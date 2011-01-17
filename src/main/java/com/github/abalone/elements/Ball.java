@@ -17,8 +17,17 @@ public class Ball implements Serializable {
       this.coords = new Coords(row, col);
    }
 
+   public Ball(Color color, Coords coords) {
+      this.color = color;
+      this.coords = coords;
+   }
+
    public Color getColor() {
       return this.color;
+   }
+
+   public void setColor(Color color) {
+      this.color = color;
    }
 
    public Coords getCoords() {
@@ -42,6 +51,9 @@ public class Ball implements Serializable {
          return false;
       }
       final Ball other = (Ball) obj;
+      if (this.color != other.color) {
+         return false;
+      }
       if (this.coords != other.coords && (this.coords == null || !this.coords.equals(other.coords))) {
          return false;
       }
@@ -50,6 +62,10 @@ public class Ball implements Serializable {
 
    @Override
    public int hashCode() {
-      return this.coords.hashCode();
+      int hash = 7;
+      hash = 43 * hash + (this.color != null ? this.color.hashCode() : 0);
+      hash = 43 * hash + (this.coords != null ? this.coords.hashCode() : 0);
+      return hash;
    }
+   
 }
