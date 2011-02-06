@@ -7,6 +7,13 @@
    <packaging>jar</packaging>
    <version>1.0-SNAPSHOT</version>
    <name>Abalone</name>
+   <distributionManagement>
+      <repository>
+         <id>bitbucket.org</id>
+         <name>Internal Maven2 Repository</name>
+         <url>https://bitbucket.org/W1M0/maven/raw/tip/2/</url>
+      </repository>
+   </distributionManagement>
    <build>
       <plugins>
          <plugin>
@@ -48,6 +55,11 @@
    </build>
    <dependencies>
       <dependency>
+          <groupId>com.kitfox.svg</groupId>
+          <artifactId>svg-salamander</artifactId>
+          <version>1.0</version>
+      </dependency>
+      <dependency>
          <groupId>junit</groupId>
          <artifactId>junit</artifactId>
          <version>3.8.1</version>
@@ -74,6 +86,14 @@
          <id>keruspe</id>
          <name>Perennou Marc-Antoine</name>
          <email>Marc-Antoine@Perennou.com</email>
+         <roles>
+            <role>Developer</role>
+         </roles>
+      </developer>
+      <developer>
+         <id>sardemff7</id>
+         <name>Sardem FF7</name>
+         <email>sardemff7.pub@gmail.com</email>
          <roles>
             <role>Developer</role>
          </roles>
