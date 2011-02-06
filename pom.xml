@@ -7,13 +7,13 @@
    <packaging>jar</packaging>
    <version>1.0-SNAPSHOT</version>
    <name>Abalone</name>
-   <distributionManagement>
+   <repositories>
       <repository>
          <id>bitbucket.org</id>
          <name>Internal Maven2 Repository</name>
          <url>https://bitbucket.org/W1M0/maven/raw/tip/2/</url>
       </repository>
-   </distributionManagement>
+   </repositories>
    <build>
       <plugins>
          <plugin>
