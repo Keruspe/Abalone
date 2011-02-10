@@ -24,7 +24,7 @@
 
 	<circle id="case"
 		cx="750" cy="750"
-		r="50"
+		r="40"
 		fill="#FFFFFF" fill-opacity="0.5"
 		/>
 
