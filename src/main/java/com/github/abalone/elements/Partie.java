@@ -43,7 +43,7 @@ public class Partie {
     /**
      * @param theBoard the theBoard to set
      */
-    public void setBoard(Set <Coords> aCoords, String direction) {
+    public void setBoard(Set <Coords> aCoords, Direction direction) {
         Coords c;
         Iterator itC=aCoords.iterator();
         Iterator itB= this.getBoard().getBalls().iterator();
@@ -68,18 +68,14 @@ public class Partie {
     public boolean coupValide(Set<Coords> selectedBalls,Direction direction){
             Iterator itc=selectedBalls.iterator();
             /*deplacement d'une bille*/
-               Coords c;
-            for(int i=0;i<selectedBalls.size();i++){
-                c=(Coords) itc.next();
-                
-                if(this.theBoard.elementAt(c.moveTo(c, direction))==Color.NONE){
-                       return true;
-                }
+
+                if(selectedBalls.size()==1){
+                    Coords c;
+                    c=(Coords) itc.next();
+                    if(this.theBoard.elementAt(c.moveTo(direction))==Color.NONE){
+                           return true;
+                    }else return true;
             }
-
-
-        return false;
+            else if(selectedBalls.)
     }
-
-
 }

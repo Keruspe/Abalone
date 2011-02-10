@@ -2,6 +2,7 @@ package com.github.abalone.elements;
 
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
+import com.github.abalone.util.Direction;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -62,7 +63,7 @@ public class Board implements Serializable {
     public HashSet<Ball> getBalls() {
         return balls;
     }
-    public void moveBallAtCoords(Coords c,String direction){
+    public void moveBallAtCoords(Coords c,Direction direction){
         Iterator itb=balls.iterator();
         boolean trouverb=false;
         Ball b;
