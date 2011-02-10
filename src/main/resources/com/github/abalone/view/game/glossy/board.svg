@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	viewBox="0 0 1500 1500"
+	>
+
+	<circle
+		cx="750" cy="750"
+		r="750"
+		fill="#008000"
+		/>
+
+	<polygon id="i"
+		points="
+			100,750
+			425,187
+			1075,187
+			1400,750
+			1075,1313
+			425,1313
+		"
+		fill="#800000"
+		/>
+
+	<circle id="case"
+		cx="750" cy="750"
+		r="40"
+		fill="#FFFFFF" fill-opacity="0.5"
+		/>
+
+	<use xlink:href="#case" y="-440" x="-260" />
+	<use xlink:href="#case" y="-440" x="-130" />
+	<use xlink:href="#case" y="-440" />
+	<use xlink:href="#case" y="-440" x="130" />
+	<use xlink:href="#case" y="-440" x="260" />
+
+	<use xlink:href="#case" y="-330" x="-325" />
+	<use xlink:href="#case" y="-330" x="-195" />
+	<use xlink:href="#case" y="-330" x="-65" />
+	<use xlink:href="#case" y="-330" x="65" />
+	<use xlink:href="#case" y="-330" x="195" />
+	<use xlink:href="#case" y="-330" x="325" />
+
+	<use xlink:href="#case" y="-220" x="-390" />
+	<use xlink:href="#case" y="-220" x="-260" />
+	<use xlink:href="#case" y="-220" x="-130" />
+	<use xlink:href="#case" y="-220" />
+	<use xlink:href="#case" y="-220" x="130" />
+	<use xlink:href="#case" y="-220" x="260" />
+	<use xlink:href="#case" y="-220" x="390" />
+
+	<use xlink:href="#case" y="-110" x="-455" />
+	<use xlink:href="#case" y="-110" x="-325" />
+	<use xlink:href="#case" y="-110" x="-195" />
+	<use xlink:href="#case" y="-110" x="-65" />
+	<use xlink:href="#case" y="-110" x="65" />
+	<use xlink:href="#case" y="-110" x="195" />
+	<use xlink:href="#case" y="-110" x="325" />
+	<use xlink:href="#case" y="-110" x="455" />
+
+	<use xlink:href="#case" x="-520" />
+	<use xlink:href="#case" x="-390" />
+	<use xlink:href="#case" x="-260" />
+	<use xlink:href="#case" x="-130" />
+	<use xlink:href="#case" x="130" />
+	<use xlink:href="#case" x="260" />
+	<use xlink:href="#case" x="390" />
+	<use xlink:href="#case" x="520" />
+
+	<use xlink:href="#case" y="440" x="-260" />
+	<use xlink:href="#case" y="440" x="-130" />
+	<use xlink:href="#case" y="440" />
+	<use xlink:href="#case" y="440" x="130" />
+	<use xlink:href="#case" y="440" x="260" />
+
+	<use xlink:href="#case" y="330" x="-325" />
+	<use xlink:href="#case" y="330" x="-195" />
+	<use xlink:href="#case" y="330" x="-65" />
+	<use xlink:href="#case" y="330" x="65" />
+	<use xlink:href="#case" y="330" x="195" />
+	<use xlink:href="#case" y="330" x="325" />
+
+	<use xlink:href="#case" y="220" x="-390" />
+	<use xlink:href="#case" y="220" x="-260" />
+	<use xlink:href="#case" y="220" x="-130" />
+	<use xlink:href="#case" y="220" />
+	<use xlink:href="#case" y="220" x="130" />
+	<use xlink:href="#case" y="220" x="260" />
+	<use xlink:href="#case" y="220" x="390" />
+
+	<use xlink:href="#case" y="110" x="-455" />
+	<use xlink:href="#case" y="110" x="-325" />
+	<use xlink:href="#case" y="110" x="-195" />
+	<use xlink:href="#case" y="110" x="-65" />
+	<use xlink:href="#case" y="110" x="65" />
+	<use xlink:href="#case" y="110" x="195" />
+	<use xlink:href="#case" y="110" x="325" />
+	<use xlink:href="#case" y="110" x="455" />
+</svg>
