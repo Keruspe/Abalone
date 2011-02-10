@@ -1,13 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package com.github.abalone.view;
 
-import javax.swing.JButton;
 import javax.swing.JToolBar;
-import com.kitfox.svg.SVGUniverse;
 
 /**
  *
@@ -15,16 +8,28 @@ import com.kitfox.svg.SVGUniverse;
  */
 class Tools extends JToolBar
 {
+    private final Window window;
 
-    public Tools()
+    public Tools(Window window)
     {
-        JButton button;
+        this.window = window;
 
-        button = new JButton("New game");
-        this.add(button);
+        Button b;
 
-        button = new JButton("Load game");
-        this.add(button);
+        b = new Button(this.window, "new-game");
+        this.add(b);
+        b.addActionListener(b);
+        
+        b = new Button(this.window, "load-game");
+        this.add(b);
+        b.addActionListener(b);
+        
+        b = new Button(this.window, "preferences");
+        this.add(b);
+        b.addActionListener(b);
+        
+        b = new Button(this.window, "quit");
+        this.add(b);
+        b.addActionListener(b);
     }
-
 }

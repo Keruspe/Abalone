@@ -1,6 +1,10 @@
 package com.github.abalone.view;
 
-import java.awt.FlowLayout;
+import com.github.abalone.controller.Game;
+import com.kitfox.svg.SVGUniverse;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.LayoutManager;
 import javax.swing.JFrame;
 
 /**
@@ -10,18 +14,27 @@ import javax.swing.JFrame;
 public class Window extends JFrame {
     
     private final Tools tools;
+    private final Board board;
+    private final Game controller;
     
-    public Window()
+    public Window(Game controller)
     {
         super("Abalone");
 
-        this.setSize(100, 100);
-        
-        this.setLayout(new FlowLayout());
+        this.controller = controller;
 
-        this.tools = new Tools();
-        this.add(this.tools);
+        this.setExtendedState(MAXIMIZED_BOTH);
+        this.setResizable(false);
         
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        LayoutManager layout = new BorderLayout();
+        this.setLayout(layout);
+
+        this.tools = new Tools(this);
+        this.add(this.tools, BorderLayout.PAGE_START);
+
+        this.board = new Board(this);
+        this.add(this.board);
+
+        this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 }

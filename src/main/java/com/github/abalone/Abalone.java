@@ -4,16 +4,20 @@
 
 package com.github.abalone;
 
+import com.github.abalone.controller.Game;
 import com.github.abalone.view.Window;
 
 /**
  * The main class of the application.
  */
 public class Abalone {
+    private final Game controller;
+    private Window view;
 
     private Abalone()
     {
-        this.view = new Window();
+        this.controller = new Game();
+        this.view = new Window(this.controller);
     }
 
     private void launch()
@@ -30,6 +34,4 @@ public class Abalone {
         app.launch();
 
     }
-
-    private Window view;
 }

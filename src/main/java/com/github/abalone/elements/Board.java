@@ -4,8 +4,10 @@ import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /**
  *
@@ -50,19 +52,13 @@ public class Board implements Serializable {
       }
    }
 
-   public Board getInstance() {
+   public static Board getInstance() {
       if (Board.singleton == null) {
          Board.singleton = new Board();
       }
       return Board.singleton;
    }
 
-    /**
-     * @return the balls
-     */
-    public HashSet<Ball> getBalls() {
-        return balls;
-    }
     public void moveBallAtCoords(Coords c,Direction direction){
         Iterator itb=balls.iterator();
         boolean trouverb=false;
@@ -75,4 +71,13 @@ public class Board implements Serializable {
             }
         }
     }
+
+   /**
+    * Returns the list of ball, read-only
+    * @return the ball list as a {Set<Ball>}
+    */
+   public Set<Ball> getBalls()
+   {
+       return Collections.unmodifiableSet(this.balls);
+   }
 }
