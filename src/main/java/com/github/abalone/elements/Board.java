@@ -24,7 +24,7 @@ public class Board implements Serializable {
    public Color elementAt(Coords coords) {
       Integer col = coords.getCol();
       Integer row = Math.abs(coords.getRow());
-      if (col < 1 || row > 4 || row + col > 9) {
+      if (col < 0 || row > 4 || row + col > 8) {
          return Color.INVALID;
       }
       Ball ball = new Ball(Color.WHITE, coords);
@@ -38,15 +38,15 @@ public class Board implements Serializable {
       return Color.NONE;
    }
    private Board() {
-      for (int i = 1 ; i <= 5 ; ++i) {
+      for (int i = 0 ; i <= 4 ; ++i) {
          this.addBall(new Ball(Color.WHITE, -4, i));
          this.addBall(new Ball(Color.BLACK, 4, i));
       }
-      for (int i = 1 ; i <= 6 ; ++i) {
+      for (int i = 0 ; i <= 5 ; ++i) {
          this.addBall(new Ball(Color.WHITE, -3, i));
          this.addBall(new Ball(Color.BLACK, 3, i));
       }
-      for (int i = 3 ; i <= 5 ; ++i) {
+      for (int i = 2 ; i <= 4 ; ++i) {
          this.addBall(new Ball(Color.WHITE, -2, i));
          this.addBall(new Ball(Color.BLACK, 2, i));
       }

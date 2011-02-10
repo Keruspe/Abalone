@@ -41,6 +41,8 @@ public class Button extends JButton implements ActionListener
             Logger.getLogger(Button.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setIcon(this.icon);
+
+        this.addActionListener(this);
     }
 
     @Override
