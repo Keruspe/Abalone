@@ -76,6 +76,10 @@ class Board extends JPanel {
         this.boardScale = s;
         this.origX = (container.width - scaled.width) / 2;
         this.origY = (container.height - scaled.height) / 2;
+
+        Dimension ballSize = new Dimension((int)(100.0 * s), (int)(100.0 * s));
+        this.whiteBall.setPreferredSize(ballSize);
+        this.blackBall.setPreferredSize(ballSize);
     }
     
     @Override
@@ -83,12 +87,11 @@ class Board extends JPanel {
     {
         this.computeBoardScale();
         this.board.paintIcon(this, g, this.origX, this.origY);
-        this.paintBalls();
+        this.paintBalls(g);
     }
 
-    private void paintBalls()
+    private void paintBalls(Graphics g)
     {
-        Graphics g = this.getGraphics();
         Double ballSize = (double)this.whiteBall.getIconHeight() * this.boardScale;
         
         Set<Ball> balls = com.github.abalone.elements.Board.getInstance().getBalls();
@@ -99,9 +102,11 @@ class Board extends JPanel {
             Coords coords = b.getCoords();
             Integer r = coords.getRow();
             Integer c = coords.getCol();
-            Integer baseX = this.origX + (int)(((double)295 - (ballSize / 2)) * this.boardScale) + Math.abs(r) * 65;
-            Integer x = baseX + c * 130;
-            Integer y = this.origY + (int)(((double)750 * 110 * r) * this.boardScale);
+            Double bX = 295.0 - (ballSize / 2.0) + Math.abs(r) * 65 + c * 130;
+            Double bY = (750.0 + 110.0 * r);
+            System.out.println(b + " x=" + bX + " y=" + bY);
+            Integer x = this.origX + (int)(bX * this.boardScale);
+            Integer y = this.origY + (int)(bY * this.boardScale);
             switch ( b.getColor() )
             {
                 case WHITE:
