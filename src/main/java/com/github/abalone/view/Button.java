@@ -47,7 +47,7 @@ public class Button extends JButton implements ActionListener
     public void actionPerformed(ActionEvent ae) {
         if ( this.type.equals("quit") )
         {
-            
+            this.window.quit();
         }
     }
 }

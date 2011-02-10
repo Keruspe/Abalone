@@ -9,4 +9,8 @@ public class Game
     public Game()
     {
     }
+
+    public void quit() {
+        System.exit(0);
+    }
 }

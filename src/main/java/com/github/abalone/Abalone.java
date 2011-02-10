@@ -12,7 +12,7 @@ import com.github.abalone.view.Window;
  */
 public class Abalone {
     private final Game controller;
-    private Window view;
+    private final Window view;
 
     private Abalone()
     {

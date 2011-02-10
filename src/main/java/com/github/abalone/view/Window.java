@@ -37,4 +37,8 @@ public class Window extends JFrame {
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
+
+    void quit() {
+        this.controller.quit();
+    }
 }

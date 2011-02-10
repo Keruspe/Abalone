@@ -102,9 +102,8 @@ class Board extends JPanel {
             Coords coords = b.getCoords();
             Integer r = coords.getRow();
             Integer c = coords.getCol();
-            Double bX = 295.0 - (ballSize / 2.0) + Math.abs(r) * 65 + c * 130;
-            Double bY = (750.0 + 110.0 * r);
-            System.out.println(b + " x=" + bX + " y=" + bY);
+            Double bX = 65.0 - (ballSize / 2.0) + Math.abs(r) * 65.0+ c * 130.0;
+            Double bY = (700.0 + 110.0 * r);
             Integer x = this.origX + (int)(bX * this.boardScale);
             Integer y = this.origY + (int)(bY * this.boardScale);
             switch ( b.getColor() )
