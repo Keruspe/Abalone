@@ -4,6 +4,7 @@ import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  *
@@ -14,7 +15,7 @@ public class Board implements Serializable {
    private HashSet<Ball> balls = new HashSet<Ball>(28);
 
    private void addBall(Ball ball) {
-      this.balls.add(ball);
+        this.getBalls().add(ball);
    }
 
    public Color elementAt(Coords coords) {
@@ -24,16 +25,15 @@ public class Board implements Serializable {
          return Color.INVALID;
       }
       Ball ball = new Ball(Color.WHITE, coords);
-      if (this.balls.contains(ball)) {
+      if (this.getBalls().contains(ball)) {
          return Color.WHITE;
       }
       ball.setColor(Color.BLACK);
-      if (this.balls.contains(ball)) {
+      if (this.getBalls().contains(ball)) {
          return Color.BLACK;
       }
       return Color.NONE;
    }
-
    private Board() {
       for (int i = 1 ; i <= 5 ; ++i) {
          this.addBall(new Ball(Color.WHITE, -4, i));
@@ -55,4 +55,23 @@ public class Board implements Serializable {
       }
       return Board.singleton;
    }
+
+    /**
+     * @return the balls
+     */
+    public HashSet<Ball> getBalls() {
+        return balls;
+    }
+    public void moveBallAtCoords(Coords c,String direction){
+        Iterator itb=balls.iterator();
+        boolean trouverb=false;
+        Ball b;
+        while(itb.hasNext()&& !trouverb){
+            b=(Ball)itb.next();
+            if(b.getCoords().equals(c)){
+                b.move(direction);
+                trouverb=true;
+            }
+        }
+    }
 }

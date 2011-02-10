@@ -2,6 +2,7 @@ package com.github.abalone.elements;
 
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
+import com.github.abalone.util.Direction;
 import java.io.Serializable;
 
 /**
@@ -59,6 +60,10 @@ public class Ball implements Serializable {
       }
       return true;
    }
+   
+public void move(Direction direction){
+       coords=coords.moveTo(direction);
+    }
 
    @Override
    public int hashCode() {
