@@ -1,5 +1,6 @@
 package com.github.abalone.view;
 
+import com.github.abalone.controller.Game;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,13 +18,11 @@ public class Button extends JButton implements ActionListener
 {
     private final String type;
     private final SVGIcon icon;
-    private final Window window;
 
-    public Button(Window window, String type)
+    public Button(String type)
     {
         super();
 
-        this.window = window;
         this.type = type;
 
         Dimension d = new Dimension(30, 30);
@@ -47,9 +46,21 @@ public class Button extends JButton implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        if ( this.type.equals("quit") )
+        if ( this.type.equals("new-game") )
         {
-            this.window.quit();
+            Game.getInstance().launch();
+        }
+        else if(this.type.equals("save-game"))
+        {
+            Game.getInstance().save();
+        }
+        else if(this.type.equals("load-game"))
+        {
+            Game.getInstance().load();
+        }
+        else if(this.type.equals("quit"))
+        {
+            Game.getInstance().quit();
         }
     }
 }

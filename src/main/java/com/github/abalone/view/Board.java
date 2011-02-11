@@ -20,16 +20,14 @@ import javax.swing.JPanel;
  */
 class Board extends JPanel {
     private final SVGIcon board;
-    private final Window window;
     private Double boardScale = -1.0;
     private final SVGIcon whiteBall;
     private final SVGIcon blackBall;
     private Integer origX = 0;
     private Integer origY = 0;
 
-    public Board(Window window)
+    public Board()
     {
-        this.window = window;
         this.board = new SVGIcon();
         this.board.setScaleToFit(true);
         this.board.setAntiAlias(true);
@@ -51,8 +49,10 @@ class Board extends JPanel {
         }
     }
     
-    private void computeBoardScale()
+    void computeBoardScale(Boolean force)
     {
+        if (( ! force ) && ( this.boardScale > -1 ))
+                return;
         Dimension target = new Dimension(this.board.getIconWidth(), this.board.getIconHeight());
         Dimension container = this.getSize();
         Double s = 1.0;
@@ -85,7 +85,7 @@ class Board extends JPanel {
     @Override
     public void paintComponent(Graphics g)
     {
-        this.computeBoardScale();
+        this.computeBoardScale(false);
         this.board.paintIcon(this, g, this.origX, this.origY);
         this.paintBalls(g);
     }

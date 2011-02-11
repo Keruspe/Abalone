@@ -2,6 +2,7 @@ package com.github.abalone.view;
 
 import com.github.abalone.controller.Game;
 import java.awt.BorderLayout;
+import java.awt.Graphics;
 import java.awt.LayoutManager;
 import javax.swing.JFrame;
 
@@ -28,17 +29,19 @@ public class Window extends JFrame {
         LayoutManager layout = new BorderLayout();
         this.setLayout(layout);
 
-        this.tools = new Tools(this);
+        this.tools = new Tools();
         this.add(this.tools, BorderLayout.PAGE_START);
 
-        this.board = new Board(this);
+        this.board = new Board();
         this.add(this.board);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
-    void quit() {
-        this.controller.quit();
+    @Override
+    public void update(Graphics g) {
+        super.update(g);
+        this.board.computeBoardScale(true);
     }
 
     public void updateBoard()

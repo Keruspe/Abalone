@@ -8,16 +8,16 @@ import javax.swing.JToolBar;
  */
 class Tools extends JToolBar
 {
-    public Tools(Window window)
+    public Tools()
     {
-        this.add(new Button(window, "new-game"));
+        this.add(new Button("new-game"));
 
-        this.add(new Button(window, "save-game"));
+        this.add(new Button("save-game"));
 
-        this.add(new Button(window, "load-game"));
+        this.add(new Button("load-game"));
         
-        this.add(new Button(window, "preferences"));
+        this.add(new Button("preferences"));
         
-        this.add(new Button(window, "quit"));
+        this.add(new Button("quit"));
     }
 }

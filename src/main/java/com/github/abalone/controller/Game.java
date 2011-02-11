@@ -39,6 +39,7 @@ public class Game
     public void launch()
     {
         Board.getInstance().fill(null);
+        this.window.updateBoard();
     }
 
     /// Save the game
@@ -56,7 +57,7 @@ public class Game
         /*
          * TODO: deserialize form the file
          */
-
+        this.window.updateBoard();
     }
 
     /// Quit the game
