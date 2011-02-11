@@ -29,11 +29,11 @@ public class Board implements Serializable {
          return Color.INVALID;
       }
       Ball ball = new Ball(Color.WHITE, coords);
-      if (this.getBalls().contains(ball)) {
+      if (this.balls.contains(ball)) {
          return Color.WHITE;
       }
       ball.setColor(Color.BLACK);
-      if (this.getBalls().contains(ball)) {
+      if (this.balls.contains(ball)) {
          return Color.BLACK;
       }
       return Color.NONE;
