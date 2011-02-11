@@ -7,7 +7,6 @@ import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.net.URISyntaxException;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
@@ -95,11 +94,8 @@ class Board extends JPanel {
 
     private void paintBalls(Graphics g)
     {
-        Set<Ball> balls = com.github.abalone.elements.Board.getInstance().getBalls();
-        Iterator<Ball> i = balls.iterator();
-        while ( i.hasNext() )
+        for (Ball b: com.github.abalone.elements.Board.getInstance().getBalls() )
         {
-            Ball b = i.next();
             Coords coords = b.getCoords();
             Integer r = coords.getRow();
             Integer c = coords.getCol();
