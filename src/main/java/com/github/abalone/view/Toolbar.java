@@ -6,9 +6,9 @@ import javax.swing.JToolBar;
  *
  * @author sardemff7
  */
-class Tools extends JToolBar
+class Toolbar extends JToolBar
 {
-    public Tools()
+    public Toolbar()
     {
         this.add(new Button("new-game"));
 
