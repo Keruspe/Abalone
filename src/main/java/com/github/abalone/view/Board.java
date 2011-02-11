@@ -1,6 +1,6 @@
 package com.github.abalone.view;
 
-import com.github.abalone.Config;
+import com.github.abalone.config.Config;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.util.Coords;
 import com.kitfox.svg.app.beans.SVGIcon;
@@ -39,9 +39,12 @@ class Board extends JPanel {
         this.blackBall.setAntiAlias(true);
         try
         {
-            this.board.setSvgURI(getClass().getResource("game/" + Config.get("theme") + "/board.svg").toURI());
-            this.whiteBall.setSvgURI(getClass().getResource("game/" + Config.get("theme") + "/white-ball.svg").toURI());
-            this.blackBall.setSvgURI(getClass().getResource("game/" + Config.get("theme") + "/black-ball.svg").toURI());
+            String theme = (String) Config.get("theme");
+            if ( theme == null )
+                theme = "classic";
+            this.board.setSvgURI(getClass().getResource("game/" + theme + "/board.svg").toURI());
+            this.whiteBall.setSvgURI(getClass().getResource("game/" + theme + "/white-ball.svg").toURI());
+            this.blackBall.setSvgURI(getClass().getResource("game/" + theme + "/black-ball.svg").toURI());
         }
         catch (URISyntaxException ex)
         {
