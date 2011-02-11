@@ -3,7 +3,9 @@ package com.github.abalone.config;
 import com.github.abalone.view.Window;
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -44,8 +46,13 @@ public class Theme extends ConstraintValue<String>
         return Theme.list.contains((String) value);
     }
 
-    public Theme(String value)
+    @Override
+    public Set<String> getList() {
+        return Collections.unmodifiableSet(Theme.list);
+    }
+
+    public Theme(String description, String value)
     {
-        super(value);
+        super(description, value);
     }
 }

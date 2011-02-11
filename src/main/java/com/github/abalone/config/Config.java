@@ -1,6 +1,8 @@
 package com.github.abalone.config;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -8,16 +10,17 @@ import java.util.HashMap;
  */
 public class Config
 {
-    private HashMap<String, Object> conf;
+    private HashMap<String, Value> conf;
     static private Config singleton;
 
     private Config()
     {
-        this.conf = new HashMap<String, Object>();
-        this.conf.put("theme", new Theme("glossy"));
+        this.conf = new HashMap<String, Value>();
+        this.conf.put("theme", new Theme("Theme", "glossy"));
+        this.conf.put("IA", new Value<Boolean>("Human vs. AI", false));
     }
 
-    static private HashMap<String, Object> getConf()
+    static private HashMap<String, Value> getConf()
     {
         if ( Config.singleton == null )
             Config.singleton = new Config();
@@ -28,23 +31,17 @@ public class Config
     {
         if ( ( name == null ) || ( ! getConf().containsKey(name) ) )
             return null;
-        Object r = getConf().get(name);
-        if ( r instanceof ConstraintValue )
-        {
-            return ((ConstraintValue)r).get();
-        }
-        else
-            return r;
+        return getConf().get(name).get();
     }
 
     static public void set(String name, Object value)
     {
-        Object r = getConf().get(name);
-        if ( r.getClass() == ConstraintValue.class )
-        {
-            ((ConstraintValue)r).set(value);
-        }
-        else
-            getConf().put(name, value);
+        Value v = getConf().get(name);
+        v.set(value);
+    }
+
+    static public Map<String, Value> getConfig()
+    {
+        return Collections.unmodifiableMap(getConf());
     }
 }

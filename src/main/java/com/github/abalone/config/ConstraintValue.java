@@ -1,29 +1,32 @@
 package com.github.abalone.config;
 
+import java.util.Set;
+
 /**
  *
  * @author sardemff7
  */
-public abstract class ConstraintValue<T>
+public abstract class ConstraintValue<T> extends Value<T>
 {
     abstract protected void initConstraint();
+    abstract public Set<T> getList();
     abstract protected Boolean check(T value);
 
-    protected T value;
-
-    protected ConstraintValue(T value)
+    protected ConstraintValue(String description, T value)
     {
-        this.initConstraint();
-        this.set(value);
+        super(description, value);
     }
 
-    public T get()
+    @Override
+    final public T get()
     {
         return this.value;
     }
 
-    public void set(T value)
+    @Override
+    final public void set(T value)
     {
+        this.initConstraint();
         if ( this.check(value) )
             this.value = value;
     }
