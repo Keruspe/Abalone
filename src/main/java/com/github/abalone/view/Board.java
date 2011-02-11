@@ -63,6 +63,7 @@ class Board extends JPanel implements MouseListener
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        this.add(new DirectionSelector());
         this.addMouseListener(this);
     }
     
