@@ -16,6 +16,7 @@ import java.util.Set;
 public class Board implements Serializable {
    private static Board singleton;
    private HashSet<Ball> balls = new HashSet<Ball>(28);
+   private boolean filled;
 
    private void addBall(Ball ball) {
         this.getBalls().add(ball);
@@ -38,18 +39,32 @@ public class Board implements Serializable {
       return Color.NONE;
    }
    private Board() {
-      for (int i = 0 ; i <= 4 ; ++i) {
-         this.addBall(new Ball(Color.WHITE, -4, i));
-         this.addBall(new Ball(Color.BLACK, 4, i));
+       this.filled = false;
+   }
+
+   public void fill(Partie p)
+   {
+      if ( this.filled )
+          return;
+      if ( p == null )
+      {
+          for (int i = 0 ; i <= 4 ; ++i) {
+             this.addBall(new Ball(Color.WHITE, -4, i));
+             this.addBall(new Ball(Color.BLACK, 4, i));
+          }
+          for (int i = 0 ; i <= 5 ; ++i) {
+             this.addBall(new Ball(Color.WHITE, -3, i));
+             this.addBall(new Ball(Color.BLACK, 3, i));
+          }
+          for (int i = 2 ; i <= 4 ; ++i) {
+             this.addBall(new Ball(Color.WHITE, -2, i));
+             this.addBall(new Ball(Color.BLACK, 2, i));
+        }
       }
-      for (int i = 0 ; i <= 5 ; ++i) {
-         this.addBall(new Ball(Color.WHITE, -3, i));
-         this.addBall(new Ball(Color.BLACK, 3, i));
-      }
-      for (int i = 2 ; i <= 4 ; ++i) {
-         this.addBall(new Ball(Color.WHITE, -2, i));
-         this.addBall(new Ball(Color.BLACK, 2, i));
-      }
+      else
+          this.balls = (HashSet<Ball>) p.getBoard().getBalls();
+      
+      this.filled = true;
    }
 
    public static Board getInstance() {

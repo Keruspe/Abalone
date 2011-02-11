@@ -1,9 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.controller.Game;
-import com.kitfox.svg.SVGUniverse;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.LayoutManager;
 import javax.swing.JFrame;
 
@@ -17,11 +15,12 @@ public class Window extends JFrame {
     private final Board board;
     private final Game controller;
     
-    public Window(Game controller)
+    public Window()
     {
         super("Abalone");
 
-        this.controller = controller;
+        this.controller = Game.getInstance();
+        this.controller.setWindow(this);
 
         this.setExtendedState(MAXIMIZED_BOTH);
         this.setResizable(false);
@@ -40,5 +39,10 @@ public class Window extends JFrame {
 
     void quit() {
         this.controller.quit();
+    }
+
+    public void updateBoard()
+    {
+        this.board.repaint();
     }
 }
