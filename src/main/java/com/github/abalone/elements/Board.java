@@ -19,7 +19,7 @@ public class Board implements Serializable {
    private boolean filled;
 
    private void addBall(Ball ball) {
-        this.getBalls().add(ball);
+        this.balls.add(ball);
    }
 
    public Color elementAt(Coords coords) {
