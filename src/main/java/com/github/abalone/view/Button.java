@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 
 /**
  *
@@ -18,6 +19,7 @@ public class Button extends JButton implements ActionListener
 {
     private final String type;
     private final SVGIcon icon;
+    private JFrame frame = null;
 
     public Button(String type)
     {
@@ -42,6 +44,11 @@ public class Button extends JButton implements ActionListener
         this.setIcon(this.icon);
 
         this.addActionListener(this);
+        
+        if(this.type.equals("preferences"))
+        {
+            this.frame = new ConfigWindow();
+        }
     }
 
     @Override
@@ -57,6 +64,10 @@ public class Button extends JButton implements ActionListener
         else if(this.type.equals("load-game"))
         {
             Game.getInstance().load();
+        }
+        else if(this.type.equals("preferences"))
+        {
+            this.frame.setVisible(true);
         }
         else if(this.type.equals("quit"))
         {
