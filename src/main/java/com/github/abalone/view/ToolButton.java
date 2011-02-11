@@ -15,13 +15,13 @@ import javax.swing.JFrame;
  *
  * @author sardemff7
  */
-public class Button extends JButton implements ActionListener
+public class ToolButton extends JButton implements ActionListener
 {
     private final String type;
     private final SVGIcon icon;
     private JFrame frame = null;
 
-    public Button(String type)
+    public ToolButton(String type)
     {
         super();
 
@@ -39,7 +39,7 @@ public class Button extends JButton implements ActionListener
         }
         catch (URISyntaxException ex)
         {
-            Logger.getLogger(Button.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ToolButton.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.setIcon(this.icon);
 
