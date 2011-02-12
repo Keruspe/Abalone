@@ -38,6 +38,7 @@ public class Board implements Serializable {
         }
         return Color.NONE;
     }
+    
     private Board() {
         this.filled = false;
     }
@@ -73,6 +74,21 @@ public class Board implements Serializable {
         return Board.singleton;
     }
 
+    public Mouvement generatorOfMove(Set<Coords> selectedBalls, Direction direction){
+            Mouvement mouvement= new Mouvement();
+            Iterator itc=selectedBalls.iterator();
+            Coords c;
+
+            while(itc.hasNext()){
+                c=(Coords) itc.next();
+               Ball bc=new Ball(this.elementAt(c), c);
+               Ball bv= new Ball(this.elementAt(c),c.moveTo(direction));
+               mouvement.unMouvement.put(bc,bv );
+
+            }
+            return mouvement;
+    }
+
     public void moveBallAtCoords(Coords c,Direction direction){
         Iterator itb=balls.iterator();
         boolean trouverb=false;
@@ -87,21 +103,46 @@ public class Board implements Serializable {
     }
 
    /**
-<<<<<<< HEAD
     * Returns the list of ball, read-only
     * @return the ball list as a {Set<Ball>}
     */
-=======
-* Returns the list of ball, read-only
-* @return the ball list as a {Set<Ball>}
-*/
->>>>>>> Implementation du controleur
    public Set<Ball> getBalls()
    {
        return Collections.unmodifiableSet(this.balls);
    }
-<<<<<<< HEAD
+
+    /// Do a move
+    /**
+     * Check if the wanted move is correct and what
+     * effect will it have
+     *
+     * @param coords The list of coordinates of the balls to move
+     * @param direction The direction in which we want to move the balls
+     */
+    public void move(Set<Coords> selectedBalls, Direction direction) {
+        Coords c;
+        Iterator itC=selectedBalls.iterator();
+        Iterator itB= this.balls.iterator();
+        /*Je cherche la bille correspondante à cette coordonnée*/
+        boolean trouverB;
+        while(itC.hasNext()){//parcout des coordonnées
+            c=(Coords) itC.next();
+            trouverB = false;
+            // premier while : parcours des billes --> itB
+            while(itB.hasNext() && !trouverB){//parcourt des bille du plateau
+                Ball ball = (Ball) itC.next();
+                if(ball.getCoords().equals(c))
+                {
+                   trouverB = true;
+                   Ball b = (Ball) itC.next();
+                   b.move(direction);
+                }
+            }
+        }
+
+        /*
+         * TODO: the addMove have to be in an History class
+         */
+        //p.addMove(generatorOfMove(selectedBalls, direction));
+    }
 }
-=======
-}
->>>>>>> Implementation du controleur

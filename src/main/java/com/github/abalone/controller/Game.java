@@ -128,54 +128,10 @@ public class Game
 
     }
 
-    /// Do a move
-    /**
-     * Check if the wanted move is correct and what
-     * effect will it have
-     *
-     * @param coords The list of coordinates of the balls to move
-     * @param direction The direction in which we want to move the balls
-     */
-    public void move(Set <Coords> coords, Direction direction) {
-        Coords c;
-        Iterator itC=coords.iterator();
-        Iterator itB= this.board.getBalls().iterator();
-        /*Je cherche la bille correspondante à cette coordonnée*/
-        boolean trouverB;
-        while(itC.hasNext()){//parcout des coordonnées
-            c=(Coords) itC.next();
-            trouverB = false;
-            // premier while : parcours des billes --> itB
-            while(itB.hasNext() && !trouverB){//parcourt des bille du plateau
-                Ball ball = (Ball) itC.next();
-                if(ball.getCoords().equals(c))
-                {
-                   trouverB = true;
-                   Ball b = (Ball) itC.next();
-                   b.move(direction);
-                }
-            }
-        }
-    }
-
-    public Mouvement generatorOfMove(Set<Coords> selectedBalls, Direction direction){
-            Mouvement mouvement= new Mouvement();
-            Iterator itc=selectedBalls.iterator();
-            Coords c;
-
-            while(itc.hasNext()){
-                c=(Coords) itc.next();
-               Ball bc=new Ball(p.getBoard().elementAt(c), c);
-               Ball bv= new Ball(p.getBoard().elementAt(c),c.moveTo(direction));
-               mouvement.unMouvement.put(bc,bv );
-
-            }
-            return mouvement;
-    }
-
-    public boolean coupValide(Set<Coords> selectedBalls,Direction direction){
+    public Boolean coupValide(Set<Coords> selectedBalls,Direction direction){
             Iterator itc=selectedBalls.iterator();
             /*deplacement d'une bille*/
+            Boolean result = false;
 
             switch ( selectedBalls.size() )
             {
@@ -191,10 +147,10 @@ public class Game
                 Coords c21 = (Coords) itc.next();
                 Coords c22 = (Coords) itc.next();
                 if (Typelignepl.lesDirectionPerpendiculaire(c21.LignePl(c22)).contains(direction)) {
-                    if (this.p.getBoard().elementAt(c21.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c21.moveTo(direction)) != Color.INVALID
-                            && this.p.getBoard().elementAt(c22.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c22.moveTo(direction)) != Color.INVALID) {
+                    if (this.board.elementAt(c21.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c21.moveTo(direction)) != Color.INVALID
+                            && this.board.elementAt(c22.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c22.moveTo(direction)) != Color.INVALID) {
                         result = true;
                     }
                 } else {
@@ -216,27 +172,27 @@ public class Game
                 Coords c32 = (Coords) itc.next();
                 Coords c33 = (Coords) itc.next();
                 if (Typelignepl.lesDirectionPerpendiculaire(c31.LignePl(c32)).contains(direction)) {
-                    if (this.p.getBoard().elementAt(c31.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c31.moveTo(direction)) != Color.INVALID
-                            && this.p.getBoard().elementAt(c32.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c32.moveTo(direction)) != Color.INVALID
-                            && this.p.getBoard().elementAt(c33.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c33.moveTo(direction)) != Color.INVALID) {
+                    if (this.board.elementAt(c31.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c31.moveTo(direction)) != Color.INVALID
+                            && this.board.elementAt(c32.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c32.moveTo(direction)) != Color.INVALID
+                            && this.board.elementAt(c33.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c33.moveTo(direction)) != Color.INVALID) {
                         result = true;
                     } else {
                         Coords closer = closer(selectedBalls, direction);
                         Coords next1 = closer.moveTo(direction);
                         Coords next2 = next1.moveTo(direction);
                         Coords next3 = next2.moveTo(direction);
-                        if (this.p.getBoard().elementAt(next1.moveTo(direction)) == Color.NONE) {
+                        if (this.board.elementAt(next1.moveTo(direction)) == Color.NONE) {
                             result = true;
-                        } else if (this.p.getBoard().elementAt(next1.moveTo(direction)) == this.adversaire()) {
-                            if (this.p.getBoard().elementAt(next2.moveTo(direction)) == Color.NONE
-                                    || this.p.getBoard().elementAt(next2.moveTo(direction)) == Color.INVALID) {
+                        } else if (this.board.elementAt(next1.moveTo(direction)) == this.adversaire()) {
+                            if (this.board.elementAt(next2.moveTo(direction)) == Color.NONE
+                                    || this.board.elementAt(next2.moveTo(direction)) == Color.INVALID) {
                                 result = true;
-                            } else if (this.p.getBoard().elementAt(next2.moveTo(direction)) == this.adversaire()) {
-                                if (this.p.getBoard().elementAt(next3.moveTo(direction)) == Color.NONE
-                                        || this.p.getBoard().elementAt(next3.moveTo(direction)) == Color.INVALID) {
+                            } else if (this.board.elementAt(next2.moveTo(direction)) == this.adversaire()) {
+                                if (this.board.elementAt(next3.moveTo(direction)) == Color.NONE
+                                        || this.board.elementAt(next3.moveTo(direction)) == Color.INVALID) {
                                     result = true;
                                 }
                             }
@@ -257,8 +213,8 @@ public class Game
             case 1:
                 Coords c;
                 c = (Coords) itc.next();
-                if (this.p.getBoard().elementAt(c.moveTo(direction)) == Color.NONE
-                        && this.p.getBoard().elementAt(c.moveTo(direction)) != Color.INVALID) {
+                if (this.board.elementAt(c.moveTo(direction)) == Color.NONE
+                        && this.board.elementAt(c.moveTo(direction)) != Color.INVALID) {
                     result.add(c);
                 }
                 break;
@@ -266,10 +222,10 @@ public class Game
                 Coords c21 = (Coords) itc.next();
                 Coords c22 = (Coords) itc.next();
                 if (Typelignepl.lesDirectionPerpendiculaire(c21.LignePl(c22)).contains(direction)) {
-                    if (this.p.getBoard().elementAt(c21.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c21.moveTo(direction)) != Color.INVALID
-                            && this.p.getBoard().elementAt(c22.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c22.moveTo(direction)) != Color.INVALID) {
+                    if (this.board.elementAt(c21.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c21.moveTo(direction)) != Color.INVALID
+                            && this.board.elementAt(c22.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c22.moveTo(direction)) != Color.INVALID) {
                         result.add(c21);
                         result.add(c21);
                     }
@@ -295,12 +251,12 @@ public class Game
                 Coords c32 = (Coords) itc.next();
                 Coords c33 = (Coords) itc.next();
                 if (Typelignepl.lesDirectionPerpendiculaire(c31.LignePl(c32)).contains(direction)) {
-                    if (this.p.getBoard().elementAt(c31.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c31.moveTo(direction)) != Color.INVALID
-                            && this.p.getBoard().elementAt(c32.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c32.moveTo(direction)) != Color.INVALID
-                            && this.p.getBoard().elementAt(c33.moveTo(direction)) == Color.NONE
-                            && this.p.getBoard().elementAt(c33.moveTo(direction)) != Color.INVALID) {
+                    if (this.board.elementAt(c31.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c31.moveTo(direction)) != Color.INVALID
+                            && this.board.elementAt(c32.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c32.moveTo(direction)) != Color.INVALID
+                            && this.board.elementAt(c33.moveTo(direction)) == Color.NONE
+                            && this.board.elementAt(c33.moveTo(direction)) != Color.INVALID) {
                         result.add(c31);
                         result.add(c32);
                         result.add(c33);
@@ -309,20 +265,20 @@ public class Game
                         Coords next1 = closer.moveTo(direction);
                         Coords next2 = next1.moveTo(direction);
                         Coords next3 = next2.moveTo(direction);
-                        if (this.p.getBoard().elementAt(next1.moveTo(direction)) == Color.NONE) {
+                        if (this.board.elementAt(next1.moveTo(direction)) == Color.NONE) {
                             result.add(c31);
                             result.add(c32);
                             result.add(c33);
-                        } else if (this.p.getBoard().elementAt(next1.moveTo(direction)) == this.adversaire()) {
-                            if (this.p.getBoard().elementAt(next2.moveTo(direction)) == Color.NONE
-                                    || this.p.getBoard().elementAt(next2.moveTo(direction)) == Color.INVALID) {
+                        } else if (this.board.elementAt(next1.moveTo(direction)) == this.adversaire()) {
+                            if (this.board.elementAt(next2.moveTo(direction)) == Color.NONE
+                                    || this.board.elementAt(next2.moveTo(direction)) == Color.INVALID) {
                                 result.add(c31);
                                 result.add(c32);
                                 result.add(c33);
                                 result.add(next1);
-                            } else if (this.p.getBoard().elementAt(next2.moveTo(direction)) == this.adversaire()) {
-                                if (this.p.getBoard().elementAt(next3.moveTo(direction)) == Color.NONE
-                                        || this.p.getBoard().elementAt(next3.moveTo(direction)) == Color.INVALID) {
+                            } else if (this.board.elementAt(next2.moveTo(direction)) == this.adversaire()) {
+                                if (this.board.elementAt(next3.moveTo(direction)) == Color.NONE
+                                        || this.board.elementAt(next3.moveTo(direction)) == Color.INVALID) {
                                     result.add(c31);
                                     result.add(c32);
                                     result.add(c33);
@@ -340,11 +296,15 @@ public class Game
         return result;
     }
    public void joueUncoup(Set<Coords> selectedBalls, Direction direction){
+       /*
+        * TODO: move the check to a "validMoves" function
+        * that the view will call to display needed controls
+        * (implies there will not be unvalid moves here)
+        */
        Set ballTomove = coupValid2(selectedBalls, direction);
        if(!ballTomove.isEmpty()){
-           move(selectedBalls, direction);
+           this.board.move(selectedBalls, direction);
            nextTurn();
-           p.addMove(generatorOfMove(selectedBalls, direction));
        }
    }
 
