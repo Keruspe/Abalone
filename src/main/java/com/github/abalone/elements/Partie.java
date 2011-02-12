@@ -40,10 +40,9 @@ public class Partie {
     {
         return this.board;
     }
-    
+
     public Color getTurn()
     {
         return this.turn;
     }
-
 }

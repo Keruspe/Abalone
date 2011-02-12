@@ -1,5 +1,6 @@
 package com.github.abalone.util;
 
+import com.github.abalone.elements.Typelignepl;
 import java.io.Serializable;
 
 /**
@@ -52,39 +53,57 @@ public class Coords implements Serializable {
 
         switch ( direction )
         {
-            case UPLEFT:
-                ++arrivee.row;
-                if ( this.row > 1 )
-                    --arrivee.col;
-            break;
-            case UPRIGHT:
-                ++arrivee.row;
-                if ( this.row > 1 )
-                    ++arrivee.col;
-            break;
-            case LEFT:
-                 --arrivee.col;
-            break;
-            case RIGHT:
-                 ++arrivee.col;
-            break;
-            case DOWNLEFT:
-                 --arrivee.row;
-                 if ( this.row > 1 )
-                    --arrivee.col;
-            break;
-            case DOWNRIGHT:
-                 ++arrivee.row;
-                 if ( this.row > 1 )
-                    ++arrivee.col;
-            break;
+        case UPLEFT:
+            ++arrivee.row;
+            if ( this.row < 1 )
+                --arrivee.col;
+        break;
+        case UPRIGHT:
+            ++arrivee.row;
+            if ( this.row > 0 )
+                ++arrivee.col;
+        break;
+        case LEFT:
+            --arrivee.col;
+        break;
+        case RIGHT:
+            ++arrivee.col;
+        break;
+        case DOWNLEFT:
+            --arrivee.row;
+            if ( this.row < 1 )
+                --arrivee.col;
+        break;
+        case DOWNRIGHT:
+            ++arrivee.row;
+            if ( this.row > 0 )
+                ++arrivee.col;
+        break;
         }
-        return arrivee;
-
+    return arrivee;
     }
 
-    @Override
-    public int hashCode() {
-        return this.row * 10 + this.col;
+    //c est juste a cote de de l'objet courant
+    public Typelignepl LignePl(Coords c){
+        if(this.moveTo(Direction.UPLEFT).equals(c)||c.equals(this.moveTo(Direction.DOWNRIGHT))){
+            return Typelignepl.DIAGONAL2;
+        } else if(this.moveTo(Direction.UPRIGHT).equals(c) || c.equals(this.moveTo(Direction.DOWNLEFT))) {
+           return Typelignepl.DIAGONAL1;
+        } else
+            return Typelignepl.HORIZONTAL;
+    }
+
+    /**
+     * @param row the row to set
+     */
+    public void setRow(Integer row) {
+        this.row = row;
+    }
+
+    /**
+     * @param col the col to set
+     */
+    public void setCol(Integer col) {
+        this.col = col;
     }
 }

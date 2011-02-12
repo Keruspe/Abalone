@@ -10,69 +10,68 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- *
- * @author keruspe
- */
+*
+* @author keruspe
+*/
 public class Board implements Serializable {
-   private static Board singleton;
-   private HashSet<Ball> balls = new HashSet<Ball>(28);
-   private boolean filled;
+    private static Board singleton;
+    private HashSet<Ball> balls = new HashSet<Ball>(28);
+    private boolean filled;
 
-   private void addBall(Ball ball) {
+    private void addBall(Ball ball) {
         this.balls.add(ball);
-   }
+    }
 
-   public Color elementAt(Coords coords) {
-      Integer col = coords.getCol();
-      Integer row = Math.abs(coords.getRow());
-      if (col < 0 || row > 4 || row + col > 8) {
-         return Color.INVALID;
-      }
-      Ball ball = new Ball(Color.WHITE, coords);
-      if (this.balls.contains(ball)) {
-         return Color.WHITE;
-      }
-      ball.setColor(Color.BLACK);
-      if (this.balls.contains(ball)) {
-         return Color.BLACK;
-      }
-      return Color.NONE;
-   }
-   private Board() {
-       this.filled = false;
-   }
-
-   public void fill(Partie p)
-   {
-      if ( this.filled )
-          return;
-      if ( p == null )
-      {
-          for (int i = 0 ; i <= 4 ; ++i) {
-             this.addBall(new Ball(Color.WHITE, -4, i));
-             this.addBall(new Ball(Color.BLACK, 4, i));
-          }
-          for (int i = 0 ; i <= 5 ; ++i) {
-             this.addBall(new Ball(Color.WHITE, -3, i));
-             this.addBall(new Ball(Color.BLACK, 3, i));
-          }
-          for (int i = 2 ; i <= 4 ; ++i) {
-             this.addBall(new Ball(Color.WHITE, -2, i));
-             this.addBall(new Ball(Color.BLACK, 2, i));
+    public Color elementAt(Coords coords) {
+        Integer col = coords.getCol();
+        Integer row = Math.abs(coords.getRow());
+        if (col < 0 || row > 4 || row + col > 8) {
+            return Color.INVALID;
         }
-      }
-      else
-          this.balls = (HashSet<Ball>) p.getBoard().getBalls();
-      
-      this.filled = true;
-   }
+        Ball ball = new Ball(Color.WHITE, coords);
+        if (this.balls.contains(ball)) {
+            return Color.WHITE;
+        }
+        ball.setColor(Color.BLACK);
+        if (this.balls.contains(ball)) {
+            return Color.BLACK;
+        }
+        return Color.NONE;
+    }
+    private Board() {
+        this.filled = false;
+    }
 
-   public static Board getInstance() {
-      if (Board.singleton == null) {
-         Board.singleton = new Board();
-      }
-      return Board.singleton;
-   }
+    public void fill(Partie p)
+    {
+        if ( this.filled )
+            return;
+        if ( p == null )
+        {
+            for (int i = 0 ; i <= 4 ; ++i) {
+                this.addBall(new Ball(Color.WHITE, -4, i));
+                this.addBall(new Ball(Color.BLACK, 4, i));
+            }
+            for (int i = 0 ; i <= 5 ; ++i) {
+                this.addBall(new Ball(Color.WHITE, -3, i));
+                this.addBall(new Ball(Color.BLACK, 3, i));
+            }
+            for (int i = 2 ; i <= 4 ; ++i) {
+                this.addBall(new Ball(Color.WHITE, -2, i));
+                this.addBall(new Ball(Color.BLACK, 2, i));
+            }
+        } else
+            this.balls = (HashSet<Ball>) p.getBoard().getBalls();
+
+        this.filled = true;
+    }
+
+    public static Board getInstance() {
+        if (Board.singleton == null) {
+            Board.singleton = new Board();
+        }
+        return Board.singleton;
+    }
 
     public void moveBallAtCoords(Coords c,Direction direction){
         Iterator itb=balls.iterator();
@@ -88,11 +87,21 @@ public class Board implements Serializable {
     }
 
    /**
+<<<<<<< HEAD
     * Returns the list of ball, read-only
     * @return the ball list as a {Set<Ball>}
     */
+=======
+* Returns the list of ball, read-only
+* @return the ball list as a {Set<Ball>}
+*/
+>>>>>>> Implementation du controleur
    public Set<Ball> getBalls()
    {
        return Collections.unmodifiableSet(this.balls);
    }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> Implementation du controleur

@@ -5,7 +5,8 @@
 
 package com.github.abalone.elements;
 
-import java.util.Set;
+import java.util.HashMap;
+//import java.util.Set;
 
 /**
  *
@@ -13,8 +14,8 @@ import java.util.Set;
  */
 public class Mouvement {
 
-        public Set<Ball> listBOrigine;
-        public Set<Ball> listBArrivee;
-        
+//        public Set<Ball> listBOrigine;
+//        public Set<Ball> listBArrivee;
+    public HashMap<Ball,Ball> unMouvement;
 
 }
