@@ -59,8 +59,6 @@ public class Board implements Serializable {
    }
 
    public Ball getBallAt(Ball ball, Direction direction) {
-      Ball returnBall = new Ball(ball.getColor(), null);
-
       Integer row = ball.getCoords().getRow();
       Integer col = ball.getCoords().getCol();
       switch (direction) {
@@ -91,7 +89,11 @@ public class Board implements Serializable {
             }
             break;
       }
-      returnBall.SetCoords(row, col);
+      Coords newCoords = new Coords(row, col);
+      Ball returnBall = this.getBallAt(newCoords);
+      if (returnBall == null) {
+         returnBall = new Ball(this.elementAt(newCoords), newCoords);
+      }
       return returnBall;
    }
 
