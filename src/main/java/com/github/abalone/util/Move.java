@@ -1,6 +1,7 @@
 package com.github.abalone.util;
 
 import com.github.abalone.elements.Ball;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import java.util.Set;
  *
  * @author keruspe
  */
-public class Move {
+public class Move implements Serializable {
 
    private Set<Ball> initialBalls;
 
