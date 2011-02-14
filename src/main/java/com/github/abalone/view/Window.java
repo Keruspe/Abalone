@@ -27,8 +27,7 @@ public class Window extends JFrame {
         this.controller = GameController.getInstance();
         this.controller.setWindow(this);
 
-        this.setExtendedState(MAXIMIZED_BOTH);
-        this.setResizable(false);
+        this.setSize(800, 600);
         
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
