@@ -155,6 +155,8 @@ public class GameController {
       switch (selectedBalls.size()) {
          case 1:
             Ball b = (Ball) itb.next();
+            System.out.println("1 ball");
+            System.out.println(b.getCoords().getRow() + "x" + b.getCoords().getCol());
             if (this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b, direction).getCoords()) == Color.NONE) {
                result.add(b);
             }
@@ -162,6 +164,9 @@ public class GameController {
          case 2:
             Ball b1 = (Ball) itb.next();
             Ball b2 = (Ball) itb.next();
+            System.out.println("2 balls");
+            System.out.println(b1.getCoords().getRow() + "x" + b1.getCoords().getCol());
+            System.out.println(b2.getCoords().getRow() + "x" + b2.getCoords().getCol());
             if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
                Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords());
                Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b2, direction).getCoords());
@@ -190,6 +195,10 @@ public class GameController {
             Ball b31 = (Ball) itb.next();
             Ball b32 = (Ball) itb.next();
             Ball b33 = (Ball) itb.next();
+            System.out.println("3 balls");
+            System.out.println(b31.getCoords().getRow() + "x" + b31.getCoords().getCol());
+            System.out.println(b32.getCoords().getRow() + "x" + b32.getCoords().getCol());
+            System.out.println(b33.getCoords().getRow() + "x" + b33.getCoords().getCol());
             if (Typelignepl.lesDirectionPerpendiculaire(b31.getCoords().LignePl(b32.getCoords())).contains(direction)) {
                Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b31, direction).getCoords());
                Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b32, direction).getCoords());
@@ -235,6 +244,9 @@ public class GameController {
    }
 
    private Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
+      if (!areALine(selectedBallsCoords)) {
+         return new HashSet<Ball>();
+      }
       Set<Ball> selectedBalls = new HashSet<Ball>();
       for (Coords c : selectedBallsCoords) {
          Ball b = this.game.getBoard().getBallAt(c);
