@@ -5,6 +5,8 @@
 package com.github.abalone;
 
 import com.github.abalone.view.Window;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * The main class of the application.
@@ -12,7 +14,7 @@ import com.github.abalone.view.Window;
 public class Abalone {
     private final Window view;
 
-    private Abalone()
+    private Abalone() throws Exception
     {
         this.view = new Window();
     }
@@ -27,8 +29,13 @@ public class Abalone {
      */
     public static void main(String[] args)
     {
-        Abalone app = new Abalone();
-        app.launch();
+        Abalone app;
+        try {
+            app = new Abalone();
+            app.launch();
+        } catch (Exception ex) {
+            Logger.getLogger(Abalone.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 }
