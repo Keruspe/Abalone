@@ -345,6 +345,7 @@ public class GameController {
          Move move = new Move(ballsTomove);
          move.setFinalState(this.game.getBoard().move(ballsTomove, direction));
          this.game.addToHistory(move);
+         this.window.repaint();
       }
       return Boolean.TRUE;
    }

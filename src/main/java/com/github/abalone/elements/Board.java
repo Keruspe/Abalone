@@ -146,8 +146,10 @@ public class Board implements Serializable {
     * @param direction The direction in which we want to move the balls
     */
    public Set<Ball> move(Set<Ball> selectedBalls, Direction direction) {
+      this.balls.removeAll(selectedBalls);
       for (Ball b : selectedBalls) {
          b.move(direction);
+         this.balls.add(b);
       }
       return selectedBalls;
    }
