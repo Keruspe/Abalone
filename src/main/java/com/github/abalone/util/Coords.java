@@ -118,4 +118,9 @@ public class Coords implements Serializable, Comparable<Coords> {
    public int compareTo(Coords o) {
       return 10 * this.row - o.row + this.col - o.col;
    }
+
+    @Override
+    public String toString() {
+        return String.format("%s: [row=%d,col=%d]", getClass().getName(), this.row, this.col);
+    }
 }
