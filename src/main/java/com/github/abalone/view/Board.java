@@ -243,6 +243,11 @@ class Board extends JPanel implements MouseListener
 
     void move(Direction direction)
     {
-        GameController.getInstance().move(this.selectedBalls, direction);
+        if ( GameController.getInstance().move(this.selectedBalls, direction) )
+        {
+            this.selectedBalls.clear();
+            System.out.println(this.selectedBalls);
+            this.selector.updateButtons(null);
+        }
     }
 }

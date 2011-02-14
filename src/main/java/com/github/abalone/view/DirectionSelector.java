@@ -33,6 +33,8 @@ public class DirectionSelector extends JPanel
     {
         for ( DirectionButton b: this.buttons.values() )
             b.setVisible(false);
+        if ( valids == null )
+            return;
         for ( Direction d: valids )
             this.buttons.get(d).setVisible(true);
     }
