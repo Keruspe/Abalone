@@ -1,6 +1,6 @@
 package com.github.abalone.view;
 
-import com.github.abalone.controller.Game;
+import com.github.abalone.controller.GameController;
 import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 import java.util.logging.Level;
@@ -18,13 +18,13 @@ public class Window extends JFrame {
     
     private final Toolbar tools;
     private final Board board;
-    private final Game controller;
+    private final GameController controller;
     
     public Window()
     {
         super("Abalone");
 
-        this.controller = Game.getInstance();
+        this.controller = GameController.getInstance();
         this.controller.setWindow(this);
 
         this.setExtendedState(MAXIMIZED_BOTH);

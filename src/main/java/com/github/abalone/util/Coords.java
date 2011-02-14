@@ -16,7 +16,7 @@ public class Coords implements Serializable {
         this.col = col;
     }
 
-    private Coords(Coords other) {
+    public Coords(Coords other) {
         this.row = other.row;
         this.col = other.col;
     }
@@ -46,6 +46,14 @@ public class Coords implements Serializable {
         }
         return true;
     }
+
+   @Override
+   public int hashCode() {
+      int hash = 5;
+      hash = 83 * hash + (this.row != null ? this.row.hashCode() : 0);
+      hash = 83 * hash + (this.col != null ? this.col.hashCode() : 0);
+      return hash;
+   }
 
     public Coords moveTo(Direction direction){
         // construction de la coordonee d arrivee

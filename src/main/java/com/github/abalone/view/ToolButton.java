@@ -1,6 +1,6 @@
 package com.github.abalone.view;
 
-import com.github.abalone.controller.Game;
+import com.github.abalone.controller.GameController;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -55,15 +55,15 @@ public class ToolButton extends JButton implements ActionListener
     public void actionPerformed(ActionEvent ae) {
         if ( this.type.equals("new-game") )
         {
-            Game.getInstance().launch();
+            GameController.getInstance().launch();
         }
         else if(this.type.equals("save-game"))
         {
-            Game.getInstance().save();
+            GameController.getInstance().save();
         }
         else if(this.type.equals("load-game"))
         {
-            Game.getInstance().load();
+            GameController.getInstance().load();
         }
         else if(this.type.equals("preferences"))
         {
@@ -71,7 +71,7 @@ public class ToolButton extends JButton implements ActionListener
         }
         else if(this.type.equals("quit"))
         {
-            Game.getInstance().quit();
+            GameController.getInstance().quit();
         }
     }
 }

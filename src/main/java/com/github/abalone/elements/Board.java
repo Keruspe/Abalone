@@ -1,5 +1,6 @@
 package com.github.abalone.elements;
 
+import com.github.abalone.util.Move;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
@@ -38,12 +39,63 @@ public class Board implements Serializable {
         }
         return Color.NONE;
     }
+
+    public Ball getBallAt(Coords coords) {
+        Integer col = coords.getCol();
+        Integer row = Math.abs(coords.getRow());
+        if (col < 0 || row > 4 || row + col > 8) {
+            return null;
+        }
+        Ball ball = new Ball(Color.WHITE, coords);
+        if (this.balls.contains(ball)) {
+            return ball;
+        }
+        ball.setColor(Color.BLACK);
+        if (this.balls.contains(ball)) {
+            return ball;
+        }
+        return null;
+    }
+
+    public Ball getBallAt(Ball ball, Direction direction){
+        Ball returnBall = new Ball(ball.getColor(), null);
+
+        Integer row = ball.getCoords().getRow();
+        Integer col = ball.getCoords().getCol();
+        switch ( direction )
+        {
+        case UPLEFT:
+            if (row++ < 1)
+                --col;
+        break;
+        case UPRIGHT:
+            if (row++ > 0)
+               ++col;
+        break;
+        case LEFT:
+            --col;
+        break;
+        case RIGHT:
+            ++col;
+        break;
+        case DOWNLEFT:
+            if (row-- < 1)
+                --col;
+        break;
+        case DOWNRIGHT:
+            if (row++ > 0)
+                ++col;
+        break;
+        }
+        returnBall.SetCoords(row, col);
+        return returnBall;
+    }
     
     private Board() {
         this.filled = false;
     }
 
-    public void fill(Partie p)
+    public void fill(Game p)
     {
         if ( this.filled )
             return;
@@ -74,8 +126,8 @@ public class Board implements Serializable {
         return Board.singleton;
     }
 
-    public Mouvement generatorOfMove(Set<Coords> selectedBalls, Direction direction){
-            Mouvement mouvement= new Mouvement();
+    public Move generatorOfMove(Set<Coords> selectedBalls, Direction direction){
+            Move mouvement= new Move();
             Iterator itc=selectedBalls.iterator();
             Coords c;
 
@@ -119,25 +171,9 @@ public class Board implements Serializable {
      * @param coords The list of coordinates of the balls to move
      * @param direction The direction in which we want to move the balls
      */
-    public void move(Set<Coords> selectedBalls, Direction direction) {
-        Coords c;
-        Iterator itC=selectedBalls.iterator();
-        Iterator itB= this.balls.iterator();
-        /*Je cherche la bille correspondante à cette coordonnée*/
-        boolean trouverB;
-        while(itC.hasNext()){//parcout des coordonnées
-            c=(Coords) itC.next();
-            trouverB = false;
-            // premier while : parcours des billes --> itB
-            while(itB.hasNext() && !trouverB){//parcourt des bille du plateau
-                Ball ball = (Ball) itC.next();
-                if(ball.getCoords().equals(c))
-                {
-                   trouverB = true;
-                   Ball b = (Ball) itC.next();
-                   b.move(direction);
-                }
-            }
+    public void move(Set<Ball> selectedBalls, Direction direction) {
+        for (Ball b : selectedBalls) {
+           b.move(direction);
         }
 
         /*

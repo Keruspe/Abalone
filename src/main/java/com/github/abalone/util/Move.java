@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 
-package com.github.abalone.elements;
+package com.github.abalone.util;
 
+import com.github.abalone.elements.Ball;
 import java.util.HashMap;
 //import java.util.Set;
 
@@ -12,7 +13,7 @@ import java.util.HashMap;
  *
  * @author joe
  */
-public class Mouvement {
+public class Move {
 
 //        public Set<Ball> listBOrigine;
 //        public Set<Ball> listBArrivee;
