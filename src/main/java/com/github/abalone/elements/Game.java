@@ -25,6 +25,7 @@ public class Game {
       this.turn = turn;
       this.timeLeft = time;
       this.turnsLeft = turns;
+      this.history = new ArrayList<Move>();
    }
 
    public ArrayList<Move> getHistory() {
