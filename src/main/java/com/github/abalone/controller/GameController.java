@@ -99,7 +99,7 @@ public class GameController {
       System.exit(0);
    }
 
-   public Color opponent(Color self) {
+   private Color opponent(Color self) {
       Color opponent = Color.NONE;
       if (self == Color.BLACK) {
          opponent = Color.WHITE;
@@ -110,7 +110,7 @@ public class GameController {
    }
 
    //renvoi la bille la plus proche de la bille adverse ou de la case vide
-   public Ball closer(Set<Ball> selectedBalls, Direction to) {
+   private Ball closer(Set<Ball> selectedBalls, Direction to) {
       Coords closer = new Coords(10, 10);
       switch (to) {
          case DOWNLEFT:
@@ -149,7 +149,7 @@ public class GameController {
 
    }
 
-   public Set<Ball> validMove(Set<Ball> selectedBalls, Direction direction, Color selfColor) {
+   private Set<Ball> validMove2(Set<Ball> selectedBalls, Direction direction, Color selfColor) {
       Iterator itb = selectedBalls.iterator();
       Set<Ball> result = new HashSet<Ball>();
       switch (selectedBalls.size()) {
@@ -234,16 +234,24 @@ public class GameController {
       return result;
    }
 
-   public Boolean move(Set<Coords> selectedBallsCoords, Direction direction) {
+   private Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
       Set<Ball> selectedBalls = new HashSet<Ball>();
       for (Coords c : selectedBallsCoords) {
          selectedBalls.add(this.game.getBoard().getBallAt(c));
       }
+      return validMove2(selectedBalls, direction, current);
+   }
+
+   public Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction) {
+      return validMove(selectedBallsCoords, direction, this.game.getTurn());
+   }
+
+   public Boolean move(Set<Coords> selectedBallsCoords, Direction direction) {
       Color current = this.game.getTurnAndGoNext();
       if (current == Color.NONE) {
          return Boolean.FALSE;
       }
-      Set<Ball> ballsTomove = validMove(selectedBalls, direction, current);
+      Set<Ball> ballsTomove = validMove(selectedBallsCoords, direction, current);
       if (!ballsTomove.isEmpty()) {
          Move move = new Move(ballsTomove);
          move.setFinalState(this.game.getBoard().move(ballsTomove, direction));

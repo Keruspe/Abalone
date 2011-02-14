@@ -47,6 +47,10 @@ public class Game {
       return this.board;
    }
 
+   public Color getTurn() {
+      return this.turn;
+   }
+
    public Color getTurnAndGoNext() {
       Color current = this.turn;
       if (!this.turnsLeft.equals(-1)) {
