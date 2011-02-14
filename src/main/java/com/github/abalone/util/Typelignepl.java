@@ -30,21 +30,25 @@ public enum Typelignepl {
 
    public static ArrayList<Direction> lesDirectionPerpendiculaire(Typelignepl t) {
       ArrayList<Direction> lesdirections = new ArrayList<Direction>();
-      if (t == Typelignepl.DIAGONAL1) {
-         lesdirections.add(Direction.LEFT);
-         lesdirections.add(Direction.RIGHT);
-         lesdirections.add(Direction.DOWNRIGHT);
-         lesdirections.add(Direction.UPLEFT);
-      } else if (t == Typelignepl.DIAGONAL2) {
-         lesdirections.add(Direction.DOWNLEFT);
-         lesdirections.add(Direction.LEFT);
-         lesdirections.add(Direction.RIGHT);
-         lesdirections.add(Direction.UPRIGHT);
-      } else if (t == Typelignepl.HORIZONTAL) {
-         lesdirections.add(Direction.UPLEFT);
-         lesdirections.add(Direction.UPRIGHT);
-         lesdirections.add(Direction.DOWNRIGHT);
-         lesdirections.add(Direction.DOWNLEFT);
+      switch (t) {
+         case DIAGONAL1:
+            lesdirections.add(Direction.LEFT);
+            lesdirections.add(Direction.RIGHT);
+            lesdirections.add(Direction.DOWNRIGHT);
+            lesdirections.add(Direction.UPLEFT);
+            break;
+         case DIAGONAL2:
+            lesdirections.add(Direction.DOWNLEFT);
+            lesdirections.add(Direction.LEFT);
+            lesdirections.add(Direction.RIGHT);
+            lesdirections.add(Direction.UPRIGHT);
+            break;
+         case HORIZONTAL:
+            lesdirections.add(Direction.UPLEFT);
+            lesdirections.add(Direction.UPRIGHT);
+            lesdirections.add(Direction.DOWNRIGHT);
+            lesdirections.add(Direction.DOWNLEFT);
+            break;
       }
       return lesdirections;
 
