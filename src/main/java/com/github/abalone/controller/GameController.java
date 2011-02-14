@@ -358,37 +358,28 @@ public class GameController {
             Integer colModifier = 0;
             if (areALine(sub1)) {
                if (!c3.getRow().equals(0)) {
-                  if (c1.getRow().equals(0)) {
-                     if (!c2.getRow().equals(0)) {
-                        if (c2.getRow() == -c3.getRow()) {
-                           colModifier = -1;
-                        }
-                     }
-                  } else if (c2.getRow().equals(0)) {
-                     if (c1.getRow() == -c3.getRow()) {
-                        colModifier = -1;
-                     }
+                  if ((c1.getRow().equals(0)
+                          && !c2.getRow().equals(0)
+                          && (c2.getRow() == -c3.getRow()))
+                          || (c2.getRow().equals(0)
+                          && (c1.getRow() == -c3.getRow()))) {
+                     colModifier = -1;
                   }
                }
                return ((c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol() + colModifier))
                        || (c3.getRow().equals(2 * c1.getRow() - c2.getRow()) && c3.getCol().equals(2 * c1.getCol() - c2.getCol() + colModifier)));
             } else if (areALine(sub2)) {
                if (!c2.getRow().equals(0)) {
-                  if (c1.getRow().equals(0)) {
-                     if (!c3.getRow().equals(0)) {
-                        if (c2.getRow() == -c3.getRow()) {
-                           colModifier = -1;
-                        }
-                     }
-                  } else if (c3.getRow().equals(0)) {
-                     if (c2.getRow() == -c1.getRow()) {
-                        colModifier = -1;
-                     }
+                  if ((c1.getRow().equals(0)
+                          && !c3.getRow().equals(0)
+                          && (c2.getRow() == -c3.getRow()))
+                          || (c3.getRow().equals(0)
+                          && (c2.getRow() == -c1.getRow()))) {
+                     colModifier = -1;
                   }
                }
                return ((c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol() + colModifier))
                        || (c2.getRow().equals(2 * c1.getRow() - c3.getRow()) && c2.getCol().equals(2 * c1.getCol() - c3.getCol() + colModifier)));
-
             }
       }
       return Boolean.FALSE;
