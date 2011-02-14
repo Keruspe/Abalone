@@ -6,7 +6,6 @@ import java.awt.LayoutManager;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
-import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -20,7 +19,7 @@ public class Window extends JFrame {
     private final Board board;
     private final GameController controller;
     
-    public Window()
+    public Window() throws Exception
     {
         super("Abalone");
 
@@ -28,17 +27,21 @@ public class Window extends JFrame {
         this.controller.setWindow(this);
 
         this.setSize(800, 600);
-        
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+
+        String[] lookAndFeels = {
+            "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
+            "com.sun.java.swing.plaf.motif.MotifLookAndFeel",
+            "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel",
+            "javax.swing.plaf.metal.MetalLookAndFeel"
+        };
+
+        integrate: {
+        for ( String name: lookAndFeels )
+        {
+            if ( this.checkLookAndFeel(name) )
+                break integrate;
+        }
+        throw new Exception("No LookAndFeel");
         }
         
         LayoutManager layout = new BorderLayout();
@@ -51,6 +54,23 @@ public class Window extends JFrame {
         this.add(this.board);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    }
+
+    private Boolean checkLookAndFeel(String name)
+    {
+        try {
+            UIManager.setLookAndFeel(name);
+            return true;
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Window.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     public void updateBoard()
