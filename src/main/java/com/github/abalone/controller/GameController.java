@@ -9,9 +9,18 @@ import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
 import com.github.abalone.util.Move;
 import com.github.abalone.view.Window;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -43,17 +52,45 @@ public class GameController
     /// Save the game
     public void save()
     {
-        /*
-         * TODO: serialize the save to the file
-         */
+        FileOutputStream fos = null;
+        ObjectOutputStream oos = null;
+      try {
+         File f = new File("abalone.save");
+         fos = new FileOutputStream(f);
+         oos = new ObjectOutputStream(fos);
+         oos.writeObject(this.game);
+      } catch (Exception ex) {
+         Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+         try {
+            fos.close();
+            oos.close();
+         } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      }
     }
 
     /// Load the saved game
     public void load()
     {
-        /*
-         * TODO: deserialize form the file
-         */
+         FileInputStream fis = null;
+        ObjectInputStream ois = null;
+      try {
+         File f = new File("abalone.save");
+         fis = new FileInputStream(f);
+         ois = new ObjectInputStream(fis);
+         this.game = (Game) ois.readObject();
+      } catch (Exception ex) {
+         Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+      } finally {
+         try {
+            fis.close();
+            ois.close();
+         } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+         }
+      }
         this.window.updateBoard();
     }
 
