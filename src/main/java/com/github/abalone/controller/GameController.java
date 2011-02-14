@@ -7,6 +7,7 @@ import com.github.abalone.elements.Typelignepl;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
+import com.github.abalone.util.Move;
 import com.github.abalone.view.Window;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -289,8 +290,10 @@ public class GameController
           selectedBalls.add(this.game.getBoard().getBallAt(c));
        }
        Set<Ball> ballsTomove = coupValid2(selectedBalls, direction, this.game.getTurnAndGoNext());
-       if(!ballsTomove.isEmpty()){
-           this.game.getBoard().move(ballsTomove, direction);
+       if(!ballsTomove.isEmpty()) {
+           Move move = new Move(ballsTomove);
+           move.setFinalState(this.game.getBoard().move(ballsTomove, direction));
+           this.game.addToHistory(move);
        }
    }
 

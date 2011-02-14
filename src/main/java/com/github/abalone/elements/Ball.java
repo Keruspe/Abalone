@@ -23,6 +23,11 @@ public class Ball implements Serializable {
       this.coords = coords;
    }
 
+   public Ball(Ball b) {
+      this.color = b.color;
+      this.coords = new Coords(b.coords);
+   }
+
    public Color getColor() {
       return this.color;
    }
