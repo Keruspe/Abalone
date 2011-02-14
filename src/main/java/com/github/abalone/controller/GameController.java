@@ -247,11 +247,11 @@ public class GameController {
                   } else {
                      Color nextColor3 = this.game.getBoard().getBallAt(next2, direction).getColor();
                      if (nextColor3 == Color.NONE || nextColor3 == Color.INVALID) {
-                     result.add(b1);
-                     result.add(b2);
-                     result.add(b3);
-                     result.add(next1);
-                     result.add(next2);
+                        result.add(b1);
+                        result.add(b2);
+                        result.add(b3);
+                        result.add(next1);
+                        result.add(next2);
                      }
                   }
                }
@@ -356,9 +356,11 @@ public class GameController {
             sub2.add(c1);
             sub2.add(c3);
             if (areALine(sub1)) {
-               return (c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol()));
+               return ((c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol()))
+                       || (c3.getRow().equals(2 * c1.getRow() - c2.getRow()) && c3.getCol().equals(2 * c1.getCol() - c2.getCol())));
             } else if (areALine(sub2)) {
-               return (c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol()));
+               return ((c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol()))
+                       || (c2.getRow().equals(2 * c1.getRow() - c3.getRow()) && c2.getCol().equals(2 * c1.getCol() - c3.getCol())));
             }
       }
       return Boolean.FALSE;
