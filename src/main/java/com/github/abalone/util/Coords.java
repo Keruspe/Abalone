@@ -77,12 +77,12 @@ public class Coords implements Serializable, Comparable<Coords> {
             ++arrivee.col;
             break;
          case DOWNLEFT:
-            if (++arrivee.row > -1) {
+            if (++arrivee.row > 0) {
                --arrivee.col;
             }
             break;
          case DOWNRIGHT:
-            if (++arrivee.row < 0) {
+            if (++arrivee.row < 1) {
                ++arrivee.col;
             }
             break;
@@ -95,8 +95,10 @@ public class Coords implements Serializable, Comparable<Coords> {
          return Typelignepl.DIAGONAL2;
       } else if (this.moveTo(Direction.UPRIGHT).equals(c) || c.equals(this.moveTo(Direction.DOWNLEFT))) {
          return Typelignepl.DIAGONAL1;
-      } else {
+      } else if (this.moveTo(Direction.RIGHT).equals(c) || c.equals(this.moveTo(Direction.LEFT))) {
          return Typelignepl.HORIZONTAL;
+      } else {
+         return Typelignepl.NONADJACENT;
       }
    }
 

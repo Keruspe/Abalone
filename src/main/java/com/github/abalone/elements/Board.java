@@ -81,12 +81,12 @@ public class Board implements Serializable {
             ++col;
             break;
          case DOWNLEFT:
-            if (++row > -1) {
+            if (++row > 0) {
                --col;
             }
             break;
          case DOWNRIGHT:
-            if (++row < 0) {
+            if (++row < 1) {
                ++col;
             }
             break;
@@ -149,7 +149,9 @@ public class Board implements Serializable {
       this.balls.removeAll(selectedBalls);
       for (Ball b : selectedBalls) {
          b.move(direction);
-         this.balls.add(b);
+         if (this.elementAt(b.getCoords()) != Color.INVALID) {
+            this.balls.add(b);
+         }
       }
       return selectedBalls;
    }
