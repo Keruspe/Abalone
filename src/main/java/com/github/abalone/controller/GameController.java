@@ -323,9 +323,6 @@ public class GameController {
             Set<Coords> sub2 = new HashSet<Coords>();
             sub2.add(c1);
             sub2.add(c3);
-            Set<Coords> sub3 = new HashSet<Coords>();
-            sub3.add(c2);
-            sub3.add(c3);
             if (areALine(sub1)) {
                if (c1.compareTo(c2) < 0) {
                   return (c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol()));
@@ -337,12 +334,6 @@ public class GameController {
                   return (c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol()));
                } else {
                   return (c2.getRow().equals(2 * c1.getRow() - c3.getRow()) && c2.getCol().equals(2 * c1.getCol() - c3.getCol()));
-               }
-            } else if (areALine(sub3)) {
-               if (c2.compareTo(c3) < 0) {
-                  return (c1.getRow().equals(2 * c3.getRow() - c2.getRow()) && c2.getCol().equals(2 * c3.getCol() - c2.getCol()));
-               } else {
-                  return (c1.getRow().equals(2 * c2.getRow() - c3.getRow()) && c2.getCol().equals(2 * c2.getCol() - c3.getCol()));
                }
             }
       }
