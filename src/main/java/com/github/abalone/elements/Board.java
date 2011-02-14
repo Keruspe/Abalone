@@ -81,13 +81,13 @@ public class Board implements Serializable {
             ++col;
             break;
          case DOWNLEFT:
-            if (++row < 0) {
-               ++col;
+            if (++row > -1) {
+               --col;
             }
             break;
          case DOWNRIGHT:
-            if (++row > -1) {
-               --col;
+            if (++row < 0) {
+               ++col;
             }
             break;
       }
