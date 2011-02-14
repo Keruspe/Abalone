@@ -246,9 +246,32 @@ public class GameController {
       return validMove2(selectedBalls, direction, current);
    }
 
-   public Boolean validMove(Set<Coords> selectedBallsCoords, Direction direction) {
+   private Boolean validMove(Set<Coords> selectedBallsCoords, Direction direction) {
       Set<Ball> balls = validMove(selectedBallsCoords, direction, this.game.getTurn());
       return (!balls.isEmpty());
+   }
+
+   public Set<Direction> validDirections(Set<Coords> selectedBallsCoords) {
+      Set<Direction> answer = new HashSet<Direction>();
+      if (validMove(selectedBallsCoords, Direction.UPLEFT)) {
+         answer.add(Direction.UPLEFT);
+      }
+      if (validMove(selectedBallsCoords, Direction.UPRIGHT)) {
+         answer.add(Direction.UPRIGHT);
+      }
+      if (validMove(selectedBallsCoords, Direction.LEFT)) {
+         answer.add(Direction.LEFT);
+      }
+      if (validMove(selectedBallsCoords, Direction.RIGHT)) {
+         answer.add(Direction.RIGHT);
+      }
+      if (validMove(selectedBallsCoords, Direction.DOWNLEFT)) {
+         answer.add(Direction.DOWNLEFT);
+      }
+      if (validMove(selectedBallsCoords, Direction.DOWNRIGHT)) {
+         answer.add(Direction.DOWNRIGHT);
+      }
+      return answer;
    }
 
    public Boolean move(Set<Coords> selectedBallsCoords, Direction direction) {
