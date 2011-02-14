@@ -61,12 +61,12 @@ public class Coords implements Serializable, Comparable<Coords> {
 
       switch (direction) {
          case UPLEFT:
-            if (arrivee.row++ < 1) {
+            if (--arrivee.row < 0) {
                --arrivee.col;
             }
             break;
          case UPRIGHT:
-            if (arrivee.row++ > 0) {
+            if (--arrivee.row > -1) {
                ++arrivee.col;
             }
             break;
@@ -77,13 +77,13 @@ public class Coords implements Serializable, Comparable<Coords> {
             ++arrivee.col;
             break;
          case DOWNLEFT:
-            if (arrivee.row-- < 1) {
-               --arrivee.col;
+            if (++arrivee.row < 0) {
+               ++arrivee.col;
             }
             break;
          case DOWNRIGHT:
-            if (arrivee.row++ > 0) {
-               ++arrivee.col;
+            if (++arrivee.row > -1) {
+               --arrivee.col;
             }
             break;
       }

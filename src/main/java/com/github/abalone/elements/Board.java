@@ -65,12 +65,12 @@ public class Board implements Serializable {
       Integer col = ball.getCoords().getCol();
       switch (direction) {
          case UPLEFT:
-            if (row++ < 1) {
+            if (--row < 0) {
                --col;
             }
             break;
          case UPRIGHT:
-            if (row++ > 0) {
+            if (--row > -1) {
                ++col;
             }
             break;
@@ -81,13 +81,13 @@ public class Board implements Serializable {
             ++col;
             break;
          case DOWNLEFT:
-            if (row-- < 1) {
-               --col;
+            if (++row < 0) {
+               ++col;
             }
             break;
          case DOWNRIGHT:
-            if (row++ > 0) {
-               ++col;
+            if (++row > -1) {
+               --col;
             }
             break;
       }
