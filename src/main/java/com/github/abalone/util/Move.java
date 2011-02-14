@@ -11,6 +11,7 @@ import java.util.Set;
 public class Move {
 
    private Set<Ball> initialBalls;
+
    private Set<Ball> finalBalls;
 
    public Move(Set<Ball> initialBalls) {
@@ -26,5 +27,4 @@ public class Move {
          this.finalBalls.add(new Ball(b));
       }
    }
-
 }

@@ -3,7 +3,7 @@ package com.github.abalone.controller;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.elements.Board;
 import com.github.abalone.elements.Game;
-import com.github.abalone.elements.Typelignepl;
+import com.github.abalone.util.Typelignepl;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
@@ -11,7 +11,6 @@ import com.github.abalone.util.Move;
 import com.github.abalone.view.Window;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -24,6 +23,7 @@ import java.util.logging.Logger;
 
 /**
  *
+ * @author keruspe
  * @author sardemff7
  */
 public class GameController {

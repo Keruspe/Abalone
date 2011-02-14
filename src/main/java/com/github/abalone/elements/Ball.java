@@ -10,7 +10,9 @@ import java.io.Serializable;
  * @author keruspe
  */
 public class Ball implements Serializable {
+
    private Color color;
+
    private Coords coords;
 
    public Ball(Color color, Integer row, Integer col) {
@@ -65,10 +67,10 @@ public class Ball implements Serializable {
       }
       return true;
    }
-   
-public void move(Direction direction){
-       coords=coords.moveTo(direction);
-    }
+
+   public void move(Direction direction) {
+      coords = coords.moveTo(direction);
+   }
 
    @Override
    public int hashCode() {
@@ -77,5 +79,4 @@ public void move(Direction direction){
       hash = 43 * hash + (this.coords != null ? this.coords.hashCode() : 0);
       return hash;
    }
-   
 }

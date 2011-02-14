@@ -6,11 +6,11 @@ import java.io.Serializable;
  *
  * @author keruspe
  */
-
 /**
  * The color of a Ball
  */
 public enum Color implements Serializable {
+
    /** A while Ball */
    WHITE,
    /** A black Ball */
@@ -19,4 +19,5 @@ public enum Color implements Serializable {
    NONE,
    /** Out of the Board */
    INVALID;
+
 }
