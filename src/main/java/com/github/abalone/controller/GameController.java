@@ -321,11 +321,11 @@ public class GameController {
             sub1.add(c1);
             sub1.add(c2);
             Set<Coords> sub2 = new HashSet<Coords>();
-            sub1.add(c1);
-            sub1.add(c3);
+            sub2.add(c1);
+            sub2.add(c3);
             Set<Coords> sub3 = new HashSet<Coords>();
-            sub1.add(c2);
-            sub1.add(c3);
+            sub3.add(c2);
+            sub3.add(c3);
             if (areALine(sub1)) {
                if (c1.compareTo(c2) < 0) {
                   return (c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol()));
