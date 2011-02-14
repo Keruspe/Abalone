@@ -216,10 +216,6 @@ public class GameController {
             b1 = itb.next();
             b2 = itb.next();
             b3 = itb.next();
-            System.out.println("3 balls");
-            System.out.println(b1.getCoords());
-            System.out.println(b2.getCoords());
-            System.out.println(b3.getCoords());
             Typelignepl linepl = b1.getCoords().LignePl(b2.getCoords());
             if (linepl == Typelignepl.NONADJACENT) {
                linepl = b1.getCoords().LignePl(b3.getCoords());
@@ -236,14 +232,12 @@ public class GameController {
             } else {
                Ball closest = closest(selectedBalls, direction);
                Ball next1 = this.game.getBoard().getBallAt(closest, direction);
-               System.out.println("next1: " + next1.getCoords());
                if (next1.getColor() == Color.NONE) {
                   result.add(b1);
                   result.add(b2);
                   result.add(b3);
                } else if (next1.getColor() == this.opponent(selfColor)) {
                   Ball next2 = this.game.getBoard().getBallAt(next1, direction);
-                  System.out.println("next2: " + next2.getCoords());
                   Color nextColor2 = next2.getColor();
                   if (nextColor2 == Color.NONE || nextColor2 == Color.INVALID) {
                      result.add(b1);
@@ -252,7 +246,6 @@ public class GameController {
                      result.add(next1);
                   } else {
                      Color nextColor3 = this.game.getBoard().getBallAt(next2, direction).getColor();
-                     System.out.println("next3: " + this.game.getBoard().getBallAt(next2, direction).getCoords());
                      if (nextColor3 == Color.NONE || nextColor3 == Color.INVALID) {
                      result.add(b1);
                      result.add(b2);
@@ -363,17 +356,9 @@ public class GameController {
             sub2.add(c1);
             sub2.add(c3);
             if (areALine(sub1)) {
-               if (c1.compareTo(c2) < 0) {
-                  return (c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol()));
-               } else {
-                  return (c3.getRow().equals(2 * c1.getRow() - c2.getRow()) && c3.getCol().equals(2 * c1.getCol() - c2.getCol()));
-               }
+               return (c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol()));
             } else if (areALine(sub2)) {
-               if (c1.compareTo(c3) < 0) {
-                  return (c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol()));
-               } else {
-                  return (c2.getRow().equals(2 * c1.getRow() - c3.getRow()) && c2.getCol().equals(2 * c1.getCol() - c3.getCol()));
-               }
+               return (c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol()));
             }
       }
       return Boolean.FALSE;
