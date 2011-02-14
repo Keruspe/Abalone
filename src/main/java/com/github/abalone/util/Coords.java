@@ -6,7 +6,7 @@ import java.io.Serializable;
  *
  * @author keruspe
  */
-public class Coords implements Serializable {
+public class Coords implements Serializable, Comparable<Coords> {
 
    private Integer row;
 
@@ -112,5 +112,10 @@ public class Coords implements Serializable {
     */
    public void setCol(Integer col) {
       this.col = col;
+   }
+
+   @Override
+   public int compareTo(Coords o) {
+      return 10 * this.row - o.row + this.col - o.col;
    }
 }
