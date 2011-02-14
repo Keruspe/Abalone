@@ -1,9 +1,11 @@
 package com.github.abalone.view;
 
 import com.github.abalone.config.Config;
+import com.github.abalone.controller.GameController;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
+import com.github.abalone.util.Direction;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -14,7 +16,6 @@ import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 
 /**
@@ -31,8 +32,9 @@ class Board extends JPanel implements MouseListener
     private Integer origY = 0;
     private HashSet<Coords> selectedBalls;
     private final SVGIcon selection;
+    private final DirectionSelector selector;
 
-    public Board()
+    Board()
     {
         this.selectedBalls = new HashSet();
         
@@ -63,7 +65,8 @@ class Board extends JPanel implements MouseListener
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        this.add(new DirectionSelector());
+        this.selector = new DirectionSelector(this);
+        this.add(this.selector);
         this.addMouseListener(this);
     }
     
@@ -169,6 +172,7 @@ class Board extends JPanel implements MouseListener
         else
             return;
         this.repaint();
+        this.selector.updateButtons(GameController.getInstance().validDirections(this.selectedBalls));
     }
 
     @Override
@@ -189,5 +193,10 @@ class Board extends JPanel implements MouseListener
     @Override
     public void mouseExited(MouseEvent me)
     {
+    }
+
+    void move(Direction direction)
+    {
+        GameController.getInstance().move(this.selectedBalls, direction);
     }
 }
