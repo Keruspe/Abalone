@@ -237,13 +237,18 @@ public class GameController {
    private Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
       Set<Ball> selectedBalls = new HashSet<Ball>();
       for (Coords c : selectedBallsCoords) {
-         selectedBalls.add(this.game.getBoard().getBallAt(c));
+         Ball b = this.game.getBoard().getBallAt(c);
+         if (b.getColor() != current) {
+            return new HashSet<Ball>();
+         }
+         selectedBalls.add(b);
       }
       return validMove2(selectedBalls, direction, current);
    }
 
-   public Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction) {
-      return validMove(selectedBallsCoords, direction, this.game.getTurn());
+   public Boolean validMove(Set<Coords> selectedBallsCoords, Direction direction) {
+      Set<Ball> balls = validMove(selectedBallsCoords, direction, this.game.getTurn());
+      return (!balls.isEmpty());
    }
 
    public Boolean move(Set<Coords> selectedBallsCoords, Direction direction) {
