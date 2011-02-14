@@ -1,6 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.config.Config;
+import com.github.abalone.controller.GameController;
 import com.github.abalone.util.Direction;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
@@ -19,12 +20,14 @@ class DirectionButton extends JButton implements ActionListener
 {
     private final Direction direction;
     private final SVGIcon icon;
+    private final Board board;
     
-    protected DirectionButton(Direction direction)
+    DirectionButton(Direction direction, Board board)
     {
         super();
         
         this.direction = direction;
+        this.board = board;
 
         Dimension d = new Dimension(30, 30);
 
@@ -47,7 +50,7 @@ class DirectionButton extends JButton implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent ae) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        this.board.move(this.direction);
     }
 
 }
