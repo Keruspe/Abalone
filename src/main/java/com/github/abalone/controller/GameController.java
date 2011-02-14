@@ -110,73 +110,102 @@ public class GameController {
    }
 
    //renvoi la bille la plus proche de la bille adverse ou de la case vide
-   private Ball closer(Set<Ball> selectedBalls, Direction to) {
-      Coords closer = new Coords(10, 10);
+   private Ball closest(Set<Ball> selectedBalls, Direction to) {
+      Coords closest = null;
       switch (to) {
          case DOWNLEFT:
-         case DOWNRIGHT:
+            closest = new Coords(-10, 10);
             for (Ball b : selectedBalls) {
-               if (closer.getRow() > b.getCoords().getRow()) {
-                  closer = new Coords(b.getCoords());
+               if ((closest.getRow() < b.getCoords().getRow())
+                       || (closest.getRow().equals(b.getCoords().getRow())
+                       && closest.getCol() > b.getCoords().getCol())) {
+                  closest = new Coords(b.getCoords());
+               }
+            }
+            break;
+         case DOWNRIGHT:
+            closest = new Coords(-10, -10);
+            for (Ball b : selectedBalls) {
+               if ((closest.getRow() < b.getCoords().getRow())
+                       || (closest.getRow().equals(b.getCoords().getRow())
+                       && closest.getCol() < b.getCoords().getCol())) {
+                  closest = new Coords(b.getCoords());
                }
             }
             break;
          case UPLEFT:
-         case UPRIGHT:
-            closer.setRow(-10);
+            closest = new Coords(10, 10);
             for (Ball b : selectedBalls) {
-               if (closer.getRow() < b.getCoords().getRow()) {
-                  closer = new Coords(b.getCoords());
+               if ((closest.getRow() > b.getCoords().getRow())
+                       || (closest.getRow().equals(b.getCoords().getRow())
+                       && closest.getCol() > b.getCoords().getCol())) {
+                  closest = new Coords(b.getCoords());
+               }
+            }
+            break;
+         case UPRIGHT:
+            closest = new Coords(10, -10);
+            for (Ball b : selectedBalls) {
+               if ((closest.getRow() > b.getCoords().getRow())
+                       || (closest.getRow().equals(b.getCoords().getRow())
+                       && closest.getCol() < b.getCoords().getCol())) {
+                  closest = new Coords(b.getCoords());
                }
             }
             break;
          case LEFT:
+            closest = new Coords(10, 10);
             for (Ball b : selectedBalls) {
-               if (closer.getCol() > b.getCoords().getCol()) {
-                  closer = new Coords(b.getCoords());
+               if (closest.getCol() > b.getCoords().getCol()) {
+                  closest = new Coords(b.getCoords());
                }
             }
             break;
          case RIGHT:
-            closer.setCol(-10);
+            closest = new Coords(10, -10);
             for (Ball b : selectedBalls) {
-               if (closer.getCol() < b.getCoords().getCol()) {
-                  closer = new Coords(b.getCoords());
+               if (closest.getCol() < b.getCoords().getCol()) {
+                  closest = new Coords(b.getCoords());
                }
             }
       }
-      return this.game.getBoard().getBallAt(closer);
+      return this.game.getBoard().getBallAt(closest);
 
    }
 
    private Set<Ball> validMove2(Set<Ball> selectedBalls, Direction direction, Color selfColor) {
-      Iterator itb = selectedBalls.iterator();
+      Iterator<Ball> itb = selectedBalls.iterator();
       Set<Ball> result = new HashSet<Ball>();
+      Ball b1;
+      Ball b2;
+      Ball b3;
       switch (selectedBalls.size()) {
          case 1:
-            Ball b = (Ball) itb.next();
-            System.out.println("1 ball");
-            System.out.println(b.getCoords().getRow() + "x" + b.getCoords().getCol());
-            if (this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b, direction).getCoords()) == Color.NONE) {
-               result.add(b);
+            b1 = itb.next();
+            if (this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords()) == Color.NONE) {
+               result.add(b1);
             }
             break;
          case 2:
-            Ball b1 = (Ball) itb.next();
-            Ball b2 = (Ball) itb.next();
+            b1 = itb.next();
+            b2 = itb.next();
             System.out.println("2 balls");
-            System.out.println(b1.getCoords().getRow() + "x" + b1.getCoords().getCol());
-            System.out.println(b2.getCoords().getRow() + "x" + b2.getCoords().getCol());
             if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
-               Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords());
-               Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b2, direction).getCoords());
-               if (nextColor1 == Color.NONE && nextColor2 == Color.NONE) {
+               System.out.println(direction);
+               Ball next1 = this.game.getBoard().getBallAt(b1, direction);
+               Ball next2 = this.game.getBoard().getBallAt(b2, direction);
+               Color nextColor1 = this.game.getBoard().elementAt(next1.getCoords());
+               Color nextColor2 = this.game.getBoard().elementAt(next2.getCoords());
+               System.out.println(nextColor1 + " " + nextColor2);
+               if ((next1.equals(b2) && (nextColor2 == Color.NONE))
+                       || (next2.equals(b1) && (nextColor1 == Color.NONE))
+                       || (nextColor1 == Color.NONE && nextColor2 == Color.NONE)) {
                   result.add(b1);
                   result.add(b2);
                }
             } else {
-               Ball closer = closer(selectedBalls, direction);
-               Ball next = this.game.getBoard().getBallAt(closer, direction);
+               Ball closest = closest(selectedBalls, direction);
+               Ball next = this.game.getBoard().getBallAt(closest, direction);
                if (this.game.getBoard().elementAt(next.getCoords()) == Color.NONE) {
                   result.add(b1);
                   result.add(b2);
@@ -192,43 +221,43 @@ public class GameController {
             break;
          case 3:
             // billes supposées sur la meme ligne
-            Ball b31 = (Ball) itb.next();
-            Ball b32 = (Ball) itb.next();
-            Ball b33 = (Ball) itb.next();
+            b1 = itb.next();
+            b2 = itb.next();
+            b3 = itb.next();
             System.out.println("3 balls");
-            System.out.println(b31.getCoords().getRow() + "x" + b31.getCoords().getCol());
-            System.out.println(b32.getCoords().getRow() + "x" + b32.getCoords().getCol());
-            System.out.println(b33.getCoords().getRow() + "x" + b33.getCoords().getCol());
-            if (Typelignepl.lesDirectionPerpendiculaire(b31.getCoords().LignePl(b32.getCoords())).contains(direction)) {
-               Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b31, direction).getCoords());
-               Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b32, direction).getCoords());
-               Color nextColor3 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b33, direction).getCoords());
+            System.out.println(b1.getCoords().getRow() + "x" + b1.getCoords().getCol());
+            System.out.println(b2.getCoords().getRow() + "x" + b2.getCoords().getCol());
+            System.out.println(b3.getCoords().getRow() + "x" + b3.getCoords().getCol());
+            if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
+               Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords());
+               Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b2, direction).getCoords());
+               Color nextColor3 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b3, direction).getCoords());
                if (nextColor1 == Color.NONE && nextColor2 == Color.NONE && nextColor3 == Color.NONE) {
-                  result.add(b31);
-                  result.add(b32);
-                  result.add(b33);
+                  result.add(b1);
+                  result.add(b2);
+                  result.add(b3);
                } else {
-                  Ball closer = closer(selectedBalls, direction);
+                  Ball closer = closest(selectedBalls, direction);
                   Ball next1 = this.game.getBoard().getBallAt(closer, direction);
                   Ball next2 = this.game.getBoard().getBallAt(next1, direction);
                   Ball next3 = this.game.getBoard().getBallAt(next2, direction);
                   if (this.game.getBoard().elementAt(next1.getCoords()) == Color.NONE) {
-                     result.add(b31);
-                     result.add(b32);
-                     result.add(b33);
+                     result.add(b1);
+                     result.add(b2);
+                     result.add(b3);
                   } else if (this.game.getBoard().elementAt(next1.getCoords()) == this.opponent(selfColor)) {
                      if (this.game.getBoard().elementAt(next2.getCoords()) == Color.NONE
                              || this.game.getBoard().elementAt(next2.getCoords()) == Color.INVALID) {
-                        result.add(b31);
-                        result.add(b32);
-                        result.add(b33);
+                        result.add(b1);
+                        result.add(b2);
+                        result.add(b3);
                         result.add(next1);
                      } else if (this.game.getBoard().elementAt(next2.getCoords()) == this.opponent(selfColor)) {
                         if (this.game.getBoard().elementAt(next3.getCoords()) == Color.NONE
                                 || this.game.getBoard().elementAt(next3.getCoords()) == Color.INVALID) {
-                           result.add(b31);
-                           result.add(b32);
-                           result.add(b33);
+                           result.add(b1);
+                           result.add(b2);
+                           result.add(b3);
                            result.add(next1);
                            result.add(next2);
                         }
@@ -315,10 +344,11 @@ public class GameController {
                return Boolean.FALSE;
             } else {
                Integer diff;
-               if (c1.getRow() < c2.getRow())
+               if (c1.getRow() < c2.getRow()) {
                   diff = c2.getCol() - c1.getCol();
-               else
+               } else {
                   diff = c1.getCol() - c2.getCol();
+               }
                if (c1.getRow() < 0) {
                   return (diff == 0 || diff == 1);
                } else {
