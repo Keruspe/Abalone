@@ -149,19 +149,65 @@ class Board extends JPanel implements MouseListener
 
     private Coords getCoords(Point point)
     {
-        Double bX = (double)point.x / this.boardScale - (double)this.origX;
-        Double bY = (double)point.y / this.boardScale - (double)this.origY;
+        point.translate(-this.origX, -this.origY);
+        Double bX = (double)point.x / this.boardScale - 185.0;
+        Double bY = (double)point.y / this.boardScale - 750.0;
 
-        Integer r = (int)(( bY - 750.0 ) / 100.0);
-        Integer c = (int)(( bX - 250.0 - Math.abs(r) * 65.0 ) / 130.0) - 2;
+        Integer r, c;
+        if ( ( bY > -50 ) && ( bY < 50 ) )
+            r = 0;
+        else if ( ( bY > -160 ) && ( bY < -60 ) )
+            r = -1;
+        else if ( ( bY > -270 ) && ( bY < -170 ) )
+            r = -2;
+        else if ( ( bY > -380 ) && ( bY < -280 ) )
+            r = -3;
+        else if ( ( bY > -490 ) && ( bY < -390 ) )
+            r = -4;
+        else if ( ( bY > 60 ) && ( bY < 160 ) )
+            r = 1;
+        else if ( ( bY > 170 ) && ( bY < 270 ) )
+            r = 2;
+        else if ( ( bY > 280 ) && ( bY < 380 ) )
+            r = 3;
+        else if ( ( bY > 390 ) && ( bY < 490 ) )
+            r = 4;
+        else
+            return null;
 
-        return new Coords(r, c);
+        bX -= (65.0 * Math.abs(r));
+        
+        if ( ( bX > 0 ) && ( bX < 100 ) )
+            c = 0;
+        else if ( ( bX > 130 ) && ( bX < 230 ) )
+            c = 1;
+        else if ( ( bX > 260 ) && ( bX < 360 ) )
+            c = 2;
+        else if ( ( bX > 390 ) && ( bX < 490 ) )
+            c = 3;
+        else if ( ( bX > 520 ) && ( bX < 620 ) )
+            c = 4;
+        else if ( ( Math.abs(r) < 4 ) && ( bX > 650 ) && ( bX < 750 ) )
+            c = 5;
+        else if ( ( Math.abs(r) < 3 ) && ( bX > 780 ) && ( bX < 880 ) )
+            c = 6;
+        else if ( ( Math.abs(r) < 2 ) && ( bX > 910 ) && ( bX < 1010 ) )
+            c = 7;
+        else if ( ( Math.abs(r) < 1 ) && ( bX > 1040 ) && ( bX < 1140 ) )
+            c = 8;
+        else
+            return null;
+
+        Coords coords = new Coords(r, c);
+        return coords;
     }
 
     @Override
     public void mouseClicked(MouseEvent me)
     {
         Coords coords = this.getCoords(me.getPoint());
+        if ( coords == null )
+            return;
         Color color = com.github.abalone.elements.Board.getInstance().elementAt(coords);
         if ( ( color != Color.WHITE ) && ( color != Color.BLACK ) )
             return;
