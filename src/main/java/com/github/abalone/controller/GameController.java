@@ -220,7 +220,11 @@ public class GameController {
             System.out.println(b1.getCoords());
             System.out.println(b2.getCoords());
             System.out.println(b3.getCoords());
-            if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
+            Typelignepl linepl = b1.getCoords().LignePl(b2.getCoords());
+            if (linepl == Typelignepl.NONADJACENT) {
+               linepl = b1.getCoords().LignePl(b3.getCoords());
+            }
+            if (Typelignepl.lesDirectionPerpendiculaire(linepl).contains(direction)) {
                Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords());
                Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b2, direction).getCoords());
                Color nextColor3 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b3, direction).getCoords());
@@ -256,9 +260,33 @@ public class GameController {
                      }
                   }
                }
+            } else {
+               Ball closest = closest(selectedBalls, direction);
+               Ball next1 = this.game.getBoard().getBallAt(closest, direction);
+               if (this.game.getBoard().elementAt(next1.getCoords()) == Color.NONE) {
+                  result.add(b1);
+                  result.add(b2);
+                  result.add(b3);
+               } else if (this.game.getBoard().elementAt(next1.getCoords()) == this.opponent(selfColor)) {
+                  Ball next2 = this.game.getBoard().getBallAt(next1, direction);
+                  Color nextColor2 = this.game.getBoard().elementAt(next2.getCoords());
+                  if (nextColor2 == Color.NONE || nextColor2 == Color.INVALID) {
+                     result.add(b1);
+                     result.add(b2);
+                     result.add(b3);
+                     result.add(next1);
+                  } else {
+                     Color nextColor3 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(next2, direction).getCoords());
+                     if (nextColor3 == Color.NONE || nextColor3 == Color.INVALID) {
+                     result.add(b1);
+                     result.add(b2);
+                     result.add(b3);
+                     result.add(next1);
+                     result.add(next2);
+                     }
+                  }
+               }
             }
-            break;
-         default:
             break;
       }
       return result;

@@ -10,20 +10,24 @@ public enum Typelignepl {
 
    DIAGONAL1, // => "/"
    DIAGONAL2, //=> "\"
-   HORIZONTAL;      // =>"--"
+   HORIZONTAL, // =>"--"
+   NONADJACENT;
 
    public static ArrayList<Direction> lesDirectionParallèle(Typelignepl t) {
       ArrayList<Direction> lesdirections = new ArrayList<Direction>();
-      if (t == Typelignepl.DIAGONAL1) {
-         lesdirections.add(Direction.UPRIGHT);
-         lesdirections.add(Direction.DOWNLEFT);
-      } else if (t == Typelignepl.DIAGONAL2) {
-         lesdirections.add(Direction.UPLEFT);
-         lesdirections.add(Direction.DOWNRIGHT);
-
-      } else if (t == Typelignepl.HORIZONTAL) {
-         lesdirections.add(Direction.LEFT);
-         lesdirections.add(Direction.RIGHT);
+      switch (t) {
+         case DIAGONAL1:
+            lesdirections.add(Direction.UPRIGHT);
+            lesdirections.add(Direction.DOWNLEFT);
+            break;
+         case DIAGONAL2:
+            lesdirections.add(Direction.UPLEFT);
+            lesdirections.add(Direction.DOWNRIGHT);
+            break;
+         case HORIZONTAL:
+            lesdirections.add(Direction.LEFT);
+            lesdirections.add(Direction.RIGHT);
+            break;
       }
       return lesdirections;
    }
