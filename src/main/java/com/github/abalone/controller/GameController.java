@@ -189,17 +189,10 @@ public class GameController {
          case 2:
             b1 = itb.next();
             b2 = itb.next();
-            System.out.println("2 balls");
             if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
-               System.out.println(direction);
-               Ball next1 = this.game.getBoard().getBallAt(b1, direction);
-               Ball next2 = this.game.getBoard().getBallAt(b2, direction);
-               Color nextColor1 = this.game.getBoard().elementAt(next1.getCoords());
-               Color nextColor2 = this.game.getBoard().elementAt(next2.getCoords());
-               System.out.println(nextColor1 + " " + nextColor2);
-               if ((next1.equals(b2) && (nextColor2 == Color.NONE))
-                       || (next2.equals(b1) && (nextColor1 == Color.NONE))
-                       || (nextColor1 == Color.NONE && nextColor2 == Color.NONE)) {
+               Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords());
+               Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b2, direction).getCoords());
+               if ((nextColor1 == Color.NONE) && (nextColor2 == Color.NONE)) {
                   result.add(b1);
                   result.add(b2);
                }
@@ -220,14 +213,13 @@ public class GameController {
             }
             break;
          case 3:
-            // billes supposées sur la meme ligne
             b1 = itb.next();
             b2 = itb.next();
             b3 = itb.next();
             System.out.println("3 balls");
-            System.out.println(b1.getCoords().getRow() + "x" + b1.getCoords().getCol());
-            System.out.println(b2.getCoords().getRow() + "x" + b2.getCoords().getCol());
-            System.out.println(b3.getCoords().getRow() + "x" + b3.getCoords().getCol());
+            System.out.println(b1.getCoords());
+            System.out.println(b2.getCoords());
+            System.out.println(b3.getCoords());
             if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
                Color nextColor1 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b1, direction).getCoords());
                Color nextColor2 = this.game.getBoard().elementAt(this.game.getBoard().getBallAt(b2, direction).getCoords());
