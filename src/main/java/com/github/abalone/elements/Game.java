@@ -72,4 +72,16 @@ public class Game implements Serializable {
       }
       return this.turn;
    }
+
+   public Color getPreviousTurn() {
+      if (!this.turnsLeft.equals(-1)) {
+         ++this.turnsLeft;
+      }
+      if (this.turnsLeft.equals(0)) {
+         this.turn = Color.NONE;
+      } else {
+         this.turn = (this.turn.equals(Color.BLACK)) ? Color.WHITE : Color.BLACK;
+      }
+      return this.turn;
+   }
 }

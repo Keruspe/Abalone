@@ -3,6 +3,7 @@ package com.github.abalone.elements;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
+import com.github.abalone.util.Move;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
@@ -22,6 +23,11 @@ public class Board implements Serializable {
 
    private void addBall(Ball ball) {
       this.balls.add(ball);
+   }
+
+   public void revert(Move move) {
+      this.balls.removeAll(move.getFinalBalls());
+      this.balls.addAll(move.getInitialBalls());
    }
 
    public Color elementAt(Coords coords) {

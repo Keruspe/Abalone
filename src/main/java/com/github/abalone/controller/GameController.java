@@ -1,6 +1,7 @@
 package com.github.abalone.controller;
 
 import com.github.abalone.ai.AI;
+import com.github.abalone.config.Config;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.elements.Board;
 import com.github.abalone.elements.Game;
@@ -51,7 +52,7 @@ public class GameController {
    public void launch() {
       Board.getInstance().fill(null);
       this.game = new Game(Color.WHITE, -1, -1);
-      AI.init(this.game, Color.BLACK);
+      AI.init(this.game, ((Boolean) Config.get("AI")) ? Color.BLACK : Color.NONE);
       this.window.updateBoard();
    }
 
@@ -335,6 +336,22 @@ public class GameController {
 
    public Move getCurrentBestMove() {
       return currentBestMove;
+   }
+
+   private void doGoBack() {
+      int lastIndex = this.game.getHistory().size()-1;
+      if (lastIndex != -1) {
+         Move move = this.game.getHistory().get(lastIndex);
+         this.game.getHistory().remove(move);
+         this.game.getBoard().revert(move);
+      }
+   }
+
+   public void goBack() {
+      doGoBack();
+      if ((Boolean)Config.get("AI")) {
+         doGoBack();
+      }
    }
 
    public Boolean areALine(Set<Coords> coords) {
