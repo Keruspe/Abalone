@@ -34,7 +34,7 @@ class Board extends JPanel implements MouseListener
     private final SVGIcon selection;
     private final DirectionSelector selector;
 
-    Board()
+    Board(Window window)
     {
         this.selectedBalls = new HashSet();
         
@@ -65,8 +65,7 @@ class Board extends JPanel implements MouseListener
             Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        this.selector = new DirectionSelector(this);
-        this.add(this.selector);
+        this.selector = new DirectionSelector(window, this);
         this.addMouseListener(this);
     }
     

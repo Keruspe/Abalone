@@ -53,7 +53,7 @@ public class Window extends JFrame implements ComponentListener
         this.tools = new Toolbar();
         this.add(this.tools, BorderLayout.PAGE_START);
 
-        this.board = new Board();
+        this.board = new Board(this);
         this.add(this.board);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
