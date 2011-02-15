@@ -39,6 +39,9 @@ public class AI {
       Move bestMove = new Move();
       Set<Ball> balls = this.game.getBoard().getBalls();
       for (Ball b : balls) {
+         if (b.getColor() != current) {
+            continue;
+         }
          Set<Coords> coords = new HashSet<Coords>();
          coords.add(b.getCoords());
          Set<Direction> directions = GameController.getInstance().validDirections(coords);
@@ -47,6 +50,7 @@ public class AI {
             ballsToMove.add(b);
             bestMove.setInitialState(ballsToMove);
             bestMove.setDirection(directions.iterator().next());
+            break;
          }
       }
       if (current == selfColor) {

@@ -325,11 +325,11 @@ public class GameController {
          Move move = new Move(ballsTomove);
          move.setFinalState(this.game.getBoard().move(ballsTomove, direction));
          this.game.addToHistory(move);
-         this.window.repaint();
-      }
-      Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
-      if (!bestMove.isAIMove()) {
-         this.currentBestMove = bestMove;
+         this.window.updateBoard();
+         Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
+         if (!bestMove.isAIMove()) {
+            this.currentBestMove = bestMove;
+         }
       }
       return Boolean.TRUE;
    }
@@ -339,7 +339,7 @@ public class GameController {
    }
 
    private void doGoBack() {
-      int lastIndex = this.game.getHistory().size()-1;
+      int lastIndex = this.game.getHistory().size() - 1;
       if (lastIndex != -1) {
          this.game.getPreviousTurn();
          Move move = this.game.getHistory().get(lastIndex);
@@ -354,7 +354,7 @@ public class GameController {
          return;
       }
       doGoBack();
-      if ((Boolean)Config.get("AI")) {
+      if ((Boolean) Config.get("AI")) {
          doGoBack();
       }
    }
