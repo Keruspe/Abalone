@@ -30,11 +30,15 @@ public class Move implements Serializable {
 
    public Move() {
       this.initialBalls = new HashSet<Ball>();
-      this.isAIMove = true;
+      this.isAIMove = false;
    }
 
    public Boolean isAIMove() {
       return isAIMove;
+   }
+
+   public void setIsAIMove() {
+      this.isAIMove = true;
    }
 
    public void setInitialState(Set<Ball> initialBalls) {

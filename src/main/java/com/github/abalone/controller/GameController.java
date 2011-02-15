@@ -54,6 +54,7 @@ public class GameController {
       Board.getInstance().fill(null);
       this.game = new Game(Color.WHITE, -1, -1);
       AI.init(this.game, ((Boolean) Config.get("AI")) ? Color.BLACK : Color.NONE);
+      this.currentBestMove = AI.getInstance().getBestMove(this.game.getTurn());
       this.window.updateBoard();
    }
 
@@ -91,7 +92,8 @@ public class GameController {
          this.game.setHistory(loadedGame.getHistory());
          this.game.setBoard(Board.getInstance());
          this.game.getBoard().fill(loadedGame);
-         AI.init(this.game, Color.BLACK);
+         AI.init(this.game, ((Boolean) Config.get("AI")) ? Color.BLACK : Color.NONE);
+         this.currentBestMove = AI.getInstance().getBestMove(this.game.getTurn());
          this.window.updateBoard();
       } catch (Exception ex) {
          Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
