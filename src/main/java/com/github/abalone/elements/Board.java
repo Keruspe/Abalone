@@ -119,7 +119,7 @@ public class Board implements Serializable {
             this.addBall(new Ball(Color.BLACK, 2, i));
          }
       } else {
-         this.balls = (HashSet<Ball>) p.getBoard().getBalls();
+         this.balls = p.getBoard().balls;
       }
 
       this.filled = true;
