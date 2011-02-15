@@ -17,7 +17,7 @@ public class Config
     {
         this.conf = new HashMap<String, Value>();
         this.conf.put("theme", new Theme("Theme", "glossy"));
-        this.conf.put("IA", new Value<Boolean>("Human vs. AI", false));
+        this.conf.put("AI", new Value<Boolean>("Human vs. AI", false));
     }
 
     static private HashMap<String, Value> getConf()
