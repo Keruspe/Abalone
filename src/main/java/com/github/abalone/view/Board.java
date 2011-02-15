@@ -48,10 +48,8 @@ class Board extends JPanel implements MouseListener
         this.addMouseListener(this);
     }
     
-    void computeBoardScale(Boolean force)
+    void computeBoardScale()
     {
-        if (( ! force ) && ( this.boardScale > -1 ))
-                return;
         Dimension target = new Dimension(1500, 1500);
         Dimension container = this.getSize();
         Double s = 1.0;
@@ -85,7 +83,6 @@ class Board extends JPanel implements MouseListener
     @Override
     public void paintComponent(Graphics g)
     {
-        this.computeBoardScale(false);
         this.board.paintIcon(this, g, this.origX, this.origY);
         this.paintBalls(g);
     }

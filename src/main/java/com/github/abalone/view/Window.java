@@ -83,7 +83,7 @@ public class Window extends JFrame implements ComponentListener
 
     @Override
     public void componentResized(ComponentEvent ce) {
-        this.board.computeBoardScale(Boolean.TRUE);
+        this.board.computeBoardScale();
     }
 
     @Override
