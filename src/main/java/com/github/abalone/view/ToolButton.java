@@ -65,6 +65,10 @@ class ToolButton extends JButton implements ActionListener
         {
             GameController.getInstance().load();
         }
+        else if(this.type.equals("undo"))
+        {
+            GameController.getInstance().goBack();
+        }
         else if(this.type.equals("preferences"))
         {
             this.frame.setVisible(true);

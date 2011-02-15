@@ -15,7 +15,9 @@ class Toolbar extends JToolBar
         this.add(new ToolButton("save-game"));
 
         this.add(new ToolButton("load-game"));
-        
+
+        this.add(new ToolButton("undo"));
+
         this.add(new ToolButton("preferences"));
         
         this.add(new ToolButton("quit"));
