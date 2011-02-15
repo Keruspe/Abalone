@@ -1,6 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.config.Config;
+import com.github.abalone.config.ValueListener;
 import com.github.abalone.controller.GameController;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.util.Color;
@@ -24,7 +25,7 @@ import javax.swing.JPanel;
  *
  * @author sardemff7
  */
-class Board extends JPanel implements MouseListener
+class Board extends JPanel implements MouseListener, ValueListener
 {
     private SVGIcon board;
     private Double boardScale = -1.0;
@@ -43,7 +44,8 @@ class Board extends JPanel implements MouseListener
 
         this.selectedBalls = new HashSet();
 
-        this.themeUpdate();
+        Config.addValueListener("theme", this);
+        this.themeChange((String)Config.get("theme"));
 
         this.addMouseListener(this);
     }
@@ -239,7 +241,7 @@ class Board extends JPanel implements MouseListener
         }
     }
 
-    void themeUpdate()
+    private void themeChange(String theme)
     {
         this.board = new SVGIcon();
         this.board.setScaleToFit(true);
@@ -255,7 +257,6 @@ class Board extends JPanel implements MouseListener
         this.selection.setAntiAlias(true);
         try
         {
-            String theme = (String) Config.get("theme");
             if ( theme == null )
                 theme = "classic";
             this.board.setSvgURI(getClass().getResource("game/" + theme + "/board.svg").toURI());
@@ -269,5 +270,13 @@ class Board extends JPanel implements MouseListener
         }
 
         this.selector = new DirectionSelector(this.window, this);
+    }
+
+    @Override
+    public void valueUpdated(Object value)
+    {
+        this.themeChange((String)value);
+        this.computeBoardScale();
+        this.repaint();
     }
 }
