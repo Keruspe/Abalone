@@ -61,8 +61,7 @@ public class Game implements Serializable {
       return this.turn;
    }
 
-   public Color getTurnAndGoNext() {
-      Color current = this.turn;
+   public Color getNextTurn() {
       if (!this.turnsLeft.equals(-1)) {
          --this.turnsLeft;
       }
@@ -71,6 +70,6 @@ public class Game implements Serializable {
       } else {
          this.turn = (this.turn.equals(Color.BLACK)) ? Color.WHITE : Color.BLACK;
       }
-      return current;
+      return this.turn;
    }
 }

@@ -1,5 +1,6 @@
 package com.github.abalone.controller;
 
+import com.github.abalone.ai.AI;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.elements.Board;
 import com.github.abalone.elements.Game;
@@ -34,6 +35,8 @@ public class GameController {
 
    private Game game;
 
+   private Move currentBestMove;
+
    private GameController() {
    }
 
@@ -48,6 +51,7 @@ public class GameController {
    public void launch() {
       Board.getInstance().fill(null);
       this.game = new Game(Color.WHITE, -1, -1);
+      AI.init(this.game, Color.BLACK);
       this.window.updateBoard();
    }
 
@@ -85,6 +89,7 @@ public class GameController {
          this.game.setHistory(loadedGame.getHistory());
          this.game.setBoard(Board.getInstance());
          this.game.getBoard().fill(loadedGame);
+         AI.init(this.game, Color.BLACK);
          this.window.updateBoard();
       } catch (Exception ex) {
          Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -310,7 +315,7 @@ public class GameController {
    }
 
    public Boolean move(Set<Coords> selectedBallsCoords, Direction direction) {
-      Color current = this.game.getTurnAndGoNext();
+      Color current = this.game.getTurn();
       if (current == Color.NONE) {
          return Boolean.FALSE;
       }
@@ -321,7 +326,15 @@ public class GameController {
          this.game.addToHistory(move);
          this.window.repaint();
       }
+      Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
+      if (!bestMove.isAIMove()) {
+         this.currentBestMove = bestMove;
+      }
       return Boolean.TRUE;
+   }
+
+   public Move getCurrentBestMove() {
+      return currentBestMove;
    }
 
    public Boolean areALine(Set<Coords> coords) {
