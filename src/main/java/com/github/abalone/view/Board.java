@@ -208,7 +208,7 @@ class Board extends JPanel implements MouseListener
         if ( coords == null )
             return;
         Color color = com.github.abalone.elements.Board.getInstance().elementAt(coords);
-        if ( ( color != Color.WHITE ) && ( color != Color.BLACK ) )
+        if ( !color.isPlayer() )
             return;
         else if(this.selectedBalls.contains(coords))
             this.selectedBalls.remove(coords);
