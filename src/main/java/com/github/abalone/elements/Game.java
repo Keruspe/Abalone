@@ -84,4 +84,8 @@ public class Game implements Serializable {
       }
       return this.turn;
    }
+
+   public Boolean over() {
+      return (this.getBoard().loose(Color.WHITE) || this.getBoard().loose(Color.BLACK));
+   }
 }

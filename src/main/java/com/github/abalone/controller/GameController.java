@@ -9,6 +9,7 @@ import com.github.abalone.util.Typelignepl;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
+import com.github.abalone.util.GameState;
 import com.github.abalone.util.Move;
 import com.github.abalone.view.Window;
 import java.io.File;
@@ -315,10 +316,12 @@ public class GameController {
       return answer;
    }
 
-   public Boolean move(Set<Coords> selectedBallsCoords, Direction direction) {
+   public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
       Color current = this.game.getTurn();
       if (current == Color.NONE) {
-         return Boolean.FALSE;
+         return GameState.OUTOFTURNS;
+      } else if(this.game.over()) {
+         return GameState.WON;
       }
       Set<Ball> ballsTomove = validMove(selectedBallsCoords, direction, current);
       if (!ballsTomove.isEmpty()) {
@@ -331,7 +334,7 @@ public class GameController {
             this.currentBestMove = bestMove;
          }
       }
-      return Boolean.TRUE;
+      return GameState.RUNNING;
    }
 
    public Move getCurrentBestMove() {

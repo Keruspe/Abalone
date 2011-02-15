@@ -163,4 +163,30 @@ public class Board implements Serializable {
       }
       return selectedBalls;
    }
+
+   public Integer ballsCount(Color color) {
+      Integer count = 0;
+      for (Ball b : balls) {
+         if (b.getColor() == color) {
+            ++count;
+         }
+      }
+      return count;
+   }
+
+   public Color dominant() {
+      Integer white = ballsCount(Color.WHITE);
+      Integer black = ballsCount(Color.BLACK);
+      if (white > black) {
+         return Color.WHITE;
+      } else if (black > white) {
+         return Color.BLACK;
+      } else {
+         return Color.NONE;
+      }
+   }
+
+   public Boolean loose(Color color) {
+      return (ballsCount(color) < 9);
+   }
 }
