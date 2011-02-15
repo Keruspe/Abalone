@@ -54,6 +54,7 @@ public class AI {
          }
       }
       if (current == selfColor) {
+         bestMove.setIsAIMove();
          Set<Coords> coords = new HashSet<Coords>();
          for (Ball b : bestMove.getInitialBalls()) {
             if (b.getColor() == current) {
