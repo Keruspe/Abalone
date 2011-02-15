@@ -74,7 +74,7 @@ class Board extends JPanel implements MouseListener
     {
         if (( ! force ) && ( this.boardScale > -1 ))
                 return;
-        Dimension target = new Dimension(this.board.getIconWidth(), this.board.getIconHeight());
+        Dimension target = new Dimension(1500, 1500);
         Dimension container = this.getSize();
         Double s = 1.0;
         if ( ( target.width <= container.width ) && ( target.height <= container.height ) )
