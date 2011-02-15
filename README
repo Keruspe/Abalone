@@ -1,2 +1,4 @@
 Student project for the University of Sciences - Nantes, France
 
+To get a working JAR file:
+mvn package
