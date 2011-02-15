@@ -10,6 +10,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
 
 /**
@@ -21,12 +22,12 @@ class ToolButton extends JButton implements ActionListener
     private final String type;
     private final SVGIcon icon;
     private JFrame frame = null;
-    private Board board = null;
+    private JComponent component = null;
 
-    public ToolButton(String type, Board board)
+    public ToolButton(String type, JComponent component)
     {
         this(type);
-        this.board = board;
+        this.component = component;
     }
     
     public ToolButton(String type)
@@ -64,6 +65,7 @@ class ToolButton extends JButton implements ActionListener
         if ( this.type.equals("new-game") )
         {
             GameController.getInstance().launch();
+            ((Toolbar)this.component).gameLaunched();
         }
         else if(this.type.equals("save-game"))
         {
@@ -71,13 +73,14 @@ class ToolButton extends JButton implements ActionListener
         }
         else if(this.type.equals("load-game"))
         {
-            GameController.getInstance().load();
+            if ( GameController.getInstance().load() )
+                ((Toolbar)this.component).gameLaunched();
         }
         else if(this.type.equals("best-move"))
         {
             Move move = GameController.getInstance().getCurrentBestMove();
             System.out.println(move);
-            this.board.setMove(move);
+            ((Board)this.component).setMove(move);
         }
         else if(this.type.equals("undo"))
         {

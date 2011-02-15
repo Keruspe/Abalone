@@ -8,20 +8,43 @@ import javax.swing.JToolBar;
  */
 class Toolbar extends JToolBar
 {
+    private final ToolButton newGame;
+    private final ToolButton saveGame;
+    private final ToolButton loadGame;
+    private final ToolButton bestMove;
+    private final ToolButton undo;
+
     public Toolbar(Board board)
     {
-        this.add(new ToolButton("new-game"));
+        this.newGame = new ToolButton("new-game", this);
+        this.add(this.newGame);
 
-        this.add(new ToolButton("save-game"));
+        this.saveGame = new ToolButton("save-game");
+        this.saveGame.setEnabled(false);
+        this.add(this.saveGame);
 
-        this.add(new ToolButton("load-game"));
+        this.loadGame = new ToolButton("load-game", this);
+        this.add(this.loadGame);
 
-        this.add(new ToolButton("best-move", board));
+        this.bestMove = new ToolButton("best-move", board);
+        this.bestMove.setEnabled(false);
+        this.add(this.bestMove);
 
-        this.add(new ToolButton("undo"));
+        this.undo = new ToolButton("undo");
+        this.undo.setEnabled(false);
+        this.add(this.undo);
 
         this.add(new ToolButton("preferences"));
         
         this.add(new ToolButton("quit"));
+    }
+
+    void gameLaunched()
+    {
+        this.newGame.setEnabled(false);
+        this.saveGame.setEnabled(true);
+        this.loadGame.setEnabled(false);
+        this.bestMove.setEnabled(true);
+        this.undo.setEnabled(true);
     }
 }
