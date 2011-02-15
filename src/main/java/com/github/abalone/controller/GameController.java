@@ -341,13 +341,18 @@ public class GameController {
    private void doGoBack() {
       int lastIndex = this.game.getHistory().size()-1;
       if (lastIndex != -1) {
+         this.game.getPreviousTurn();
          Move move = this.game.getHistory().get(lastIndex);
          this.game.getHistory().remove(move);
          this.game.getBoard().revert(move);
+         this.window.updateBoard();
       }
    }
 
    public void goBack() {
+      if (this.game == null) {
+         return;
+      }
       doGoBack();
       if ((Boolean)Config.get("AI")) {
          doGoBack();
