@@ -60,7 +60,7 @@ public class AI {
                coords.add(b.getCoords());
             }
          }
-         GameController.getInstance().move(coords, bestMove.getDirection());
+         GameController.getInstance().move(coords, bestMove.getDirection(), Boolean.TRUE);
       }
       return bestMove;
    }

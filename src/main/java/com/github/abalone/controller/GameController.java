@@ -316,12 +316,14 @@ public class GameController {
       return answer;
    }
 
-   public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
+   public GameState move(Set<Coords> selectedBallsCoords, Direction direction, Boolean AITurn) {
       Color current = this.game.getTurn();
       if (current == Color.NONE) {
          return GameState.OUTOFTURNS;
       } else if(this.game.over()) {
          return GameState.WON;
+      } else if ((current == Color.BLACK) && !AITurn) {
+         return GameState.RUNNING;
       }
       Set<Ball> ballsTomove = validMove(selectedBallsCoords, direction, current);
       if (!ballsTomove.isEmpty()) {
@@ -335,6 +337,10 @@ public class GameController {
          }
       }
       return GameState.RUNNING;
+   }
+
+   public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
+      return move(selectedBallsCoords, direction, Boolean.FALSE);
    }
 
    public Move getCurrentBestMove() {
