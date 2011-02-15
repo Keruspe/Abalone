@@ -1,6 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.controller.GameController;
+import com.github.abalone.util.Move;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -20,7 +21,14 @@ class ToolButton extends JButton implements ActionListener
     private final String type;
     private final SVGIcon icon;
     private JFrame frame = null;
+    private Board board = null;
 
+    public ToolButton(String type, Board board)
+    {
+        this(type);
+        this.board = board;
+    }
+    
     public ToolButton(String type)
     {
         super();
@@ -64,6 +72,12 @@ class ToolButton extends JButton implements ActionListener
         else if(this.type.equals("load-game"))
         {
             GameController.getInstance().load();
+        }
+        else if(this.type.equals("best-move"))
+        {
+            Move move = GameController.getInstance().getCurrentBestMove();
+            System.out.println(move);
+            this.board.setMove(move);
         }
         else if(this.type.equals("undo"))
         {

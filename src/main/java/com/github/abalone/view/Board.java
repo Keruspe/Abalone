@@ -7,6 +7,7 @@ import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
 import com.github.abalone.util.GameState;
+import com.github.abalone.util.Move;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -216,6 +217,19 @@ class Board extends JPanel implements MouseListener
     @Override
     public void mouseExited(MouseEvent me)
     {
+    }
+
+    void setMove(Move move)
+    {
+        HashSet<Direction> d = new HashSet<Direction>();
+        d.add(move.getDirection());
+        this.selectedBalls.clear();
+        for ( Ball b : move.getInitialBalls() )
+        {
+            Coords c = b.getCoords();
+            this.selectedBalls.add(c);
+        }
+        this.selector.updateButtons(d);
     }
 
     void move(Direction direction)

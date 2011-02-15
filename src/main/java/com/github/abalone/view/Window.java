@@ -18,7 +18,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Window extends JFrame implements ComponentListener
 {
     
-    private final Toolbar tools;
+    private final Toolbar toolbar;
     private final Board board;
     
     public Window() throws Exception
@@ -48,10 +48,10 @@ public class Window extends JFrame implements ComponentListener
         LayoutManager layout = new BorderLayout();
         this.setLayout(layout);
 
-        this.tools = new Toolbar();
-        this.add(this.tools, BorderLayout.PAGE_START);
-
         this.board = new Board(this);
+        this.toolbar = new Toolbar(this.board);
+
+        this.add(this.toolbar, BorderLayout.PAGE_START);
         this.add(this.board);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);

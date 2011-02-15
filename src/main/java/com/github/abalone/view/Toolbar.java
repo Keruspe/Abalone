@@ -8,13 +8,15 @@ import javax.swing.JToolBar;
  */
 class Toolbar extends JToolBar
 {
-    public Toolbar()
+    public Toolbar(Board board)
     {
         this.add(new ToolButton("new-game"));
 
         this.add(new ToolButton("save-game"));
 
         this.add(new ToolButton("load-game"));
+
+        this.add(new ToolButton("best-move", board));
 
         this.add(new ToolButton("undo"));
 
