@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  *
  * @author sardemff7
  */
-public class DirectionSelector extends JPanel
+class DirectionSelector extends JPanel
 {
     private EnumMap<Direction, DirectionButton> buttons;
 

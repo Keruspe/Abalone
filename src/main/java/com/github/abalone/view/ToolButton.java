@@ -15,7 +15,7 @@ import javax.swing.JFrame;
  *
  * @author sardemff7
  */
-public class ToolButton extends JButton implements ActionListener
+class ToolButton extends JButton implements ActionListener
 {
     private final String type;
     private final SVGIcon icon;
@@ -47,7 +47,7 @@ public class ToolButton extends JButton implements ActionListener
         
         if(this.type.equals("preferences"))
         {
-            this.frame = new ConfigWindow();
+            this.frame = new com.github.abalone.view.config.Window();
         }
     }
 

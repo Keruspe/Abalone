@@ -1,4 +1,4 @@
-package com.github.abalone.view;
+package com.github.abalone.view.config;
 
 import com.github.abalone.config.ConstraintValue;
 import com.github.abalone.config.Value;
@@ -6,20 +6,17 @@ import java.awt.Component;
 import java.util.Map;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
 
 /**
  *
  * @author sardemff7
  */
-class ConfigWindow extends JFrame
+public class Window extends JFrame
 {
     private final Box box;
-    public ConfigWindow()
+    public Window()
     {
         super("Preferences");
 
@@ -34,22 +31,15 @@ class ConfigWindow extends JFrame
             Class cl = value.getType();
             if ( value instanceof ConstraintValue )
             {
-                JComboBox list = new JComboBox();
-                for ( Object option: ((ConstraintValue)value).getList() )
-                {
-                    list.addItem(option);
-                }
-                this.addConf(list, value.description);
+                this.addConf(new ComboBox(value), value.description);
             }
             else if ( cl.equals(Boolean.class) )
             {
-                JCheckBox checkbox = new JCheckBox(value.description, (Boolean)value.get());
-                this.addConf(checkbox, null);
+                this.addConf(new CheckBox(value), null);
             }
             else if ( cl.equals(String.class) )
             {
-                JTextField field = new JTextField((String)value.get());
-                this.addConf(field, value.description);
+                this.addConf(new TextField(value), value.description);
             }
         }
 
