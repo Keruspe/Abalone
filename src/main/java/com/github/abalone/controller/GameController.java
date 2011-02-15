@@ -316,7 +316,7 @@ public class GameController {
       return answer;
    }
 
-   public GameState move(Set<Coords> selectedBallsCoords, Direction direction, Boolean AITurn) {
+   public GameState doMove(Set<Coords> selectedBallsCoords, Direction direction, Boolean AITurn) {
       Color current = this.game.getTurn();
       if (current == Color.NONE) {
          return GameState.OUTOFTURNS;
@@ -340,7 +340,7 @@ public class GameController {
    }
 
    public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
-      return move(selectedBallsCoords, direction, Boolean.FALSE);
+      return doMove(selectedBallsCoords, direction, Boolean.FALSE);
    }
 
    public Move getCurrentBestMove() {
