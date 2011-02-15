@@ -80,7 +80,7 @@ public class GameController {
    }
 
    /// Load the saved game
-   public void load() {
+   public Boolean load() {
       FileInputStream fis = null;
       ObjectInputStream ois = null;
       try {
@@ -97,15 +97,19 @@ public class GameController {
          this.window.updateBoard();
       } catch (Exception ex) {
          Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+         return Boolean.FALSE;
       } finally {
          try {
-            fis.close();
-            ois.close();
+            if ( fis != null )
+               fis.close();
+            if ( ois != null )
+               ois.close();
          } catch (IOException ex) {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
          }
       }
       this.window.updateBoard();
+      return Boolean.TRUE;
    }
 
    /// Quit the game
