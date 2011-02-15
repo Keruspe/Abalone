@@ -354,7 +354,7 @@ public class GameController {
          return;
       }
       doGoBack();
-      if ((Boolean) Config.get("AI")) {
+      if (AI.getInstance().getColor() != Color.NONE) {
          doGoBack();
       }
    }
