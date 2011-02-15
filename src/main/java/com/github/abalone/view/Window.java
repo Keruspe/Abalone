@@ -31,6 +31,7 @@ public class Window extends JFrame implements ComponentListener
 
         String[] lookAndFeels = {
             "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
+	    "com.sun.java.swing.plaf.windows.WindowsLookAndFeel",
             "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel",
             "com.sun.java.swing.plaf.motif.MotifLookAndFeel",
             "javax.swing.plaf.metal.MetalLookAndFeel"
