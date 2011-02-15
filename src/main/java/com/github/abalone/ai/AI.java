@@ -1,7 +1,14 @@
 package com.github.abalone.ai;
 
+import com.github.abalone.controller.GameController;
+import com.github.abalone.elements.Ball;
 import com.github.abalone.elements.Game;
+import com.github.abalone.util.Color;
+import com.github.abalone.util.Coords;
+import com.github.abalone.util.Direction;
 import com.github.abalone.util.Move;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -11,23 +18,39 @@ public class AI {
 
    private static AI instance;
    private Game game;
+   private Color selfColor;
 
-   private AI(Game game) {
+   private AI(Game game, Color selfColor) {
       this.game = game;
+      this.selfColor = selfColor;
    }
 
-   public static AI init(Game game) {
+   public static void init(Game game, Color AIColor) {
       if (AI.instance == null)
-         AI.instance = new AI(game);
-      return AI.instance;
+         AI.instance = new AI(game, AIColor);
+      AI.instance.getBestMove(Color.WHITE);
    }
 
    public static AI getInstance() {
       return AI.instance;
    }
 
-   public Move getBestMove() {
-      return null;
+   public Move getBestMove(Color current) {
+      Move bestMove = new Move();
+      if (current == selfColor) {
+         Set<Coords> coords = new HashSet<Coords>();
+         for (Ball b : bestMove.getInitialBalls()) {
+            if (b.getColor() == current) {
+               coords.add(b.getCoords());
+            }
+         }
+         GameController.getInstance().move(coords, bestMove.getDirection());
+      }
+      return bestMove;
+   }
+
+   public Color getColor() {
+      return selfColor;
    }
 
 }
