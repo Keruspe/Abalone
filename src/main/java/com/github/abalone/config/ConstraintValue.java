@@ -28,6 +28,6 @@ public abstract class ConstraintValue<T> extends Value<T>
     {
         this.initConstraint();
         if ( this.check(value) )
-            this.value = value;
+            super.set(value);
     }
 }
