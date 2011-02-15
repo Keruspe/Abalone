@@ -80,7 +80,12 @@ public class GameController {
          File f = new File("abalone.save");
          fis = new FileInputStream(f);
          ois = new ObjectInputStream(fis);
-         this.game = (Game) ois.readObject();
+         Game loadedGame = (Game) ois.readObject();
+         this.game = new Game(loadedGame.getTurn(), loadedGame.getTimeLeft(), loadedGame.getTurnsLeft());
+         this.game.setHistory(loadedGame.getHistory());
+         this.game.setBoard(Board.getInstance());
+         this.game.getBoard().fill(loadedGame);
+         this.window.updateBoard();
       } catch (Exception ex) {
          Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
       } finally {
