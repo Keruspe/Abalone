@@ -24,4 +24,13 @@ public enum Color implements Serializable {
       return (this == Color.WHITE || this == Color.BLACK);
    }
 
+   public Color other() {
+       if ( this == WHITE )
+           return BLACK;
+       else if ( this == BLACK )
+           return WHITE;
+       else
+           return this;
+   }
+
 }

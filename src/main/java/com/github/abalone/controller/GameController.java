@@ -117,16 +117,6 @@ public class GameController {
       System.exit(0);
    }
 
-   private Color opponent(Color self) {
-      Color opponent = Color.NONE;
-      if (self == Color.BLACK) {
-         opponent = Color.WHITE;
-      } else if (self == Color.WHITE) {
-         opponent = Color.BLACK;
-      }
-      return opponent;
-   }
-
    //renvoi la bille la plus proche de la bille adverse ou de la case vide
    private Ball closest(Set<Ball> selectedBalls, Direction to) {
       Coords closest = null;
@@ -220,7 +210,7 @@ public class GameController {
                if (next.getColor() == Color.NONE) {
                   result.add(b1);
                   result.add(b2);
-               } else if (next.getColor() == this.opponent(selfColor)) {
+               } else if (next.getColor() == selfColor.other()) {
                   Color nextColor = this.game.getBoard().getBallAt(next, direction).getColor();
                   if (nextColor == Color.NONE || nextColor == Color.INVALID) {
                      result.add(b1);
@@ -254,7 +244,7 @@ public class GameController {
                   result.add(b1);
                   result.add(b2);
                   result.add(b3);
-               } else if (next1.getColor() == this.opponent(selfColor)) {
+               } else if (next1.getColor() == selfColor.other()) {
                   Ball next2 = this.game.getBoard().getBallAt(next1, direction);
                   Color nextColor2 = next2.getColor();
                   if (nextColor2 == Color.NONE || nextColor2 == Color.INVALID) {
