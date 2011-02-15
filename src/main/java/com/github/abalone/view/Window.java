@@ -20,21 +20,19 @@ public class Window extends JFrame implements ComponentListener
     
     private final Toolbar tools;
     private final Board board;
-    private final GameController controller;
     
     public Window() throws Exception
     {
         super("Abalone");
 
-        this.controller = GameController.getInstance();
-        this.controller.setWindow(this);
+        GameController.getInstance().setWindow(this);
 
         this.setSize(800, 600);
 
         String[] lookAndFeels = {
             "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
-            "com.sun.java.swing.plaf.motif.MotifLookAndFeel",
             "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel",
+            "com.sun.java.swing.plaf.motif.MotifLookAndFeel",
             "javax.swing.plaf.metal.MetalLookAndFeel"
         };
 
