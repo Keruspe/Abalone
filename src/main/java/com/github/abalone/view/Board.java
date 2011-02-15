@@ -6,6 +6,7 @@ import com.github.abalone.elements.Ball;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
+import com.github.abalone.util.GameState;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -24,48 +25,25 @@ import javax.swing.JPanel;
  */
 class Board extends JPanel implements MouseListener
 {
-    private final SVGIcon board;
+    private SVGIcon board;
     private Double boardScale = -1.0;
-    private final SVGIcon whiteBall;
-    private final SVGIcon blackBall;
+    private SVGIcon whiteBall;
+    private SVGIcon blackBall;
     private Integer origX = 0;
     private Integer origY = 0;
     private HashSet<Coords> selectedBalls;
-    private final SVGIcon selection;
-    private final DirectionSelector selector;
+    private SVGIcon selection;
+    private DirectionSelector selector;
+    private final Window window;
 
     Board(Window window)
     {
-        this.selectedBalls = new HashSet();
-        
-        this.board = new SVGIcon();
-        this.board.setScaleToFit(true);
-        this.board.setAntiAlias(true);
-        this.whiteBall = new SVGIcon();
-        this.whiteBall.setScaleToFit(true);
-        this.whiteBall.setAntiAlias(true);
-        this.blackBall = new SVGIcon();
-        this.blackBall.setScaleToFit(true);
-        this.blackBall.setAntiAlias(true);
-        this.selection = new SVGIcon();
-        this.selection.setScaleToFit(true);
-        this.selection.setAntiAlias(true);
-        try
-        {
-            String theme = (String) Config.get("theme");
-            if ( theme == null )
-                theme = "classic";
-            this.board.setSvgURI(getClass().getResource("game/" + theme + "/board.svg").toURI());
-            this.whiteBall.setSvgURI(getClass().getResource("game/" + theme + "/white-ball.svg").toURI());
-            this.blackBall.setSvgURI(getClass().getResource("game/" + theme + "/black-ball.svg").toURI());
-            this.selection.setSvgURI(getClass().getResource("game/" + theme + "/selection.svg").toURI());
-        }
-        catch (URISyntaxException ex)
-        {
-            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.window = window;
 
-        this.selector = new DirectionSelector(window, this);
+        this.selectedBalls = new HashSet();
+
+        this.themeUpdate();
+
         this.addMouseListener(this);
     }
     
@@ -242,10 +220,42 @@ class Board extends JPanel implements MouseListener
 
     void move(Direction direction)
     {
-        if ( GameController.getInstance().move(this.selectedBalls, direction) )
+        if ( GameController.getInstance().move(this.selectedBalls, direction).equals(GameState.RUNNING) )
         {
             this.selectedBalls.clear();
             this.selector.updateButtons(null);
         }
+    }
+
+    void themeUpdate()
+    {
+        this.board = new SVGIcon();
+        this.board.setScaleToFit(true);
+        this.board.setAntiAlias(true);
+        this.whiteBall = new SVGIcon();
+        this.whiteBall.setScaleToFit(true);
+        this.whiteBall.setAntiAlias(true);
+        this.blackBall = new SVGIcon();
+        this.blackBall.setScaleToFit(true);
+        this.blackBall.setAntiAlias(true);
+        this.selection = new SVGIcon();
+        this.selection.setScaleToFit(true);
+        this.selection.setAntiAlias(true);
+        try
+        {
+            String theme = (String) Config.get("theme");
+            if ( theme == null )
+                theme = "classic";
+            this.board.setSvgURI(getClass().getResource("game/" + theme + "/board.svg").toURI());
+            this.whiteBall.setSvgURI(getClass().getResource("game/" + theme + "/white-ball.svg").toURI());
+            this.blackBall.setSvgURI(getClass().getResource("game/" + theme + "/black-ball.svg").toURI());
+            this.selection.setSvgURI(getClass().getResource("game/" + theme + "/selection.svg").toURI());
+        }
+        catch (URISyntaxException ex)
+        {
+            Logger.getLogger(Board.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        this.selector = new DirectionSelector(this.window, this);
     }
 }

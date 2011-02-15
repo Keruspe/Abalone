@@ -20,7 +20,7 @@ public class Value<T>
         return this.value.getClass();
     }
 
-    void set(T value)
+    public void set(T value)
     {
         this.value = value;
     }
