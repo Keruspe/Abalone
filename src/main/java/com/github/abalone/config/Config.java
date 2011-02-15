@@ -44,4 +44,9 @@ public class Config
     {
         return Collections.unmodifiableMap(getConf());
     }
+
+    static public void addValueListener(String key, ValueListener listener)
+    {
+        getConf().get(key).addValueListener(listener);
+    }
 }
