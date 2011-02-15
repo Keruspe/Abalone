@@ -230,6 +230,7 @@ class Board extends JPanel implements MouseListener
             this.selectedBalls.add(c);
         }
         this.selector.updateButtons(d);
+        this.repaint();
     }
 
     void move(Direction direction)
