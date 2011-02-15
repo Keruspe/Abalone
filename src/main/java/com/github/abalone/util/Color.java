@@ -20,4 +20,8 @@ public enum Color implements Serializable {
    /** Out of the Board */
    INVALID;
 
+   public Boolean isPlayer() {
+      return (this == Color.WHITE || this == Color.BLACK);
+   }
+
 }
