@@ -123,6 +123,6 @@ public class Coords implements Serializable, Comparable<Coords> {
 
     @Override
     public String toString() {
-        return String.format("%s: [row=%d,col=%d]", getClass().getName(), this.row, this.col);
+        return String.format("[row=%d,col=%d]", this.row, this.col);
     }
 }

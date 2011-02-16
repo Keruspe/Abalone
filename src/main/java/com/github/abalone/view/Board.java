@@ -248,6 +248,7 @@ class Board extends JPanel implements MouseListener, ValueListener
         for ( Ball b : move.getInitialBalls() )
         {
             Coords c = b.getCoords();
+            System.out.println(c);
             this.selectedBalls.add(c);
         }
         this.selector.updateButtons(d);

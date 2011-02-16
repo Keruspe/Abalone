@@ -79,7 +79,6 @@ class ToolButton extends JButton implements ActionListener
         else if(this.type.equals("best-move"))
         {
             Move move = GameController.getInstance().getCurrentBestMove();
-            System.out.println(move);
             ((Board)this.component).setMove(move);
         }
         else if(this.type.equals("undo"))
