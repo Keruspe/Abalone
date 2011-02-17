@@ -36,7 +36,7 @@ public class AI {
    }
 
    public Move getBestMove(Color current) {
-      Move bestMove = new Move();
+      Move bestMove = null;
       Set<Ball> balls = this.game.getBoard().getBalls();
       for (Ball b : balls) {
          if (b.getColor() != current) {
@@ -44,24 +44,17 @@ public class AI {
          }
          Set<Coords> coords = new HashSet<Coords>();
          coords.add(b.getCoords());
-         Set<Direction> directions = GameController.getInstance().validDirections(coords);
-         if (!directions.isEmpty()) {
-            Set<Ball> ballsToMove = new HashSet<Ball>();
-            ballsToMove.add(b);
-            bestMove.setInitialState(ballsToMove);
-            bestMove.setDirection(directions.iterator().next());
-            break;
+         for ( Direction d : Direction.values() ) {
+            bestMove = this.game.getBoard().getMove(coords, d, current);
+            if ( bestMove != null )
+               break;
          }
+         if ( bestMove != null )
+            break;
       }
       if (current == selfColor) {
-         bestMove.setIsAIMove();
-         Set<Coords> coords = new HashSet<Coords>();
-         for (Ball b : bestMove.getInitialBalls()) {
-            if (b.getColor() == current) {
-               coords.add(b.getCoords());
-            }
-         }
-         GameController.getInstance().doMove(coords, bestMove.getDirection(), Boolean.TRUE);
+         GameController.getInstance().doMove(bestMove, Boolean.TRUE);
+         return null;
       }
       return bestMove;
    }

@@ -1,5 +1,6 @@
 package com.github.abalone.elements;
 
+import com.github.abalone.controller.GameController;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
@@ -23,11 +24,6 @@ public class Board implements Serializable {
 
    private void addBall(Ball ball) {
       this.balls.add(ball);
-   }
-
-   public void revert(Move move) {
-      this.balls.removeAll(move.getFinalBalls());
-      this.balls.addAll(move.getInitialBalls());
    }
 
    public Color elementAt(Coords coords) {
@@ -146,22 +142,9 @@ public class Board implements Serializable {
       return Collections.unmodifiableSet(this.balls);
    }
 
-   /**
-    * Check if the wanted move is correct and what
-    * effect will it have
-    *
-    * @param coords The list of coordinates of the balls to move
-    * @param direction The direction in which we want to move the balls
-    */
-   public Set<Ball> move(Set<Ball> selectedBalls, Direction direction) {
-      this.balls.removeAll(selectedBalls);
-      for (Ball b : selectedBalls) {
-         b.move(direction);
-         if (this.elementAt(b.getCoords()) != Color.INVALID) {
-            this.balls.add(b);
-         }
-      }
-      return selectedBalls;
+   public Move getMove(Set<Coords> selectedCoords, Direction direction, Color player) {
+      Set<Ball> selectedBalls = GameController.getInstance().validMove(selectedCoords, direction, player);
+      return new Move(selectedBalls, direction);
    }
 
    public Integer ballsCount(Color color) {
@@ -184,6 +167,16 @@ public class Board implements Serializable {
       } else {
          return Color.NONE;
       }
+   }
+
+   public void apply(Move move) {
+      this.balls.removeAll(move.getInitialBalls());
+      this.balls.addAll(move.getFinalBalls());
+   }
+
+   public void revert(Move move) {
+      this.balls.removeAll(move.getFinalBalls());
+      this.balls.addAll(move.getInitialBalls());
    }
 
    public Boolean loose(Color color) {

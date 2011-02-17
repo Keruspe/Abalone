@@ -266,18 +266,21 @@ public class GameController {
             }
             break;
       }
-      return result;
+      if ( result.isEmpty() )
+         return null;
+      else
+         return result;
    }
 
-   private Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
+   public Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
       if (!areALine(selectedBallsCoords)) {
-         return new HashSet<Ball>();
+         return null;
       }
       Set<Ball> selectedBalls = new HashSet<Ball>();
       for (Coords c : selectedBallsCoords) {
          Ball b = this.game.getBoard().getBallAt(c);
          if (b.getColor() != current) {
-            return new HashSet<Ball>();
+                return null;
          }
          selectedBalls.add(b);
       }
@@ -286,7 +289,7 @@ public class GameController {
 
    private Boolean validMove(Set<Coords> selectedBallsCoords, Direction direction) {
       Set<Ball> balls = validMove(selectedBallsCoords, direction, this.game.getTurn());
-      return (!balls.isEmpty());
+      return (balls != null);
    }
 
    public Set<Direction> validDirections(Set<Coords> selectedBallsCoords) {
@@ -299,34 +302,31 @@ public class GameController {
       return answer;
    }
 
-   public GameState doMove(Set<Coords> selectedBallsCoords, Direction direction, Boolean AITurn) {
+   public GameState doMove(Move move, Boolean AIPlaying) {
       Color current = this.game.getTurn();
+      Boolean AITurn = false;
       if (current == Color.NONE) {
          return GameState.OUTOFTURNS;
-      } else if(this.game.over()) {
+      } else if (this.game.over()) {
          return GameState.WON;
-      /*
-       * FIXME: must check if we actually have an AI
-      } else if ((current == Color.BLACK) && !AITurn) {
-         return GameState.RUNNING;
-       */
+      } else if (current.equals(AI.getInstance().getColor())) {
+         AITurn = true;
+         if ( !AIPlaying )
+           return GameState.RUNNING;
       }
-      Set<Ball> ballsTomove = validMove(selectedBallsCoords, direction, current);
-      if (!ballsTomove.isEmpty()) {
-         Move move = new Move(ballsTomove);
-         move.setFinalState(this.game.getBoard().move(ballsTomove, direction));
-         this.game.addToHistory(move);
-         Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
-         if (!bestMove.isAIMove()) {
-            this.currentBestMove = bestMove;
-         }
-         this.window.updateBoard(this.game.getTurn());
+      this.game.getBoard().apply(move);
+      this.game.addToHistory(move);
+      Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
+      if (AITurn) {
+         this.currentBestMove = bestMove;
       }
+      this.window.updateBoard(this.game.getTurn());
       return GameState.RUNNING;
    }
 
    public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
-      return doMove(selectedBallsCoords, direction, Boolean.FALSE);
+      Move move = this.game.getBoard().getMove(selectedBallsCoords, direction, this.game.getTurn());
+      return doMove(move, Boolean.FALSE);
    }
 
    public Move getCurrentBestMove() {

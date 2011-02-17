@@ -17,39 +17,21 @@ public class Move implements Serializable {
 
    private Direction direction;
 
-   private Boolean isAIMove;
 
-   public Move(Set<Ball> initialBalls) {
+   public Move(Set<Ball> initialBalls, Direction direction) {
       this.initialBalls = new HashSet<Ball>();
+      for (Ball b : initialBalls) {
+         this.initialBalls.add(new Ball(b));
+      }
+      
+      this.direction = direction;
+
       this.finalBalls = new HashSet<Ball>();
-      for (Ball b : initialBalls) {
-         this.initialBalls.add(new Ball(b));
-      }
-      this.isAIMove = false;
-   }
-
-   public Move() {
-      this.initialBalls = new HashSet<Ball>();
-      this.isAIMove = false;
-   }
-
-   public Boolean isAIMove() {
-      return isAIMove;
-   }
-
-   public void setIsAIMove() {
-      this.isAIMove = true;
-   }
-
-   public void setInitialState(Set<Ball> initialBalls) {
-      for (Ball b : initialBalls) {
-         this.initialBalls.add(new Ball(b));
-      }
-   }
-
-   public void setFinalState(Set<Ball> finalBalls) {
-      for (Ball b : finalBalls) {
-         this.finalBalls.add(new Ball(b));
+      for (Ball b : this.initialBalls) {
+         Ball nb = new Ball(b);
+         nb.move(this.direction);
+         if ( nb.getColor() != Color.INVALID )
+            this.finalBalls.add(nb);
       }
    }
 
@@ -64,9 +46,4 @@ public class Move implements Serializable {
    public Direction getDirection() {
       return direction;
    }
-
-   public void setDirection(Direction direction) {
-      this.direction = direction;
-   }
-
 }
