@@ -79,4 +79,10 @@ public class Ball implements Serializable {
       hash = 43 * hash + (this.coords != null ? this.coords.hashCode() : 0);
       return hash;
    }
+
+    @Override
+    public String toString() {
+        return "Ball:" + this.color.name() + this.coords.toString();
+    }
+
 }
