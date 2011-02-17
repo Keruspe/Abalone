@@ -273,9 +273,6 @@ public class GameController {
    }
 
    public Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
-      if (!areALine(selectedBallsCoords)) {
-         return null;
-      }
       Set<Ball> selectedBalls = new HashSet<Ball>();
       for (Coords c : selectedBallsCoords) {
          Ball b = this.game.getBoard().getBallAt(c);
@@ -283,6 +280,9 @@ public class GameController {
                 return null;
          }
          selectedBalls.add(b);
+      }
+      if (!this.game.getBoard().areALine(selectedBalls)) {
+         return null;
       }
       return validMove2(selectedBalls, direction, current);
    }
@@ -352,72 +352,6 @@ public class GameController {
       if (AI.getInstance().getColor() != Color.NONE) {
          doGoBack();
       }
-   }
-
-   public Boolean areALine(Set<Coords> coords) {
-      Iterator<Coords> itc = coords.iterator();
-      Coords c1, c2, c3;
-      switch (coords.size()) {
-         case 1:
-            return Boolean.TRUE;
-         case 2:
-            c1 = itc.next();
-            c2 = itc.next();
-            if (c1.getRow().equals(c2.getRow())) {
-               return (Math.abs(c1.getCol() - c2.getCol()) == 1);
-            } else if (Math.abs(c1.getRow() - c2.getRow()) != 1) {
-               return Boolean.FALSE;
-            } else {
-               Integer diff;
-               if (c1.getRow() < c2.getRow()) {
-                  diff = c2.getCol() - c1.getCol();
-               } else {
-                  diff = c1.getCol() - c2.getCol();
-               }
-               if (c1.getRow() < 0) {
-                  return (diff == 0 || diff == 1);
-               } else {
-                  return (diff == 0 || diff == -1);
-               }
-            }
-         case 3:
-            c1 = itc.next();
-            c2 = itc.next();
-            c3 = itc.next();
-            Set<Coords> sub1 = new HashSet<Coords>();
-            sub1.add(c1);
-            sub1.add(c2);
-            Set<Coords> sub2 = new HashSet<Coords>();
-            sub2.add(c1);
-            sub2.add(c3);
-            Integer colModifier = 0;
-            if (areALine(sub1)) {
-               if (!c3.getRow().equals(0)) {
-                  if ((c1.getRow().equals(0)
-                          && !c2.getRow().equals(0)
-                          && (c2.getRow() == -c3.getRow()))
-                          || (c2.getRow().equals(0)
-                          && (c1.getRow() == -c3.getRow()))) {
-                     colModifier = -1;
-                  }
-               }
-               return ((c3.getRow().equals(2 * c2.getRow() - c1.getRow()) && c3.getCol().equals(2 * c2.getCol() - c1.getCol() + colModifier))
-                       || (c3.getRow().equals(2 * c1.getRow() - c2.getRow()) && c3.getCol().equals(2 * c1.getCol() - c2.getCol() + colModifier)));
-            } else if (areALine(sub2)) {
-               if (!c2.getRow().equals(0)) {
-                  if ((c1.getRow().equals(0)
-                          && !c3.getRow().equals(0)
-                          && (c2.getRow() == -c3.getRow()))
-                          || (c3.getRow().equals(0)
-                          && (c2.getRow() == -c1.getRow()))) {
-                     colModifier = -1;
-                  }
-               }
-               return ((c2.getRow().equals(2 * c3.getRow() - c1.getRow()) && c2.getCol().equals(2 * c3.getCol() - c1.getCol() + colModifier))
-                       || (c2.getRow().equals(2 * c1.getRow() - c3.getRow()) && c2.getCol().equals(2 * c1.getCol() - c3.getCol() + colModifier)));
-            }
-      }
-      return Boolean.FALSE;
    }
 
    public void setWindow(Window window) {
