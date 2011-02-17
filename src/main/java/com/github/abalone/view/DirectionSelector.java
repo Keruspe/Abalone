@@ -39,7 +39,7 @@ class DirectionSelector extends JDialog
     {
         for ( DirectionButton b: this.buttons.values() )
             b.setVisible(false);
-        if ( valids == null )
+        if ( ( valids == null ) || ( valids.isEmpty() ) )
         {
             this.setVisible(false);
             return;
