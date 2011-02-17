@@ -501,7 +501,6 @@ public class Board implements Serializable {
       for ( Set<Ball> ballsToMove : sets ) {
          moves.addAll(this.validMoves(ballsToMove, player));
       }
-      System.out.println(moves.size() + " to process for " + sets.size() + " combinations");
       return moves;
    }
 }

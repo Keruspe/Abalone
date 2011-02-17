@@ -178,8 +178,4 @@ public class GameController {
    public void setWindow(Window window) {
       this.window = window;
    }
-
-    public void repaint() {
-        this.window.updateBoard();
-    }
 }
