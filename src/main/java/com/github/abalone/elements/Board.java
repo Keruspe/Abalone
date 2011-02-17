@@ -478,24 +478,24 @@ public class Board implements Serializable {
       for (Ball b1 : balls1) {
          Set<Ball> ballsToMove = new HashSet<Ball>();
          ballsToMove.add(b1);
-         if ( this.ballsAreALine(ballsToMove))
-            sets.add(ballsToMove);
+         sets.add(ballsToMove);
 
          balls2.remove(b1);
          Set<Ball> balls3 = new HashSet<Ball>(balls2);
          for (Ball b2 : balls2) {
             Set<Ball> ballsToMove2 = new HashSet<Ball>(ballsToMove);
             ballsToMove2.add(b2);
-            if ( this.ballsAreALine(ballsToMove))
-               sets.add(ballsToMove);
+            if ( this.ballsAreALine(ballsToMove2)) {
+               sets.add(ballsToMove2);
 
-            balls3.remove(b2);
-            for (Ball b3 : balls3) {
-               Set<Ball> ballsToMove3 = new HashSet<Ball>(ballsToMove2);
-               ballsToMove.add(b3);
-               if ( this.ballsAreALine(ballsToMove))
-                  sets.add(ballsToMove);
-            }
+               balls3.remove(b2);
+               for (Ball b3 : balls3) {
+                  Set<Ball> ballsToMove3 = new HashSet<Ball>(ballsToMove2);
+                  ballsToMove3.add(b3);
+                  if ( this.ballsAreALine(ballsToMove3))
+                     sets.add(ballsToMove3);
+               }
+	    }
          }
       }
       for ( Set<Ball> ballsToMove : sets ) {
