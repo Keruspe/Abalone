@@ -291,23 +291,10 @@ public class GameController {
 
    public Set<Direction> validDirections(Set<Coords> selectedBallsCoords) {
       Set<Direction> answer = new HashSet<Direction>();
-      if (validMove(selectedBallsCoords, Direction.UPLEFT)) {
-         answer.add(Direction.UPLEFT);
-      }
-      if (validMove(selectedBallsCoords, Direction.UPRIGHT)) {
-         answer.add(Direction.UPRIGHT);
-      }
-      if (validMove(selectedBallsCoords, Direction.LEFT)) {
-         answer.add(Direction.LEFT);
-      }
-      if (validMove(selectedBallsCoords, Direction.RIGHT)) {
-         answer.add(Direction.RIGHT);
-      }
-      if (validMove(selectedBallsCoords, Direction.DOWNLEFT)) {
-         answer.add(Direction.DOWNLEFT);
-      }
-      if (validMove(selectedBallsCoords, Direction.DOWNRIGHT)) {
-         answer.add(Direction.DOWNRIGHT);
+      for ( Direction d : Direction.values() ) {
+         if (validMove(selectedBallsCoords, d)) {
+            answer.add(d);
+         }
       }
       return answer;
    }
