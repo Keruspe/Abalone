@@ -1,6 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.controller.GameController;
+import com.github.abalone.util.Color;
 import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
@@ -27,7 +28,7 @@ public class Window extends JFrame implements ComponentListener
 
         GameController.getInstance().setWindow(this);
 
-        this.setSize(800, 600);
+        this.setSize(300, 100);
 
         String[] lookAndFeels = {
             "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
@@ -76,8 +77,9 @@ public class Window extends JFrame implements ComponentListener
         return false;
     }
 
-    public void updateBoard()
+    public void updateBoard(Color turn)
     {
+	this.board.reversed = turn.equals(Color.WHITE);
         this.board.repaint();
     }
 

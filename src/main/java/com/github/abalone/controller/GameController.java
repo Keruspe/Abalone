@@ -55,7 +55,7 @@ public class GameController {
       this.game = new Game(Color.WHITE, -1, -1);
       AI.init(this.game, ((Boolean) Config.get("AI")) ? Color.BLACK : Color.NONE);
       this.currentBestMove = AI.getInstance().getBestMove(this.game.getTurn());
-      this.window.updateBoard();
+      this.window.updateBoard(this.game.getTurn());
    }
 
    /// Save the game
@@ -94,7 +94,7 @@ public class GameController {
          this.game.getBoard().fill(loadedGame);
          AI.init(this.game, ((Boolean) Config.get("AI")) ? Color.BLACK : Color.NONE);
          this.currentBestMove = AI.getInstance().getBestMove(this.game.getTurn());
-         this.window.updateBoard();
+         this.window.updateBoard(this.game.getTurn());
       } catch (Exception ex) {
          Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
          return Boolean.FALSE;
@@ -108,7 +108,7 @@ public class GameController {
             Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
          }
       }
-      this.window.updateBoard();
+      this.window.updateBoard(this.game.getTurn());
       return Boolean.TRUE;
    }
 
@@ -328,19 +328,22 @@ public class GameController {
          return GameState.OUTOFTURNS;
       } else if(this.game.over()) {
          return GameState.WON;
+      /*
+       * FIXME: must check if we actually have an AI
       } else if ((current == Color.BLACK) && !AITurn) {
          return GameState.RUNNING;
+       */
       }
       Set<Ball> ballsTomove = validMove(selectedBallsCoords, direction, current);
       if (!ballsTomove.isEmpty()) {
          Move move = new Move(ballsTomove);
          move.setFinalState(this.game.getBoard().move(ballsTomove, direction));
          this.game.addToHistory(move);
-         this.window.updateBoard();
          Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
          if (!bestMove.isAIMove()) {
             this.currentBestMove = bestMove;
          }
+         this.window.updateBoard(this.game.getTurn());
       }
       return GameState.RUNNING;
    }
@@ -360,7 +363,7 @@ public class GameController {
          Move move = this.game.getHistory().get(lastIndex);
          this.game.getHistory().remove(move);
          this.game.getBoard().revert(move);
-         this.window.updateBoard();
+         this.window.updateBoard(this.game.getTurn());
       }
    }
 

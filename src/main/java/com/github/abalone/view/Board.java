@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.net.URISyntaxException;
 import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JPanel;
@@ -37,6 +38,7 @@ class Board extends JPanel implements MouseListener, ValueListener
     private SVGIcon selection;
     private DirectionSelector selector;
     private final Window window;
+    Boolean reversed = true;
 
     Board(Window window)
     {
@@ -93,7 +95,12 @@ class Board extends JPanel implements MouseListener, ValueListener
     {
         for (Ball b: com.github.abalone.elements.Board.getInstance().getBalls() )
         {
-            Coords coords = b.getCoords();
+            Coords ballCoords = b.getCoords();
+	    Coords coords;
+	    if ( this.reversed )
+	        coords = new Coords(-ballCoords.getRow(), ballCoords.getCol());
+            else
+	        coords = new Coords(ballCoords);
             Point point = this.getPoint(coords);
             switch ( b.getColor() )
             {
@@ -105,7 +112,7 @@ class Board extends JPanel implements MouseListener, ValueListener
                 break;
 
             }
-            if ( this.selectedBalls.contains(coords) )
+            if ( this.selectedBalls.contains(ballCoords) )
             {
                 this.selection.paintIcon(this, g, point.x, point.y);
             }
@@ -175,6 +182,8 @@ class Board extends JPanel implements MouseListener, ValueListener
         else
             return null;
 
+        if ( this.reversed )
+	    r = -r;
         Coords coords = new Coords(r, c);
         return coords;
     }
@@ -195,7 +204,17 @@ class Board extends JPanel implements MouseListener, ValueListener
         else
             return;
         this.repaint();
-        this.selector.updateButtons(GameController.getInstance().validDirections(this.selectedBalls));
+        Set<Direction> directions;
+        Set<Direction> validDirections = GameController.getInstance().validDirections(this.selectedBalls);
+        if ( this.reversed )
+        {
+            directions = new HashSet<Direction>();
+            for ( Direction d : validDirections )
+                directions.add(d.reversed());
+        }
+        else
+            directions = new HashSet<Direction>(validDirections);
+        this.selector.updateButtons(directions);
     }
 
     @Override
@@ -221,7 +240,10 @@ class Board extends JPanel implements MouseListener, ValueListener
     void setMove(Move move)
     {
         HashSet<Direction> d = new HashSet<Direction>();
-        d.add(move.getDirection());
+        if ( this.reversed )
+            d.add(move.getDirection().reversed());
+        else
+            d.add(move.getDirection());
         this.selectedBalls.clear();
         for ( Ball b : move.getInitialBalls() )
         {
@@ -232,8 +254,13 @@ class Board extends JPanel implements MouseListener, ValueListener
         this.repaint();
     }
 
-    void move(Direction direction)
+    void move(Direction buttonDirection)
     {
+        Direction direction;
+        if ( this.reversed )
+            direction = buttonDirection.reversed();
+        else
+            direction = buttonDirection;
         if ( GameController.getInstance().move(this.selectedBalls, direction).equals(GameState.RUNNING) )
         {
             this.selectedBalls.clear();
