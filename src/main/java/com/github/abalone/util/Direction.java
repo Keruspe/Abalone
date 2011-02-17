@@ -13,4 +13,21 @@ public enum Direction {
    DOWNLEFT,
    DOWNRIGHT;
 
+   public Direction reversed()
+   {
+      switch ( this )
+      {
+          case DOWNLEFT:
+             return UPLEFT;
+          case DOWNRIGHT:
+             return UPRIGHT;
+          case UPLEFT:
+             return DOWNLEFT;
+          case UPRIGHT:
+             return DOWNRIGHT;
+          default:
+             return this;
+      }
+   }
+
 }
