@@ -5,7 +5,6 @@ import com.github.abalone.config.Config;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.elements.Board;
 import com.github.abalone.elements.Game;
-import com.github.abalone.util.Typelignepl;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -118,19 +116,23 @@ public class GameController {
 
    public Move validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
       Set<Ball> selectedBalls = this.game.getBoard().getLineColorBallsAt(selectedBallsCoords, current);
-      return new Move(selectedBalls, direction, current);
-   }
-
-   private Boolean validMove(Set<Coords> selectedBallsCoords, Direction direction) {
-      Move move = validMove(selectedBallsCoords, direction, this.game.getTurn());
-      return move.isValid();
+      Move move = new Move(selectedBalls, direction, current);
+      move.compute(this.game.getBoard());
+      return move;
    }
 
    public Set<Direction> validDirections(Set<Coords> selectedBallsCoords) {
       Set<Direction> answer = new HashSet<Direction>();
-      for ( Direction d : Direction.values() ) {
-         if (validMove(selectedBallsCoords, d)) {
-            answer.add(d);
+      Color color = this.game.getTurn();
+      Board board = this.game.getBoard();
+      Set<Ball> balls = board.getLineColorBallsAt(selectedBallsCoords, color);
+      if ( balls != null ) {
+         for ( Direction d : Direction.values() ) {
+            Move move = new Move(balls, d, color);
+            move.compute(board);
+            if ( move.isValid() ) {
+               answer.add(d);
+            }
          }
       }
       return answer;
@@ -159,7 +161,10 @@ public class GameController {
    }
 
    public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
-      Move move = new Move(this.game.getBoard().getLineColorBallsAt(selectedBallsCoords, this.game.getTurn()), direction, this.game.getTurn());
+      Color turn = this.game.getTurn();
+      Board board = this.game.getBoard();
+      Move move = new Move(board.getLineColorBallsAt(selectedBallsCoords, turn), direction, turn);
+      move.compute(board);
       return doMove(move, Boolean.FALSE);
    }
 
