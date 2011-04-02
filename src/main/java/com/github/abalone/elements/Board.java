@@ -61,7 +61,7 @@ public class Board implements Serializable {
       return null;
    }
 
-   public Ball getColorBallAt(Coords coords, Color color) {
+   private Ball getColorBallAt(Color color, Coords coords) {
       Integer col = coords.getCol();
       Integer row = Math.abs(coords.getRow());
       if (col < 0 || row > 4 || row + col > 8) {
@@ -75,9 +75,9 @@ public class Board implements Serializable {
    }
 
    public Set<Ball> getLineColorBallsAt(Set<Coords> coords, Color color) {
-         Set<Ball> selectedBalls = new HashSet<Ball>();
+      Set<Ball> selectedBalls = new HashSet<Ball>();
       for (Coords c : coords) {
-         Ball b = this.getColorBallAt(c, color);
+         Ball b = this.getColorBallAt(color, c);
          if ( b == null )
             return null;
          selectedBalls.add(b);
@@ -192,12 +192,16 @@ public class Board implements Serializable {
       }
    }
 
-   public void apply(Move move) {
+   public void apply(Move move) throws RuntimeException {
+      if ( ! move.isValid() )
+         throw new RuntimeException("Try to apply an invalid move");
       this.balls.removeAll(move.getInitialBalls());
       this.balls.addAll(move.getFinalBalls());
    }
 
    public void revert(Move move) {
+      if ( ! move.isValid() )
+         throw new RuntimeException("Try to apply an invalid move");
       this.balls.removeAll(move.getFinalBalls());
       this.balls.addAll(move.getInitialBalls());
    }
@@ -205,6 +209,7 @@ public class Board implements Serializable {
    public Boolean loose(Color color) {
       return (ballsCount(color) < 9);
    }
+   
    public Boolean areALine(Set<Ball> coords) {
       Iterator<Ball> itc = coords.iterator();
       Coords c1, c2, c3;

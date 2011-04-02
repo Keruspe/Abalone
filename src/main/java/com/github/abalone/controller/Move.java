@@ -34,6 +34,21 @@ public class Move implements Serializable {
       this.color = color;
    }
 
+   public void compute(Board board) {
+      Set<Ball> newInitials = validMove2(board);
+      if ( newInitials != null ) {
+         this.valid = true;
+         this.initialBalls = newInitials;
+         this.finalBalls = new HashSet<Ball>();
+         for (Ball b : this.initialBalls) {
+            Ball nb = new Ball(b);
+            nb.move(this.direction);
+            if ( nb.getColor() != Color.INVALID )
+               this.finalBalls.add(nb);
+         }
+      }
+   }
+
 
    //renvoi la bille la plus proche de la bille adverse ou de la case vide
    private Ball closest(Board board) {
@@ -188,20 +203,6 @@ public class Move implements Serializable {
          return null;
       else
          return result;
-   }
-
-   public void compute(Board board) {
-      Set<Ball> newInitials = validMove2(board);
-      if ( newInitials != null ) {
-         this.initialBalls = newInitials;
-         this.finalBalls = new HashSet<Ball>();
-         for (Ball b : this.initialBalls) {
-            Ball nb = new Ball(b);
-            nb.move(this.direction);
-            if ( nb.getColor() != Color.INVALID )
-               this.finalBalls.add(nb);
-         }
-      }
    }
 
    public Set<Ball> getFinalBalls() {
