@@ -116,179 +116,14 @@ public class GameController {
       System.exit(0);
    }
 
-   //renvoi la bille la plus proche de la bille adverse ou de la case vide
-   private Ball closest(Set<Ball> selectedBalls, Direction to) {
-      Coords closest = null;
-      switch (to) {
-         case DOWNLEFT:
-            closest = new Coords(-10, 10);
-            for (Ball b : selectedBalls) {
-               if ((closest.getRow() < b.getCoords().getRow())
-                       || (closest.getRow().equals(b.getCoords().getRow())
-                       && closest.getCol() > b.getCoords().getCol())) {
-                  closest = new Coords(b.getCoords());
-               }
-            }
-            break;
-         case DOWNRIGHT:
-            closest = new Coords(-10, -10);
-            for (Ball b : selectedBalls) {
-               if ((closest.getRow() < b.getCoords().getRow())
-                       || (closest.getRow().equals(b.getCoords().getRow())
-                       && closest.getCol() < b.getCoords().getCol())) {
-                  closest = new Coords(b.getCoords());
-               }
-            }
-            break;
-         case UPLEFT:
-            closest = new Coords(10, 10);
-            for (Ball b : selectedBalls) {
-               if ((closest.getRow() > b.getCoords().getRow())
-                       || (closest.getRow().equals(b.getCoords().getRow())
-                       && closest.getCol() > b.getCoords().getCol())) {
-                  closest = new Coords(b.getCoords());
-               }
-            }
-            break;
-         case UPRIGHT:
-            closest = new Coords(10, -10);
-            for (Ball b : selectedBalls) {
-               if ((closest.getRow() > b.getCoords().getRow())
-                       || (closest.getRow().equals(b.getCoords().getRow())
-                       && closest.getCol() < b.getCoords().getCol())) {
-                  closest = new Coords(b.getCoords());
-               }
-            }
-            break;
-         case LEFT:
-            closest = new Coords(10, 10);
-            for (Ball b : selectedBalls) {
-               if (closest.getCol() > b.getCoords().getCol()) {
-                  closest = new Coords(b.getCoords());
-               }
-            }
-            break;
-         case RIGHT:
-            closest = new Coords(10, -10);
-            for (Ball b : selectedBalls) {
-               if (closest.getCol() < b.getCoords().getCol()) {
-                  closest = new Coords(b.getCoords());
-               }
-            }
-      }
-      return this.game.getBoard().getBallAt(closest);
-
-   }
-
-   private Set<Ball> validMove2(Set<Ball> selectedBalls, Direction direction, Color selfColor) {
-      Iterator<Ball> itb = selectedBalls.iterator();
-      Set<Ball> result = new HashSet<Ball>();
-      Ball b1;
-      Ball b2;
-      Ball b3;
-      switch (selectedBalls.size()) {
-         case 1:
-            b1 = itb.next();
-            if (this.game.getBoard().getBallAt(b1, direction).getColor() == Color.NONE) {
-               result.add(b1);
-            }
-            break;
-         case 2:
-            b1 = itb.next();
-            b2 = itb.next();
-            if (Typelignepl.lesDirectionPerpendiculaire(b1.getCoords().LignePl(b2.getCoords())).contains(direction)) {
-               Color nextColor1 = this.game.getBoard().getBallAt(b1, direction).getColor();
-               Color nextColor2 = this.game.getBoard().getBallAt(b2, direction).getColor();
-               if ((nextColor1 == Color.NONE) && (nextColor2 == Color.NONE)) {
-                  result.add(b1);
-                  result.add(b2);
-               }
-            } else {
-               Ball closest = closest(selectedBalls, direction);
-               Ball next = this.game.getBoard().getBallAt(closest, direction);
-               if (next.getColor() == Color.NONE) {
-                  result.add(b1);
-                  result.add(b2);
-               } else if (next.getColor() == selfColor.other()) {
-                  Color nextColor = this.game.getBoard().getBallAt(next, direction).getColor();
-                  if (nextColor == Color.NONE || nextColor == Color.INVALID) {
-                     result.add(b1);
-                     result.add(b2);
-                     result.add(next);
-                  }
-               }
-            }
-            break;
-         case 3:
-            b1 = itb.next();
-            b2 = itb.next();
-            b3 = itb.next();
-            Typelignepl linepl = b1.getCoords().LignePl(b2.getCoords());
-            if (linepl == Typelignepl.NONADJACENT) {
-               linepl = b1.getCoords().LignePl(b3.getCoords());
-            }
-            if (Typelignepl.lesDirectionPerpendiculaire(linepl).contains(direction)) {
-               Color nextColor1 = this.game.getBoard().getBallAt(b1, direction).getColor();
-               Color nextColor2 = this.game.getBoard().getBallAt(b2, direction).getColor();
-               Color nextColor3 = this.game.getBoard().getBallAt(b3, direction).getColor();
-               if (nextColor1 == Color.NONE && nextColor2 == Color.NONE && nextColor3 == Color.NONE) {
-                  result.add(b1);
-                  result.add(b2);
-                  result.add(b3);
-               }
-            } else {
-               Ball closest = closest(selectedBalls, direction);
-               Ball next1 = this.game.getBoard().getBallAt(closest, direction);
-               if (next1.getColor() == Color.NONE) {
-                  result.add(b1);
-                  result.add(b2);
-                  result.add(b3);
-               } else if (next1.getColor() == selfColor.other()) {
-                  Ball next2 = this.game.getBoard().getBallAt(next1, direction);
-                  Color nextColor2 = next2.getColor();
-                  if (nextColor2 == Color.NONE || nextColor2 == Color.INVALID) {
-                     result.add(b1);
-                     result.add(b2);
-                     result.add(b3);
-                     result.add(next1);
-                  } else {
-                     Color nextColor3 = this.game.getBoard().getBallAt(next2, direction).getColor();
-                     if (nextColor3 == Color.NONE || nextColor3 == Color.INVALID) {
-                        result.add(b1);
-                        result.add(b2);
-                        result.add(b3);
-                        result.add(next1);
-                        result.add(next2);
-                     }
-                  }
-               }
-            }
-            break;
-      }
-      if ( result.isEmpty() )
-         return null;
-      else
-         return result;
-   }
-
-   public Set<Ball> validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
-      Set<Ball> selectedBalls = new HashSet<Ball>();
-      for (Coords c : selectedBallsCoords) {
-         Ball b = this.game.getBoard().getBallAt(c);
-         if (b.getColor() != current) {
-                return null;
-         }
-         selectedBalls.add(b);
-      }
-      if (!this.game.getBoard().areALine(selectedBalls)) {
-         return null;
-      }
-      return validMove2(selectedBalls, direction, current);
+   public Move validMove(Set<Coords> selectedBallsCoords, Direction direction, Color current) {
+      Set<Ball> selectedBalls = this.game.getBoard().getLineColorBallsAt(selectedBallsCoords, current);
+      return new Move(selectedBalls, direction, current);
    }
 
    private Boolean validMove(Set<Coords> selectedBallsCoords, Direction direction) {
-      Set<Ball> balls = validMove(selectedBallsCoords, direction, this.game.getTurn());
-      return (balls != null);
+      Move move = validMove(selectedBallsCoords, direction, this.game.getTurn());
+      return move.isValid();
    }
 
    public Set<Direction> validDirections(Set<Coords> selectedBallsCoords) {
@@ -324,7 +159,7 @@ public class GameController {
    }
 
    public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
-      Move move = this.game.getBoard().getMove(selectedBallsCoords, direction, this.game.getTurn());
+      Move move = new Move(this.game.getBoard().getLineColorBallsAt(selectedBallsCoords, this.game.getTurn()), direction, this.game.getTurn());
       return doMove(move, Boolean.FALSE);
    }
 

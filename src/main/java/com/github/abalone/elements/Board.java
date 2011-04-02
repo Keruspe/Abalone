@@ -61,6 +61,33 @@ public class Board implements Serializable {
       return null;
    }
 
+   public Ball getColorBallAt(Coords coords, Color color) {
+      Integer col = coords.getCol();
+      Integer row = Math.abs(coords.getRow());
+      if (col < 0 || row > 4 || row + col > 8) {
+         return null;
+      }
+      Ball ball = new Ball(color, coords);
+      if (this.balls.contains(ball)) {
+         return ball;
+      }
+      return null;
+   }
+
+   public Set<Ball> getLineColorBallsAt(Set<Coords> coords, Color color) {
+         Set<Ball> selectedBalls = new HashSet<Ball>();
+      for (Coords c : coords) {
+         Ball b = this.getColorBallAt(c, color);
+         if ( b == null )
+            return null;
+         selectedBalls.add(b);
+      }
+      if ( areALine(selectedBalls) ) {
+         return selectedBalls;
+      }
+      return null;
+   }
+
    public Ball getBallAt(Ball ball, Direction direction) {
       Integer row = ball.getCoords().getRow();
       Integer col = ball.getCoords().getCol();
@@ -141,11 +168,6 @@ public class Board implements Serializable {
     */
    public Set<Ball> getBalls() {
       return Collections.unmodifiableSet(this.balls);
-   }
-
-   public Move getMove(Set<Coords> selectedCoords, Direction direction, Color player) {
-      Set<Ball> selectedBalls = GameController.getInstance().validMove(selectedCoords, direction, player);
-      return new Move(selectedBalls, direction);
    }
 
    public Integer ballsCount(Color color) {
