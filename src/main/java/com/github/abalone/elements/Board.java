@@ -131,6 +131,13 @@ public class Board implements Serializable {
       this.filled = false;
    }
 
+   public Board(Board other) {
+      this.filled = true;
+      this.balls = new HashSet<Ball>();
+      for ( Ball b : other.balls )
+          this.balls.add(new Ball(b));
+   }
+
    public void fill(Game p) {
       if (this.filled) {
          return;
