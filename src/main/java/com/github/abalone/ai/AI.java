@@ -7,6 +7,7 @@ import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
 import com.github.abalone.controller.Move;
+import com.github.abalone.elements.Board;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,8 +38,8 @@ public class AI {
 
    public Move getBestMove(Color current) {
       Move bestMove = null;
-      /*
-      Set<Ball> balls = this.game.getBoard().getBalls();
+      Board board = this.game.getBoard();
+      Set<Ball> balls = board.getBalls();
       for (Ball b : balls) {
          if (b.getColor() != current) {
             continue;
@@ -46,18 +47,15 @@ public class AI {
          Set<Coords> coords = new HashSet<Coords>();
          coords.add(b.getCoords());
          for ( Direction d : Direction.values() ) {
-            bestMove = this.game.getBoard().getMove(coords, d, current);
-            if ( bestMove != null )
+            bestMove = null;
+            bestMove = new Move(board.getLineColorBallsAt(coords, current), d, current);
+            bestMove.compute(board);
+            if ( bestMove.isValid() )
                break;
          }
          if ( bestMove != null )
             break;
       }
-      if (current == selfColor) {
-         GameController.getInstance().doMove(bestMove, Boolean.TRUE);
-         return null;
-      }
-      */
       return bestMove;
    }
 
