@@ -1,7 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.controller.GameController;
-import com.github.abalone.util.Move;
+import com.github.abalone.controller.Move;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;

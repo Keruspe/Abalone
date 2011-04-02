@@ -1,6 +1,6 @@
 package com.github.abalone.elements;
 
-import com.github.abalone.util.Move;
+import com.github.abalone.controller.Move;
 import com.github.abalone.util.Color;
 import java.io.Serializable;
 import java.util.ArrayList;

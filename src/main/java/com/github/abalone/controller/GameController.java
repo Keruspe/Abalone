@@ -10,7 +10,6 @@ import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
 import com.github.abalone.util.GameState;
-import com.github.abalone.util.Move;
 import com.github.abalone.view.Window;
 import java.io.File;
 import java.io.FileInputStream;

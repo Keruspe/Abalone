@@ -4,7 +4,7 @@ import com.github.abalone.controller.GameController;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
-import com.github.abalone.util.Move;
+import com.github.abalone.controller.Move;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
