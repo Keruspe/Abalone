@@ -138,22 +138,21 @@ public class GameController {
       return answer;
    }
 
-   public GameState doMove(Move move, Boolean AIPlaying) {
+   public GameState doMove(Move move) {
       Color current = this.game.getTurn();
-      Boolean AITurn = false;
       if (current == Color.NONE) {
          return GameState.OUTOFTURNS;
       } else if (this.game.over()) {
          return GameState.WON;
-      } else if (current.equals(AI.getInstance().getColor())) {
-         AITurn = true;
-         if ( !AIPlaying )
-           return GameState.RUNNING;
       }
       this.game.getBoard().apply(move);
       this.game.addToHistory(move);
-      Move bestMove = AI.getInstance().getBestMove(this.game.getNextTurn());
-      if (AITurn) {
+      Color next = this.game.getNextTurn();
+      AI ai = AI.getInstance();
+      Move bestMove = ai.getBestMove(next);
+      if (next.equals(ai.getColor())) {
+         return this.doMove(bestMove);
+      } else {
          this.currentBestMove = bestMove;
       }
       this.window.updateBoard(this.game.getTurn());
@@ -165,7 +164,7 @@ public class GameController {
       Board board = this.game.getBoard();
       Move move = new Move(board.getLineColorBallsAt(selectedBallsCoords, turn), direction, turn);
       move.compute(board);
-      return doMove(move, Boolean.FALSE);
+      return doMove(move);
    }
 
    public Move getCurrentBestMove() {
