@@ -37,6 +37,7 @@ public class AI {
 
    public Move getBestMove(Color current) {
       Move bestMove = null;
+      /*
       Set<Ball> balls = this.game.getBoard().getBalls();
       for (Ball b : balls) {
          if (b.getColor() != current) {
@@ -56,6 +57,7 @@ public class AI {
          GameController.getInstance().doMove(bestMove, Boolean.TRUE);
          return null;
       }
+      */
       return bestMove;
    }
 
