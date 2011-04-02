@@ -220,4 +220,35 @@ public class Move implements Serializable {
    public Boolean isValid() {
       return this.valid;
    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Move other = (Move) obj;
+        if (this.initialBalls != other.initialBalls && (this.initialBalls == null || !this.initialBalls.equals(other.initialBalls))) {
+            return false;
+        }
+        if (this.direction != other.direction) {
+            return false;
+        }
+        if (this.color != other.color) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 53 * hash + (this.initialBalls != null ? this.initialBalls.hashCode() : 0);
+        hash = 53 * hash + (this.direction != null ? this.direction.hashCode() : 0);
+        hash = 53 * hash + (this.color != null ? this.color.hashCode() : 0);
+        return hash;
+    }
 }
