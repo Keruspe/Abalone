@@ -2,6 +2,7 @@ package com.github.abalone.controller;
 
 import com.github.abalone.ai.AI;
 import com.github.abalone.config.Config;
+import com.github.abalone.config.Theme;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.elements.Board;
 import com.github.abalone.elements.Game;
@@ -35,8 +36,10 @@ public class GameController {
    private Game game;
 
    private Move currentBestMove;
+    private NetworkController networkController;
 
    private GameController() {
+      this.networkController = null;
    }
 
    public static GameController getInstance() {
@@ -57,7 +60,15 @@ public class GameController {
 
    /// Start a network game
    public void network(Boolean host) {
-      throw new UnsupportedOperationException("Not yet implemented");
+      Thread th;
+      if ( host ) {
+         this.networkController = new NetworkServer(this.window);
+         th = new Thread(this.networkController, "Abalone Server");
+      } else {
+         this.networkController = new NetworkClient(this.window);
+         th = new Thread(this.networkController, "Abalone Client");
+      }
+      th.start();
    }
 
    /// Save the game
@@ -169,7 +180,12 @@ public class GameController {
       Board board = this.game.getBoard();
       Move move = new Move(board.getLineColorBallsAt(selectedBallsCoords, turn), direction, turn);
       move.compute(board);
-      return doMove(move);
+      GameState state = doMove(move);
+
+      if ( this.networkController != null )
+         this.networkController.doMove(move);
+
+      return state;
    }
 
    public Move getCurrentBestMove() {
@@ -183,6 +199,8 @@ public class GameController {
          Move move = this.game.getHistory().get(lastIndex);
          this.game.getHistory().remove(move);
          this.game.getBoard().revert(move);
+         if ( this.networkController != null )
+            this.networkController.doMove(move);
          this.window.updateBoard(this.game.getTurn());
       }
    }

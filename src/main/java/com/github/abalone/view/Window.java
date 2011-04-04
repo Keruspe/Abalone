@@ -2,6 +2,7 @@ package com.github.abalone.view;
 
 import com.github.abalone.controller.GameController;
 import com.github.abalone.util.Color;
+import com.github.abalone.util.NetworkStatus;
 import java.awt.BorderLayout;
 import java.awt.LayoutManager;
 import java.awt.event.ComponentEvent;
@@ -115,5 +116,24 @@ public class Window extends JFrame implements ComponentListener
 
     @Override
     public void componentHidden(ComponentEvent ce) {
+    }
+
+    public void addNetworkUI() {
+    }
+
+    public void setNetworkStatus(NetworkStatus networkState)
+    {
+        switch ( networkState )
+        {
+            case CONNECTED:
+                this.status.setText("Now connected");
+            break;
+            case WAITING_CONNECTION:
+                this.status.setText("Waiting for connection");
+            break;
+            case WAITING_MOVE:
+                this.status.setText("Waiting for move");
+            break;
+        }
     }
 }
