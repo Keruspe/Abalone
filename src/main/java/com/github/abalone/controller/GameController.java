@@ -138,7 +138,7 @@ public class GameController {
       return answer;
    }
 
-   public GameState doMove(Move move) {
+   GameState doMove(Move move) {
       Color current = this.game.getTurn();
       if (current == Color.NONE) {
          return GameState.OUTOFTURNS;
