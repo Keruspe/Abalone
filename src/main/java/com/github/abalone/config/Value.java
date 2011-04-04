@@ -16,7 +16,8 @@ public class Value<T>
     {
         this.description = description;
         this.listeners = new HashSet<ValueListener>();
-        this.set(value);
+        if ( value != null )
+            this.set(value);
     }
 
     public Class getType()
@@ -31,7 +32,7 @@ public class Value<T>
             l.valueUpdated(value);
     }
 
-    public T get()
+    final public T get()
     {
         return this.value;
     }

@@ -18,12 +18,6 @@ public abstract class ConstraintValue<T> extends Value<T>
     }
 
     @Override
-    final public T get()
-    {
-        return this.value;
-    }
-
-    @Override
     final public void set(T value)
     {
         this.initConstraint();
