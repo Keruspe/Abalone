@@ -18,6 +18,8 @@ public class Config
         this.conf = new HashMap<String, Value>();
         this.conf.put("theme", new Theme("Theme", "glossy"));
         this.conf.put("AI", new Value<Boolean>("Human vs. AI", false));
+        this.conf.put("host", new Value<String>("Host to connect to", "localhost"));
+        this.conf.put("port", new Range("Port number", 9630, 1025, 65535));
     }
 
     static private HashMap<String, Value> getConf()
