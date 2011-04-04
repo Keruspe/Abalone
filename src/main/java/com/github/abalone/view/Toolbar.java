@@ -9,6 +9,8 @@ import javax.swing.JToolBar;
 class Toolbar extends JToolBar
 {
     private final ToolButton newGame;
+    private final ToolButton hostGame;
+    private final ToolButton joinGame;
     private final ToolButton saveGame;
     private final ToolButton loadGame;
     private final ToolButton bestMove;
@@ -18,6 +20,12 @@ class Toolbar extends JToolBar
     {
         this.newGame = new ToolButton("new-game", this);
         this.add(this.newGame);
+
+        this.hostGame = new ToolButton("host-game", this);
+        this.add(this.hostGame);
+
+        this.joinGame = new ToolButton("join-game", this);
+        this.add(this.joinGame);
 
         this.saveGame = new ToolButton("save-game");
         this.saveGame.setEnabled(false);
@@ -42,6 +50,8 @@ class Toolbar extends JToolBar
     void gameLaunched()
     {
         this.newGame.setEnabled(false);
+        this.hostGame.setEnabled(false);
+        this.joinGame.setEnabled(false);
         this.saveGame.setEnabled(true);
         this.loadGame.setEnabled(false);
         this.bestMove.setEnabled(true);

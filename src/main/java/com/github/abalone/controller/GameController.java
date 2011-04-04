@@ -55,6 +55,11 @@ public class GameController {
       this.window.updateBoard(this.game.getTurn());
    }
 
+   /// Start a network game
+   public void network(Boolean host) {
+      throw new UnsupportedOperationException("Not yet implemented");
+   }
+
    /// Save the game
    public void save() {
       FileOutputStream fos = null;

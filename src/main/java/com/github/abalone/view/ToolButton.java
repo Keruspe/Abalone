@@ -67,6 +67,16 @@ class ToolButton extends JButton implements ActionListener
             GameController.getInstance().launch();
             ((Toolbar)this.component).gameLaunched();
         }
+        else if(this.type.equals("host-game"))
+        {
+            GameController.getInstance().network(Boolean.TRUE);
+            ((Toolbar)this.component).gameLaunched();
+        }
+        else if(this.type.equals("join-game"))
+        {
+            GameController.getInstance().network(Boolean.FALSE);
+            ((Toolbar)this.component).gameLaunched();
+        }
         else if(this.type.equals("save-game"))
         {
             GameController.getInstance().save();
