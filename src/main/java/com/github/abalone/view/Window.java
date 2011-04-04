@@ -25,6 +25,7 @@ public class Window extends JFrame implements ComponentListener
     private final Board board;
     private Boolean locked = Boolean.FALSE;
     private final JLabel status;
+    private NetworkUI networkUI;
 
     Boolean isLocked() {
         return this.locked;
@@ -68,7 +69,7 @@ public class Window extends JFrame implements ComponentListener
 
         this.board = new Board(this);
         this.toolbar = new Toolbar(this.board);
-        this.status = new JLabel();
+        this.status = new JLabel("Abalone");
 
         this.add(this.toolbar, BorderLayout.PAGE_START);
         this.add(this.board);
@@ -118,7 +119,10 @@ public class Window extends JFrame implements ComponentListener
     public void componentHidden(ComponentEvent ce) {
     }
 
-    public void addNetworkUI() {
+    public NetworkUI addNetworkUI()
+    {
+        this.networkUI = new NetworkUI(this);
+        return this.networkUI;
     }
 
     public void setNetworkStatus(NetworkStatus networkState)
