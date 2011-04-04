@@ -1,6 +1,7 @@
 package com.github.abalone.view.config;
 
 import com.github.abalone.config.ConstraintValue;
+import com.github.abalone.config.Range;
 import com.github.abalone.config.Value;
 import java.awt.Component;
 import java.util.Map;
@@ -33,6 +34,10 @@ public class Window extends JFrame
             {
                 this.addConf(new ComboBox(value), value.description);
             }
+            else if ( value instanceof Range )
+            {
+                this.addConf(new Slider(value), value.description);
+            }
             else if ( cl.equals(Boolean.class) )
             {
                 this.addConf(new CheckBox(value), null);
@@ -41,6 +46,8 @@ public class Window extends JFrame
             {
                 this.addConf(new TextField(value), value.description);
             }
+            else
+                throw new RuntimeException(String.format("Value type not supported yet: %s", cl));
         }
 
         this.add(this.box);
