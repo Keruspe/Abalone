@@ -1,7 +1,7 @@
 package com.github.abalone.view;
 
 import com.github.abalone.config.Config;
-import com.github.abalone.config.ValueListener;
+import com.github.abalone.util.listeners.ValueListener;
 import com.github.abalone.controller.GameController;
 import com.github.abalone.elements.Ball;
 import com.github.abalone.util.Color;

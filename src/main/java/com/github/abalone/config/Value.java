@@ -1,5 +1,6 @@
 package com.github.abalone.config;
 
+import com.github.abalone.util.listeners.ValueListener;
 import java.util.HashSet;
 
 /**

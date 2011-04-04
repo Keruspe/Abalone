@@ -1,4 +1,4 @@
-package com.github.abalone.config;
+package com.github.abalone.util.listeners;
 
 /**
  *
