@@ -82,7 +82,7 @@ public class Ball implements Serializable {
 
     @Override
     public String toString() {
-        return "Ball:" + this.color.name() + this.coords.toString();
+        return "Ball (" + this.color.name() + "): " + this.coords.toString();
     }
 
 }

@@ -8,7 +8,7 @@ import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
 import com.github.abalone.util.GameState;
-import com.github.abalone.util.Move;
+import com.github.abalone.controller.Move;
 import com.kitfox.svg.app.beans.SVGIcon;
 import java.awt.Dimension;
 import java.awt.Graphics;

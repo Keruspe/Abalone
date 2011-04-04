@@ -6,7 +6,8 @@ import com.github.abalone.elements.Game;
 import com.github.abalone.util.Color;
 import com.github.abalone.util.Coords;
 import com.github.abalone.util.Direction;
-import com.github.abalone.util.Move;
+import com.github.abalone.controller.Move;
+import com.github.abalone.elements.Board;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,32 +37,24 @@ public class AI {
    }
 
    public Move getBestMove(Color current) {
-      Move bestMove = new Move();
-      Set<Ball> balls = this.game.getBoard().getBalls();
+      Move bestMove = null;
+      Board board = this.game.getBoard();
+      Set<Ball> balls = board.getBalls();
       for (Ball b : balls) {
          if (b.getColor() != current) {
             continue;
          }
          Set<Coords> coords = new HashSet<Coords>();
          coords.add(b.getCoords());
-         Set<Direction> directions = GameController.getInstance().validDirections(coords);
-         if (!directions.isEmpty()) {
-            Set<Ball> ballsToMove = new HashSet<Ball>();
-            ballsToMove.add(b);
-            bestMove.setInitialState(ballsToMove);
-            bestMove.setDirection(directions.iterator().next());
+         for ( Direction d : Direction.values() ) {
+            bestMove = null;
+            bestMove = new Move(board.getLineColorBallsAt(coords, current), d, current);
+            bestMove.compute(board);
+            if ( bestMove.isValid() )
+               break;
+         }
+         if ( bestMove != null )
             break;
-         }
-      }
-      if (current == selfColor) {
-         bestMove.setIsAIMove();
-         Set<Coords> coords = new HashSet<Coords>();
-         for (Ball b : bestMove.getInitialBalls()) {
-            if (b.getColor() == current) {
-               coords.add(b.getCoords());
-            }
-         }
-         GameController.getInstance().doMove(coords, bestMove.getDirection(), Boolean.TRUE);
       }
       return bestMove;
    }
