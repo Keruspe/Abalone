@@ -191,6 +191,8 @@ class Board extends JPanel implements MouseListener, ValueListener
     @Override
     public void mouseClicked(MouseEvent me)
     {
+        if ( this.window.isLocked() )
+            return;
         Coords coords = this.getCoords(me.getPoint());
         if ( coords == null )
             return;

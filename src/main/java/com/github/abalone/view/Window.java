@@ -9,6 +9,7 @@ import java.awt.event.ComponentListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -21,6 +22,20 @@ public class Window extends JFrame implements ComponentListener
     
     private final Toolbar toolbar;
     private final Board board;
+    private Boolean locked = Boolean.FALSE;
+    private final JLabel status;
+
+    Boolean isLocked() {
+        return this.locked;
+    }
+
+    public void lock() {
+        this.locked = Boolean.TRUE;
+    }
+
+    public void unlock() {
+        this.locked = Boolean.FALSE;
+    }
     
     public Window() throws Exception
     {
@@ -52,9 +67,11 @@ public class Window extends JFrame implements ComponentListener
 
         this.board = new Board(this);
         this.toolbar = new Toolbar(this.board);
+        this.status = new JLabel();
 
         this.add(this.toolbar, BorderLayout.PAGE_START);
         this.add(this.board);
+        this.add(this.status, BorderLayout.PAGE_END);
 
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         this.addComponentListener(this);
