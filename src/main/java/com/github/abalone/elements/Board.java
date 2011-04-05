@@ -241,6 +241,7 @@ public class Board implements Serializable {
                   return (diff == 0 || diff == -1);
                }
             }
+            break;
          case 3:
             Ball b1 = itc.next();
             Ball b2 = itc.next();
