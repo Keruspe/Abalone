@@ -8,5 +8,7 @@ public enum NetworkStatus
 {
     WAITING_CONNECTION,
     CONNECTED,
-    WAITING_MOVE
+    WAITING_MOVE,
+    CONNECTION_ERROR,
+    QUIT
 }

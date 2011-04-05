@@ -138,6 +138,12 @@ public class Window extends JFrame implements ComponentListener
             case WAITING_MOVE:
                 this.status.setText("Waiting for move");
             break;
+            case CONNECTION_ERROR:
+                this.status.setText("Connection problem, can't continue");
+            break;
+            case QUIT:
+                this.status.setText("Your opponent left the game");
+            break;
         }
     }
 }

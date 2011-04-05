@@ -127,6 +127,8 @@ public class GameController {
 
    /// Quit the game
    public void quit() {
+      if ( this.networkController != null )
+         this.networkController.quit();
       System.exit(0);
    }
 

@@ -66,11 +66,16 @@ abstract class NetworkController implements Runnable, MessageListener
                     for ( MessageListener l : this.listeners )
                         l.newMessage(line.substring(4));
                 }
+                else if(line.startsWith("BYE"))
+                {
+                    this.window.setNetworkStatus(NetworkStatus.QUIT);
+                }
             }
         }
         catch (IOException ex)
         {
             Logger.getLogger(NetworkController.class.getName()).log(Level.SEVERE, null, ex);
+            this.window.setNetworkStatus(NetworkStatus.CONNECTION_ERROR);
         }
     }
 
@@ -96,6 +101,17 @@ abstract class NetworkController implements Runnable, MessageListener
         try {
             this.output.writeUTF("MSG " + message);
             this.output.flush();
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    void quit()
+    {
+        try {
+            this.output.writeUTF("BYE");
+            this.output.flush();
+            this.output.close();
         } catch (IOException ex) {
             Logger.getLogger(NetworkController.class.getName()).log(Level.SEVERE, null, ex);
         }
