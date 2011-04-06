@@ -256,13 +256,10 @@ class Board extends JPanel implements MouseListener, ValueListener
         this.repaint();
     }
 
-    void move(Direction buttonDirection)
+    void move(Direction direction)
     {
-        Direction direction;
         if ( this.reversed )
-            direction = buttonDirection.reversed();
-        else
-            direction = buttonDirection;
+            direction = direction.reversed();
         if ( GameController.getInstance().move(this.selectedBalls, direction).equals(GameState.RUNNING) )
         {
             this.selectedBalls.clear();
