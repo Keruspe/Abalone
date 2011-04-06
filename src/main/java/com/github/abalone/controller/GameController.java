@@ -180,7 +180,10 @@ public class GameController {
    public GameState move(Set<Coords> selectedBallsCoords, Direction direction) {
       Color turn = this.game.getTurn();
       Board board = this.game.getBoard();
-      Move move = new Move(board.getLineColorBallsAt(selectedBallsCoords, turn), direction, turn);
+      Set<Ball> balls = board.getLineColorBallsAt(selectedBallsCoords, turn);
+      if ( balls == null )
+          throw new RuntimeException("This one should never throw");
+      Move move = new Move(balls, direction, turn);
       move.compute(board);
       GameState state = doMove(move);
 
