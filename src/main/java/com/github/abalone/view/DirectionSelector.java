@@ -19,6 +19,7 @@ class DirectionSelector extends JDialog
     {
         super(window, "Direction");
         this.setSize(70, 100);
+        this.setLocationRelativeTo(board);
 
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(3, 2));
