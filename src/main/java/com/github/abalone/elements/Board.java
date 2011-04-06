@@ -284,4 +284,52 @@ public class Board implements Serializable {
       }
       return Boolean.FALSE;
    }
+
+   public HashSet<Move> getPossibleMoves(Color player) {
+      HashSet<Move> moves = new HashSet<Move>();
+      HashSet<Set<Ball>> sets = new HashSet<Set<Ball>>();
+
+      Set<Ball> balls1 = new HashSet<Ball>();
+      for (Ball b : this.balls) {
+         if (b.getColor().equals(player))
+            balls1.add(new Ball(b));
+      }
+      Set<Ball> balls2 = new HashSet<Ball>(balls1);
+      for (Ball b1 : balls1) {
+         Set<Ball> ballsToMove = new HashSet<Ball>();
+         ballsToMove.add(new Ball(b1));
+         sets.add(ballsToMove);
+
+         balls2.remove(b1);
+         Set<Ball> balls3 = new HashSet<Ball>(balls2);
+         for (Ball b2 : balls2) {
+            Set<Ball> ballsToMove2 = new HashSet<Ball>(ballsToMove);
+            ballsToMove2.add(new Ball(b2));
+            if ( this.areALine(ballsToMove2)) {
+               sets.add(ballsToMove2);
+
+               balls3.remove(b2);
+               for (Ball b3 : balls3) {
+                  Set<Ball> ballsToMove3 = new HashSet<Ball>(ballsToMove2);
+                  ballsToMove3.add(new Ball(b3));
+                  if ( this.areALine(ballsToMove3))
+                     sets.add(ballsToMove3);
+               }
+	    }
+         }
+      }
+      for ( Set<Ball> ballsToMove : sets ) {
+         Set<Move> answer = new HashSet<Move>();
+         for ( Direction d : Direction.values() ) {
+            Move m = new Move(ballsToMove, d, player);
+            m.compute(this);
+            if ( m.isValid() ) {
+               answer.add(m);
+            }
+         }
+         moves.addAll(answer);
+      }
+      return moves;
+   }
+
 }
