@@ -14,6 +14,7 @@ import java.util.Set;
 public class AI {
 
    private static final Integer MAX_DEPTH = 3;
+   private static final Integer INF = 1000;
 
    private static AI instance;
    private Game game;
@@ -40,7 +41,7 @@ public class AI {
       Set<Move> moves = board.getPossibleMoves(current);
       for ( Move m : moves ) {
          board.apply(m);
-         Integer score = negaMax(board, current.other(), MAX_DEPTH - 1);
+         Integer score = negaScout(board, current.other(), MAX_DEPTH - 1, -INF, +INF);
          if ( score > best ) {
              best = score;
              bestMove = m;
@@ -50,15 +51,18 @@ public class AI {
       return bestMove;
    }
 
-   private Integer negaMax(Board board, Color current, Integer depth) {
+   private Integer negaScout(Board board, Color current, Integer depth, Integer alpha, Integer beta) {
       if ( depth > 0 ) {
-         Integer best = -100;
-         Set<Move> moves = board.getPossibleMoves(current);
-         for ( Move m : moves ) {
+         Integer best = beta;
+         for ( Move m :  board.getPossibleMoves(current) ) {
             board.apply(m);
-            Integer score = negaMax(board, current.other(), depth - 1);
-            if ( score > best )
-                best = score;
+            Integer score = - negaScout(board, current.other(), depth - 1, -best, -alpha);
+            if ( alpha < score && score < beta )
+               score = - negaScout(board, current.other(), depth - 1, -beta, -alpha);
+            alpha = Math.max(alpha, score);
+            if ( alpha >= beta )
+               return alpha;
+            best = alpha + 1;
             board.revert(m);
          }
          return best;
