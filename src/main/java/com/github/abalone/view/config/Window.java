@@ -21,7 +21,7 @@ public class Window extends JFrame
     {
         super("Preferences");
 
-        this.setSize(300, 70);
+        this.setSize(500, 200);
 
         this.box = new Box(BoxLayout.PAGE_AXIS);
 

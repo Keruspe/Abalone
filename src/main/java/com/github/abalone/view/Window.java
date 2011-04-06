@@ -45,7 +45,7 @@ public class Window extends JFrame implements ComponentListener
 
         GameController.getInstance().setWindow(this);
 
-        this.setSize(300, 100);
+        this.setSize(600, 600);
 
         String[] lookAndFeels = {
             "com.sun.java.swing.plaf.gtk.GTKLookAndFeel",
