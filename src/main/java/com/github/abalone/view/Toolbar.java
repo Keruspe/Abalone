@@ -47,14 +47,16 @@ class Toolbar extends JToolBar
         this.add(new ToolButton("quit"));
     }
 
-    void gameLaunched()
+    void gameLaunched(Boolean network)
     {
         this.newGame.setEnabled(false);
         this.hostGame.setEnabled(false);
         this.joinGame.setEnabled(false);
-        this.saveGame.setEnabled(true);
+        if ( ! network )
+            this.saveGame.setEnabled(true);
         this.loadGame.setEnabled(false);
         this.bestMove.setEnabled(true);
-        this.undo.setEnabled(true);
+        if ( ! network )
+            this.undo.setEnabled(true);
     }
 }

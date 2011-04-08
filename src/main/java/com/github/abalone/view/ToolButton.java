@@ -65,17 +65,17 @@ class ToolButton extends JButton implements ActionListener
         if ( this.type.equals("new-game") )
         {
             GameController.getInstance().launch();
-            ((Toolbar)this.component).gameLaunched();
+            ((Toolbar)this.component).gameLaunched(Boolean.FALSE);
         }
         else if(this.type.equals("host-game"))
         {
             GameController.getInstance().network(Boolean.TRUE);
-            ((Toolbar)this.component).gameLaunched();
+            ((Toolbar)this.component).gameLaunched(Boolean.TRUE);
         }
         else if(this.type.equals("join-game"))
         {
             GameController.getInstance().network(Boolean.FALSE);
-            ((Toolbar)this.component).gameLaunched();
+            ((Toolbar)this.component).gameLaunched(Boolean.TRUE);
         }
         else if(this.type.equals("save-game"))
         {
@@ -84,7 +84,7 @@ class ToolButton extends JButton implements ActionListener
         else if(this.type.equals("load-game"))
         {
             if ( GameController.getInstance().load() )
-                ((Toolbar)this.component).gameLaunched();
+                ((Toolbar)this.component).gameLaunched(Boolean.FALSE);
         }
         else if(this.type.equals("best-move"))
         {
